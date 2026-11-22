@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Keuangan;
 use App\Models\KategoriKeuangan;
+use App\Models\Program;
+use App\Models\Donation;
 use App\Exports\LaporanInternalExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -27,12 +29,16 @@ class LaporanInternalController extends Controller
         }
 
         $defaultCategories = [
-            'Gerakan Berantas Buta Huruf Al-Qur\'an (BBHQ)',
+            'Gebraq (Gerakan Berantas Buta Huruf Al-Qur\'an)',
             'TPA / TPQ Santri Al Futuh',
             'Kajian Muslimah & Majelis Ta\'lim',
             'Operasional & Sarana Dakwah Yayasan',
             'Alokasi Donasi Umum Operasional',
         ];
+
+        // Otomatis perbarui kategori lama yang masih bernama BBHQ menjadi Gebraq
+        KategoriKeuangan::where('nama_kategori', 'like', '%BBHQ%')
+            ->update(['nama_kategori' => 'Gebraq (Gerakan Berantas Buta Huruf Al-Qur\'an)']);
 
         if (KategoriKeuangan::where('is_internal', true)->count() === 0) {
             foreach ($defaultCategories as $catName) {
@@ -45,6 +51,60 @@ class LaporanInternalController extends Controller
                 }
             }
         }
+    }
+
+    /**
+     * Dapatkan Program Donasi Operasional Umum
+     */
+    protected function getOperasionalProgram()
+    {
+        return Program::where('slug', 'sedekah-operasional-dakwah-yayasan')
+            ->orWhere('nama', 'like', '%operasional%')
+            ->first();
+    }
+
+    /**
+     * Hitung total dana terkumpul dari Donasi Operasional Umum
+     */
+    protected function getTotalDonasiOperasional()
+    {
+        $prog = $this->getOperasionalProgram();
+        if (!$prog) {
+            return 0;
+        }
+
+        $verifiedSum = Donation::where('program_id', $prog->id)
+            ->where('status', 'verified')
+            ->sum('nominal');
+
+        return max((int) $prog->dana_terkumpul, (int) $verifiedSum);
+    }
+
+    /**
+     * Hitung total akumulasi pencairan dana ke pos kegiatan internal
+     */
+    protected function getTotalPencairanDana()
+    {
+        return Keuangan::where('is_internal', true)->where('tipe', 'Pemasukan')->sum('nominal');
+    }
+
+    /**
+     * Hitung sisa dana donasi operasional yang masih bisa dicairkan ke kegiatan
+     */
+    protected function getSisaBisaDicairkan()
+    {
+        $totalDonasi = $this->getTotalDonasiOperasional();
+        $totalPencairan = $this->getTotalPencairanDana();
+
+        return max(0, $totalDonasi - $totalPencairan);
+    }
+
+    /**
+     * Hitung akumulasi pengeluaran biaya kegiatan riil
+     */
+    protected function getTotalPengeluaranKegiatan()
+    {
+        return Keuangan::where('is_internal', true)->where('tipe', 'Pengeluaran')->sum('nominal');
     }
 
     /**
@@ -99,11 +159,17 @@ class LaporanInternalController extends Controller
         // Paginasi Transaksi
         $transaksis = (clone $query)->paginate(15)->withQueryString();
 
-        // Hitung Ringkasan Statistik Berdasarkan Filter
+        // 1. Total Dana Donasi Operasional Yayasan
+        $totalDonasiOperasional = $this->getTotalDonasiOperasional();
+        $totalPencairanKumulatif = $this->getTotalPencairanDana();
+        // Sisa dana donasi operasional yang siap dicairkan ke pos kegiatan
+        $sisaBisaDicairkan = max(0, $totalDonasiOperasional - $totalPencairanKumulatif);
+
+        // 2 & 3. Total Pencairan & Total Pengeluaran pada filter periode
         $allFiltered = (clone $query)->get();
-        $totalAlokasiMasuk = $allFiltered->where('tipe', 'Pemasukan')->sum('nominal');
+        $totalPencairanDana = $allFiltered->where('tipe', 'Pemasukan')->sum('nominal');
         $totalPengeluaranKegiatan = $allFiltered->where('tipe', 'Pengeluaran')->sum('nominal');
-        $sisaSaldo = $totalAlokasiMasuk - $totalPengeluaranKegiatan;
+        $totalPengeluaranKumulatif = $this->getTotalPengeluaranKegiatan();
 
         // Breakdown Statistik per Program Kegiatan Internal
         $statKegiatan = $internalCategories->map(function ($kat) use ($startDate, $endDate) {
@@ -138,9 +204,12 @@ class LaporanInternalController extends Controller
             'kategoriId',
             'tipe',
             'search',
-            'totalAlokasiMasuk',
+            'totalDonasiOperasional',
+            'sisaBisaDicairkan',
+            'totalPencairanDana',
+            'totalPencairanKumulatif',
             'totalPengeluaranKegiatan',
-            'sisaSaldo',
+            'totalPengeluaranKumulatif',
             'statKegiatan'
         ));
     }
@@ -174,6 +243,32 @@ class LaporanInternalController extends Controller
         } else {
             $request->validate(['kategori_id' => 'required|exists:kategori_keuangans,id']);
             $kategoriId = $request->kategori_id;
+        }
+
+        // 1. Validasi saat Admin Mencairkan Dana (Tipe: Pemasukan / Pencairan ke Pos Kegiatan)
+        // Pencairan dana tidak boleh melebihi sisa dana donasi operasional yang dapat dicairkan
+        if ($validated['tipe'] === 'Pemasukan') {
+            $sisaBisaDicairkan = $this->getSisaBisaDicairkan();
+            if ($validated['nominal'] > $sisaBisaDicairkan) {
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Pencairan dana tidak dapat diproses! Nominal pencairan (Rp ' . number_format($validated['nominal'], 0, ',', '.') . ') melebihi sisa dana donasi operasional yang dapat dicairkan (Maksimal Rp ' . number_format($sisaBisaDicairkan, 0, ',', '.') . ').');
+            }
+        }
+
+        // 2. Validasi saat Admin Mengeluarkan Dana Kegiatan (Tipe: Pengeluaran dari Pos Kegiatan)
+        // Pengeluaran tidak boleh melebihi saldo dana yang tersedia di pos kegiatan yang bersangkutan
+        if ($validated['tipe'] === 'Pengeluaran') {
+            $posMasuk = Keuangan::where('kategori_id', $kategoriId)->where('tipe', 'Pemasukan')->sum('nominal');
+            $posKeluar = Keuangan::where('kategori_id', $kategoriId)->where('tipe', 'Pengeluaran')->sum('nominal');
+            $saldoPos = $posMasuk - $posKeluar;
+
+            if ($validated['nominal'] > $saldoPos) {
+                $posName = KategoriKeuangan::find($kategoriId)?->nama_kategori ?? 'pos kegiatan ini';
+                return redirect()->back()
+                    ->withInput()
+                    ->with('error', 'Pengeluaran kegiatan tidak dapat diproses! Nominal pengeluaran (Rp ' . number_format($validated['nominal'], 0, ',', '.') . ') melebihi saldo dana yang tersedia pada ' . $posName . ' (Maksimal Rp ' . number_format(max(0, $saldoPos), 0, ',', '.') . '). Silakan lakukan pencairan dana ke pos kegiatan terlebih dahulu.');
+            }
         }
 
         Keuangan::create([
@@ -312,9 +407,15 @@ class LaporanInternalController extends Controller
         }
 
         $transaksis = $query->get();
-        $totalAlokasiMasuk = $transaksis->where('tipe', 'Pemasukan')->sum('nominal');
+        
+        // 1. Total Dana Donasi Operasional Yayasan
+        $totalDonasiOperasional = $this->getTotalDonasiOperasional();
+        $totalPencairanKumulatif = $this->getTotalPencairanDana();
+        $sisaBisaDicairkan = max(0, $totalDonasiOperasional - $totalPencairanKumulatif);
+
+        // 2 & 3. Total Pencairan & Total Pengeluaran pada filter periode
+        $totalPencairanDana = $transaksis->where('tipe', 'Pemasukan')->sum('nominal');
         $totalPengeluaranKegiatan = $transaksis->where('tipe', 'Pengeluaran')->sum('nominal');
-        $sisaSaldo = $totalAlokasiMasuk - $totalPengeluaranKegiatan;
 
         // Breakdown per Program
         $kategoriTerpilih = $kategoriId ? KategoriKeuangan::find($kategoriId) : null;
@@ -338,9 +439,10 @@ class LaporanInternalController extends Controller
             'startDate',
             'endDate',
             'kategoriTerpilih',
-            'totalAlokasiMasuk',
+            'totalDonasiOperasional',
+            'sisaBisaDicairkan',
+            'totalPencairanDana',
             'totalPengeluaranKegiatan',
-            'sisaSaldo',
             'statKegiatan'
         ))->setPaper('a4', 'portrait');
 

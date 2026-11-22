@@ -27,48 +27,60 @@
 
     <div class="space-y-4 sm:space-y-6">
 
-        <!-- 3 Kartu Metrik Utama Anggaran Internal -->
+        <!-- 3 Kartu Metrik Utama Anggaran Internal Sesuai Alur -->
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-            <!-- 1. Total Alokasi Masuk -->
+            <!-- 1. Total Donasi Operasional -->
             <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
                 <div class="flex items-center gap-2.5 mb-1">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-[#EAF5EE] text-[#155E4B] flex items-center justify-center shrink-0">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="2" stroke-linecap="round"/></svg>
                     </div>
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Total Alokasi Masuk</p>
-                        <p class="text-[10px] text-slate-400">Plafon donasi operasional</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Total Donasi Operasional</p>
+                        <p class="text-[10px] text-slate-400">Plafon kas operasional yayasan</p>
                     </div>
                 </div>
-                <p class="text-lg sm:text-xl font-black text-[#155E4B]">Rp {{ number_format($totalAlokasiMasuk, 0, ',', '.') }}</p>
+                <p class="text-lg sm:text-xl font-black text-[#155E4B]">Rp {{ number_format($totalDonasiOperasional, 0, ',', '.') }}</p>
+                <div class="pt-1 flex items-center justify-between text-[10px]">
+                    <span class="text-slate-400">Sisa siap dicairkan:</span>
+                    <span class="font-bold text-[#155E4B] bg-[#EAF5EE] px-2 py-0.5 rounded-full border border-[#D2E6DC]">Rp {{ number_format(max(0, $sisaBisaDicairkan), 0, ',', '.') }}</span>
+                </div>
             </div>
 
-            <!-- 2. Total Pengeluaran Kegiatan -->
+            <!-- 2. Total Pencairan Dana -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
+                <div class="flex items-center gap-2.5 mb-1">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Total Pencairan Dana</p>
+                        <p class="text-[10px] text-slate-400">Dicairkan ke pos kegiatan (Gebraq, TPA, dsb.)</p>
+                    </div>
+                </div>
+                <p class="text-lg sm:text-xl font-black text-blue-600">Rp {{ number_format($totalPencairanDana, 0, ',', '.') }}</p>
+                <div class="pt-1 flex items-center justify-between text-[10px]">
+                    <span class="text-slate-400">Tersalurkan ke:</span>
+                    <span class="font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">{{ $internalCategories->count() }} Pos Kegiatan</span>
+                </div>
+            </div>
+
+            <!-- 3. Total Pengeluaran Kegiatan -->
             <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
                 <div class="flex items-center gap-2.5 mb-1">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 12H4" stroke-width="2" stroke-linecap="round"/></svg>
                     </div>
                     <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Total Biaya Kegiatan</p>
-                        <p class="text-[10px] text-slate-400">BBHQ, TPA, Kajian, dsb.</p>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Total Pengeluaran</p>
+                        <p class="text-[10px] text-slate-400">Realisasi biaya pos kegiatan (Gebraq, TPA, dsb.)</p>
                     </div>
                 </div>
                 <p class="text-lg sm:text-xl font-black text-rose-600">Rp {{ number_format($totalPengeluaranKegiatan, 0, ',', '.') }}</p>
-            </div>
-
-            <!-- 3. Sisa Saldo Kas Internal -->
-            <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
-                <div class="flex items-center gap-2.5 mb-1">
-                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl {{ $sisaSaldo >= 0 ? 'bg-[#EAF5EE] text-[#155E4B]' : 'bg-amber-50 text-amber-700' }} flex items-center justify-center shrink-0">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke-width="1.8" stroke-linecap="round"/></svg>
-                    </div>
-                    <div>
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Sisa Saldo Kas Internal</p>
-                        <p class="text-[10px] text-slate-400">Siap dialokasikan</p>
-                    </div>
+                <div class="pt-1 flex items-center justify-between text-[10px]">
+                    <span class="text-slate-400">Sisa saldo di pos:</span>
+                    <span class="font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-full">Rp {{ number_format(max(0, $totalPencairanKumulatif - $totalPengeluaranKumulatif), 0, ',', '.') }}</span>
                 </div>
-                <p class="text-lg sm:text-xl font-black {{ $sisaSaldo >= 0 ? 'text-[#155E4B]' : 'text-amber-600' }}">Rp {{ number_format($sisaSaldo, 0, ',', '.') }}</p>
             </div>
         </div>
 
@@ -217,20 +229,52 @@
             </div>
         </div>
 
-        <!-- Form Catat Transaksi Kegiatan Internal Baru -->
-        <div x-data="{ showForm: false, showNewCategory: false }" class="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-3.5">
+        <!-- Form Catat Transaksi Kegiatan Internal Baru Sesuai Alur -->
+        <div x-data="{
+                showForm: false,
+                showNewCategory: false,
+                tipe: 'Pemasukan',
+                nominal: '',
+                sisaBisaDicairkan: {{ (int) max(0, $sisaBisaDicairkan) }},
+                validateSubmit(e) {
+                    if (this.tipe === 'Pemasukan' && Number(this.nominal) > this.sisaBisaDicairkan) {
+                        e.preventDefault();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Pencairan Melebihi Dana Tersedia!',
+                            text: 'Pencairan dana tidak dapat diproses. Nominal pencairan (Rp ' + Number(this.nominal).toLocaleString('id-ID') + ') melebihi sisa dana donasi operasional yang dapat dicairkan (Rp ' + this.sisaBisaDicairkan.toLocaleString('id-ID') + ').',
+                            confirmButtonColor: '#155E4B',
+                            confirmButtonText: 'Sesuaikan Nominal',
+                            customClass: { popup: 'rounded-3xl' }
+                        });
+                        return false;
+                    }
+                }
+            }"
+            class="bg-white p-4 sm:p-6 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-3.5">
+            
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                 <div>
                     <h3 class="font-extrabold text-sm sm:text-base text-slate-800">Catat Transaksi Kas Internal Kegiatan</h3>
-                    <p class="text-[11px] sm:text-xs text-slate-400">Pencairan alokasi atau pengeluaran operasional kegiatan (BBHQ, TPA, Kajian, dsb.)</p>
+                    <p class="text-[11px] sm:text-xs text-slate-400">Pencairan dana ke pos kegiatan atau pengeluaran biaya pelaksanaan kegiatan (Gebraq, TPA, Kajian, dsb.)</p>
                 </div>
                 <button type="button" @click="showForm = !showForm" class="w-full sm:w-auto text-xs font-bold bg-[#EAF5EE] text-[#155E4B] px-4 py-2.5 rounded-full border border-[#D2E6DC] hover:bg-[#DCEEE5] transition flex items-center justify-center gap-1.5 active:scale-95 shadow-xs">
                     <span x-text="showForm ? 'Sembunyikan Form' : '+ Tambah Transaksi'"></span>
                 </button>
             </div>
 
-            <form x-show="showForm" x-cloak action="{{ route('admin.laporan-internal.store') }}" method="POST" class="space-y-3 pt-3 border-t border-slate-100">
+            <form x-show="showForm" x-cloak action="{{ route('admin.laporan-internal.store') }}" method="POST" @submit="validateSubmit($event)" class="space-y-3 pt-3 border-t border-slate-100">
                 @csrf
+
+                <!-- Banner Informasi Status Alur Dana -->
+                <div class="p-3 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"
+                    :class="tipe === 'Pemasukan' ? 'bg-[#EAF5EE] border-[#D2E6DC] text-[#155E4B]' : 'bg-slate-50 border-slate-200 text-slate-700'">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        <span class="font-bold" x-text="tipe === 'Pemasukan' ? 'Sisa Donasi Operasional Siap Dicairkan ke Kegiatan:' : 'Pengeluaran Kegiatan dari Pos Kegiatan:'"></span>
+                    </div>
+                    <span class="font-black text-sm sm:text-base" x-text="tipe === 'Pemasukan' ? 'Rp {{ number_format(max(0, $sisaBisaDicairkan), 0, ',', '.') }}' : 'Dipotong dari Saldo Pos Terpilih'"></span>
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                     <!-- Tanggal -->
@@ -242,16 +286,27 @@
                     <!-- Tipe Transaksi -->
                     <div>
                         <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Tipe Transaksi <span class="text-rose-500">*</span></label>
-                        <select name="tipe" required class="w-full text-xs border border-slate-200 rounded-xl focus:border-[#155E4B] focus:ring-[#155E4B] p-2.5 sm:p-3 bg-white">
-                            <option value="Pengeluaran">Pengeluaran Biaya Kegiatan (-)</option>
-                            <option value="Pemasukan">Pencairan Alokasi dari Donasi Operasional (+)</option>
+                        <select name="tipe" x-model="tipe" required class="w-full text-xs border border-slate-200 rounded-xl focus:border-[#155E4B] focus:ring-[#155E4B] p-2.5 sm:p-3 bg-white">
+                            <option value="Pemasukan">1. Pencairan Dana (Dari Donasi Operasional ke Pos Kegiatan)</option>
+                            <option value="Pengeluaran">2. Pengeluaran Kegiatan (Biaya Pelaksanaan Pos Kegiatan)</option>
                         </select>
                     </div>
 
                     <!-- Nominal -->
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Nominal (Rp) <span class="text-rose-500">*</span></label>
-                        <input type="number" name="nominal" min="1000" step="1000" placeholder="Contoh: 1500000" required class="w-full text-xs font-bold border border-slate-200 rounded-xl focus:border-[#155E4B] focus:ring-[#155E4B] p-2.5 sm:p-3">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider">Nominal (Rp) <span class="text-rose-500">*</span></label>
+                            <span x-show="tipe === 'Pemasukan'" class="text-[10px] text-slate-400 font-semibold">Maks: Rp {{ number_format(max(0, $sisaBisaDicairkan), 0, ',', '.') }}</span>
+                        </div>
+                        <input type="number" name="nominal" x-model="nominal" min="1000" step="1000" placeholder="Contoh: 1500000" required
+                            class="w-full text-xs font-bold border border-slate-200 rounded-xl focus:border-[#155E4B] focus:ring-[#155E4B] p-2.5 sm:p-3"
+                            :class="{ 'border-rose-400 text-rose-600 bg-rose-50/50': tipe === 'Pemasukan' && Number(nominal) > sisaBisaDicairkan }">
+                        
+                        <!-- Peringatan Real-Time Melebihi Dana Tersedia -->
+                        <div x-show="tipe === 'Pemasukan' && Number(nominal) > sisaBisaDicairkan" x-cloak class="mt-1.5 p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-[11px] font-bold flex items-center gap-1.5">
+                            <svg class="w-4 h-4 shrink-0 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            <span>Peringatan: Pencairan melebihi sisa dana donasi operasional (Maks Rp {{ number_format(max(0, $sisaBisaDicairkan), 0, ',', '.') }}).</span>
+                        </div>
                     </div>
                 </div>
 
@@ -289,7 +344,7 @@
                 <!-- Rincian Penggunaan Anggaran -->
                 <div>
                     <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Rincian Penggunaan / Keterangan Transaksi <span class="text-rose-500">*</span></label>
-                    <input type="text" name="keterangan" required placeholder="Contoh: Honorarium pengajar BBHQ 3 kelas, pengadaan 50 mushaf tajwid, snack santri TPA..." class="w-full text-xs border border-slate-200 rounded-xl focus:border-[#155E4B] focus:ring-[#155E4B] p-2.5 sm:p-3">
+                    <input type="text" name="keterangan" required placeholder="Contoh: Honorarium pengajar Gebraq 3 kelas, pengadaan 50 mushaf tajwid, snack santri TPA..." class="w-full text-xs border border-slate-200 rounded-xl focus:border-[#155E4B] focus:ring-[#155E4B] p-2.5 sm:p-3">
                 </div>
 
                 <div class="pt-1">
@@ -333,7 +388,7 @@
                         <label class="block text-[10px] text-slate-400 font-bold mb-1">Tipe Transaksi</label>
                         <select name="tipe" class="w-full text-xs border border-slate-200 rounded-xl focus:border-[#155E4B] p-2 sm:p-2.5 bg-white">
                             <option value="">-- Semua Tipe --</option>
-                            <option value="Pemasukan" {{ $tipe == 'Pemasukan' ? 'selected' : '' }}>Alokasi Masuk (+)</option>
+                            <option value="Pemasukan" {{ $tipe == 'Pemasukan' ? 'selected' : '' }}>Pencairan Dana (+)</option>
                             <option value="Pengeluaran" {{ $tipe == 'Pengeluaran' ? 'selected' : '' }}>Pengeluaran Kegiatan (-)</option>
                         </select>
                     </div>
@@ -381,12 +436,12 @@
                                 {{ $tx->kategori->nama_kategori ?? 'Operasional' }}
                             </span>
                             @if($tx->tipe === 'Pemasukan')
-                                <span class="text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full shrink-0">
-                                    + Alokasi Masuk
+                                <span class="text-[10px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-full shrink-0">
+                                    + Pencairan Dana
                                 </span>
                             @else
                                 <span class="text-[10px] font-extrabold bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-0.5 rounded-full shrink-0">
-                                    - Biaya Kegiatan
+                                    - Pengeluaran Kegiatan
                                 </span>
                             @endif
                         </div>
@@ -408,7 +463,7 @@
                         <div class="flex items-center justify-between pt-2 border-t border-slate-200/60 text-xs">
                             <span class="text-[11px] text-slate-400">📅 {{ $tx->tanggal ? $tx->tanggal->format('d M Y') : '-' }}</span>
                             <div class="flex items-center gap-2.5">
-                                <span class="font-black text-sm {{ $tx->tipe === 'Pemasukan' ? 'text-emerald-700' : 'text-rose-600' }}">
+                                <span class="font-black text-sm {{ $tx->tipe === 'Pemasukan' ? 'text-blue-700' : 'text-rose-600' }}">
                                     {{ $tx->tipe === 'Pemasukan' ? '+' : '-' }} Rp {{ number_format($tx->nominal, 0, ',', '.') }}
                                 </span>
                                 <form action="{{ route('admin.laporan-internal.destroy', $tx->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Hapus transaksi internal senilai Rp {{ number_format($tx->nominal, 0, ',', '.') }}?')">
@@ -455,12 +510,12 @@
                                 </td>
                                 <td class="py-3 px-3 whitespace-nowrap">
                                     @if($tx->tipe === 'Pemasukan')
-                                        <span class="text-[10px] font-extrabold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full">
-                                            + Alokasi Masuk
+                                        <span class="text-[10px] font-extrabold bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-full">
+                                            + Pencairan Dana
                                         </span>
                                     @else
                                         <span class="text-[10px] font-extrabold bg-rose-50 text-rose-700 border border-rose-200 px-2.5 py-0.5 rounded-full">
-                                            - Biaya Kegiatan
+                                            - Pengeluaran Kegiatan
                                         </span>
                                     @endif
                                 </td>
@@ -470,7 +525,7 @@
                                 <td class="py-3 px-3 text-slate-600 max-w-xs leading-relaxed">
                                     {{ $tx->keterangan }}
                                 </td>
-                                <td class="py-3 px-3 text-right font-black whitespace-nowrap {{ $tx->tipe === 'Pemasukan' ? 'text-emerald-700' : 'text-rose-600' }}">
+                                <td class="py-3 px-3 text-right font-black whitespace-nowrap {{ $tx->tipe === 'Pemasukan' ? 'text-blue-700' : 'text-rose-600' }}">
                                     {{ $tx->tipe === 'Pemasukan' ? '+' : '-' }} Rp {{ number_format($tx->nominal, 0, ',', '.') }}
                                 </td>
                                 <td class="py-3 px-3 text-center whitespace-nowrap">

@@ -205,23 +205,32 @@
     <!-- RINGKASAN EKSEKUTIF -->
     <table class="summary-table">
         <tr>
-            <td style="width: 32%; padding-right: 4px;">
+            <td style="width: 33%; padding-right: 4px;">
                 <div class="summary-card">
-                    <div class="summary-card-title">Total Alokasi Masuk (Donasi Operasional)</div>
-                    <div class="summary-card-amount text-green">Rp {{ number_format($totalAlokasiMasuk, 0, ',', '.') }}</div>
+                    <div class="summary-card-title">Total Donasi Operasional</div>
+                    <div class="summary-card-amount text-green">Rp {{ number_format($totalDonasiOperasional, 0, ',', '.') }}</div>
+                    <div style="font-size: 8px; color: #155E4B; margin-top: 3px; font-weight: bold;">
+                        Sisa siap dicairkan: Rp {{ number_format(max(0, $sisaBisaDicairkan), 0, ',', '.') }}
+                    </div>
                 </div>
             </td>
-            <td style="width: 32%; padding: 0 2px;">
+            <td style="width: 33%; padding: 0 2px;">
                 <div class="summary-card">
-                    <div class="summary-card-title">Total Biaya Realisasi Kegiatan</div>
-                    <div class="summary-card-amount text-rose">Rp {{ number_format($totalPengeluaranKegiatan, 0, ',', '.') }}</div>
+                    <div class="summary-card-title">Total Pencairan Dana</div>
+                    <div class="summary-card-amount text-green">Rp {{ number_format($totalPencairanDana, 0, ',', '.') }}</div>
+                    <div style="font-size: 8px; color: #64748b; margin-top: 3px;">
+                        Dicairkan ke pos-pos kegiatan
+                    </div>
                 </div>
             </td>
-            <td style="width: 36%; padding-left: 4px;">
+            <td style="width: 34%; padding-left: 4px;">
                 <div class="summary-card">
-                    <div class="summary-card-title">Sisa Saldo Kas Program Internal</div>
-                    <div class="summary-card-amount {{ $sisaSaldo >= 0 ? 'text-green' : 'text-rose' }}">
-                        Rp {{ number_format($sisaSaldo, 0, ',', '.') }}
+                    <div class="summary-card-title">Total Pengeluaran Kegiatan</div>
+                    <div class="summary-card-amount text-rose">
+                        Rp {{ number_format($totalPengeluaranKegiatan, 0, ',', '.') }}
+                    </div>
+                    <div style="font-size: 8px; color: #64748b; margin-top: 3px;">
+                        Realisasi biaya pos kegiatan
                     </div>
                 </div>
             </td>
@@ -235,8 +244,8 @@
             <tr>
                 <th style="width: 5%;" class="text-center">No</th>
                 <th style="width: 45%;">Nama Pos Program Kegiatan Yayasan</th>
-                <th style="width: 16%;" class="text-right">Alokasi Masuk</th>
-                <th style="width: 17%;" class="text-right">Realisasi Biaya</th>
+                <th style="width: 16%;" class="text-right">Dana Dicairkan</th>
+                <th style="width: 17%;" class="text-right">Biaya Pengeluaran</th>
                 <th style="width: 17%;" class="text-right">Sisa Saldo</th>
             </tr>
         </thead>

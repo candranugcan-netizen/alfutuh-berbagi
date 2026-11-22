@@ -99,7 +99,7 @@ class AlFutuhSeeder extends Seeder
         KategoriKeuangan::firstOrCreate(['nama_kategori' => 'Sedekah Operasional & Dakwah Yayasan']);
         KategoriKeuangan::firstOrCreate(['nama_kategori' => 'Operasional & Sarana Dakwah Yayasan'], ['is_internal' => true]);
         KategoriKeuangan::firstOrCreate(['nama_kategori' => 'Alokasi Donasi Umum Operasional'], ['is_internal' => true]);
-        KategoriKeuangan::firstOrCreate(['nama_kategori' => 'Gerakan Berantas Buta Huruf Al-Qur\'an (BBHQ)'], ['is_internal' => true]);
+        KategoriKeuangan::firstOrCreate(['nama_kategori' => 'Gebraq (Gerakan Berantas Buta Huruf Al-Qur\'an)'], ['is_internal' => true]);
         KategoriKeuangan::firstOrCreate(['nama_kategori' => 'TPA / TPQ Santri Al Futuh'], ['is_internal' => true]);
         KategoriKeuangan::firstOrCreate(['nama_kategori' => 'Kajian Muslimah & Majelis Ta\'lim'], ['is_internal' => true]);
     }

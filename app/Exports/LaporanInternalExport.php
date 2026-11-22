@@ -76,8 +76,8 @@ class LaporanInternalExport implements FromCollection, WithHeadings, WithMapping
             'Tipe Transaksi',
             'Penanggung Jawab / Penerima',
             'Rincian Penggunaan Anggaran',
-            'Nominal Masuk / Alokasi (Rp)',
-            'Nominal Keluar / Biaya (Rp)',
+            'Nominal Pencairan Dana (Rp)',
+            'Nominal Pengeluaran Kegiatan (Rp)',
         ];
     }
 
@@ -93,7 +93,7 @@ class LaporanInternalExport implements FromCollection, WithHeadings, WithMapping
             $index,
             $row->tanggal ? $row->tanggal->format('d/m/Y') : '-',
             $row->kategori->nama_kategori ?? 'Operasional Umum',
-            $row->tipe === 'Pemasukan' ? 'Alokasi Masuk (+)' : 'Pengeluaran Kegiatan (-)',
+            $row->tipe === 'Pemasukan' ? 'Pencairan Dana (+)' : 'Pengeluaran Kegiatan (-)',
             $row->penanggung_jawab ?? '-',
             $row->keterangan,
             $masuk,
