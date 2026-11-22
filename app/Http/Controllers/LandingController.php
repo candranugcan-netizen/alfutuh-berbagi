@@ -72,6 +72,14 @@ class LandingController extends Controller
             ->take(5)
             ->get();
 
+        // 6. Program Sedekah Operasional Dakwah untuk Pop-Up Promosi
+        $operasionalProgram = Program::where('is_active', true)
+            ->where(function ($q) {
+                $q->where('slug', 'sedekah-operasional-dakwah-yayasan')
+                  ->orWhere('nama', 'like', '%operasional%');
+            })
+            ->first() ?? ($featuredPrograms->first() ?? $programs->first());
+
         return view('welcome', compact(
             'featuredPrograms',
             'programs',
@@ -83,7 +91,8 @@ class LandingController extends Controller
             'totalDonaturCount',
             'totalProgramCount',
             'saldoKas',
-            'recentDonations'
+            'recentDonations',
+            'operasionalProgram'
         ));
     }
 
@@ -98,7 +107,10 @@ class LandingController extends Controller
         $query = Program::where('is_active', true)->orderBy('urutan');
 
         if ($kategori && $kategori !== 'Semua') {
-            $query->where('kategori', $kategori);
+            $query->where(function ($q) use ($kategori) {
+                $q->where('kategori', $kategori)
+                  ->orWhere('kategori', 'like', "%{$kategori}%");
+            });
         }
 
         if ($search) {
@@ -110,7 +122,10 @@ class LandingController extends Controller
         }
 
         $programs = $query->paginate(9)->withQueryString();
-        $categories = Program::where('is_active', true)->distinct()->pluck('kategori');
+
+        $dbCategories = Program::where('is_active', true)->distinct()->pluck('kategori')->toArray();
+        $baseCategories = ['Masjid', 'Pendidikan', 'Sosial', 'Kemanusiaan'];
+        $categories = collect(array_values(array_unique(array_merge($baseCategories, $dbCategories))));
 
         return view('programs.index', compact('programs', 'categories', 'kategori', 'search'));
     }
@@ -126,7 +141,8 @@ class LandingController extends Controller
         $donations = Donation::where('program_id', $program->id)
             ->where('status', 'verified')
             ->latest()
-            ->paginate(15);
+            ->paginate(10)
+            ->withQueryString();
 
         // Kabar update untuk program ini
         $kabars = Kabar::where('program_id', $program->id)
@@ -181,7 +197,8 @@ class LandingController extends Controller
 
         $penyalurans = Penyaluran::with('program')
             ->latest('tanggal')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
         $programsSummary = Program::withCount('verifiedDonations')
             ->withSum('penyalurans', 'nominal')

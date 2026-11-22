@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Al Futuh">
+  <!-- Crescent Moon on Top -->
+  <path d="M60 6c-1.2 0-2.4.3-3.4.9 3.2 2 5.4 5.5 5.4 9.6s-2.2 7.6-5.4 9.6c1 .6 2.2.9 3.4.9 6.1 0 11-4.9 11-11S66.1 6 60 6z" fill="#D4AF37"/>
+  
+  <!-- Outer Mosque Arch / Dome -->
+  <path d="M60 22C46.5 32 30 46 30 72c0 22 13 38 30 42 17-4 30-20 30-42 0-26-16.5-40-30-50z" fill="none" stroke="#155E4B" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Inner Mosque Arch -->
+  <path d="M60 40c-8 7-18 16-18 32 0 14 8 24 18 28 10-4 18-14 18-28 0-16-10-25-18-32z" fill="#155E4B"/>
+  
+  <!-- Base Ground Line -->
+  <path d="M22 114h76" stroke="#155E4B" stroke-width="5" stroke-linecap="round"/>
+</svg>

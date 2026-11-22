@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="100%" height="100%" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <!-- Sky Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A7C7E7"/>
+      <stop offset="45%" stop-color="#D4E6F1"/>
+      <stop offset="75%" stop-color="#EAF2F8"/>
+      <stop offset="100%" stop-color="#FDFEFE"/>
+    </linearGradient>
+
+    <!-- Sun Glow -->
+    <radialGradient id="sunGlow" cx="20%" cy="30%" r="45%">
+      <stop offset="0%" stop-color="#FFFDF0" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#FFF8DC" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FFF8DC" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Dome Metallic Blue/Grey -->
+    <linearGradient id="domeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3A5364"/>
+      <stop offset="35%" stop-color="#516F84"/>
+      <stop offset="70%" stop-color="#7392A7"/>
+      <stop offset="100%" stop-color="#34495E"/>
+    </linearGradient>
+
+    <!-- Small Dome Gradient -->
+    <linearGradient id="smallDomeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#415B6D"/>
+      <stop offset="50%" stop-color="#658399"/>
+      <stop offset="100%" stop-color="#354B5B"/>
+    </linearGradient>
+
+    <!-- Stone Wall Base -->
+    <linearGradient id="stoneLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#F6F3EE"/>
+      <stop offset="100%" stop-color="#E7E1D7"/>
+    </linearGradient>
+
+    <linearGradient id="stoneShadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#DCD4C7"/>
+      <stop offset="100%" stop-color="#C7BBA8"/>
+    </linearGradient>
+
+    <!-- Gold Accent -->
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F7DC6F"/>
+      <stop offset="50%" stop-color="#D4AC0D"/>
+      <stop offset="100%" stop-color="#9A7D0A"/>
+    </linearGradient>
+
+    <!-- Grass Gradient -->
+    <linearGradient id="grassGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7D9C68"/>
+      <stop offset="30%" stop-color="#62854D"/>
+      <stop offset="100%" stop-color="#466534"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sky Background -->
+  <rect width="800" height="500" fill="url(#skyGrad)"/>
+  <circle cx="160" cy="140" r="150" fill="url(#sunGlow)"/>
+
+  <!-- Distant Soft Trees / Garden Backdrop -->
+  <path d="M0 380 Q 80 340 180 365 T 380 350 T 560 360 T 720 345 T 800 370 L 800 500 L 0 500 Z" fill="#6A8D60" opacity="0.35"/>
+  <path d="M0 395 Q 120 365 240 380 T 480 370 T 700 380 T 800 390 L 800 500 L 0 500 Z" fill="#5A7D50" opacity="0.5"/>
+
+  <!-- MOSQUE MAIN STRUCTURE -->
+  <!-- Left Wing -->
+  <rect x="140" y="270" width="130" height="110" fill="url(#stoneLight)" stroke="#D4CBBC" stroke-width="1.5"/>
+  <rect x="140" y="260" width="130" height="12" fill="#E4DCD0"/>
+  <!-- Left Wing Arched Windows -->
+  <g fill="#2B3A42">
+    <path d="M160 310 C160 295 174 285 174 285 C174 285 188 295 188 310 L188 340 L160 340 Z"/>
+    <path d="M200 310 C200 295 214 285 214 285 C214 285 228 295 228 310 L228 340 L200 340 Z"/>
+    <path d="M240 310 C240 295 254 285 254 285 C254 285 268 295 268 310 L268 340 L240 340 Z"/>
+  </g>
+  <!-- Left Side Dome -->
+  <path d="M175 260 C175 220 205 190 205 175 C205 190 235 220 235 260 Z" fill="url(#smallDomeGrad)"/>
+  <path d="M205 175 L205 160" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="205" cy="157" r="3" fill="url(#goldGrad)"/>
+
+  <!-- Right Wing -->
+  <rect x="430" y="270" width="130" height="110" fill="url(#stoneLight)" stroke="#D4CBBC" stroke-width="1.5"/>
+  <rect x="430" y="260" width="130" height="12" fill="#E4DCD0"/>
+  <!-- Right Wing Arched Windows -->
+  <g fill="#2B3A42">
+    <path d="M445 310 C445 295 459 285 459 285 C459 285 473 295 473 310 L473 340 L445 340 Z"/>
+    <path d="M485 310 C485 295 499 285 499 285 C499 285 513 295 513 310 L513 340 L485 340 Z"/>
+    <path d="M525 310 C525 295 539 285 539 285 C539 285 553 295 553 310 L553 340 L525 340 Z"/>
+  </g>
+  <!-- Right Side Dome -->
+  <path d="M465 260 C465 220 495 190 495 175 C495 190 525 220 525 260 Z" fill="url(#smallDomeGrad)"/>
+  <path d="M495 175 L495 160" stroke="url(#goldGrad)" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="495" cy="157" r="3" fill="url(#goldGrad)"/>
+
+  <!-- Central Portico / Main Body -->
+  <rect x="250" y="240" width="200" height="145" fill="url(#stoneLight)" stroke="#CDC3B2" stroke-width="2"/>
+  <rect x="245" y="235" width="210" height="14" fill="#DDD4C5"/>
+
+  <!-- Grand Central Dome Drum -->
+  <rect x="290" y="185" width="120" height="55" fill="url(#stoneLight)" stroke="#D4CBBC"/>
+  <!-- Drum Windows -->
+  <g fill="#374A56">
+    <rect x="300" y="195" width="10" height="25" rx="5"/>
+    <rect x="320" y="195" width="10" height="25" rx="5"/>
+    <rect x="345" y="195" width="10" height="25" rx="5"/>
+    <rect x="370" y="195" width="10" height="25" rx="5"/>
+    <rect x="390" y="195" width="10" height="25" rx="5"/>
+  </g>
+
+  <!-- GRAND CENTRAL DOME -->
+  <path d="M280 185 C280 115 350 75 350 45 C350 75 420 115 420 185 Z" fill="url(#domeGrad)"/>
+  <!-- Dome Spire & Crescent -->
+  <path d="M350 45 L350 15" stroke="url(#goldGrad)" stroke-width="3.5" stroke-linecap="round"/>
+  <circle cx="350" cy="16" r="4" fill="url(#goldGrad)"/>
+  <path d="M350 6 C347 6 345 8 345 11 C347 10 350 10 352 11 C354 10 355 7 350 6 Z" fill="url(#goldGrad)"/>
+
+  <!-- MAIN ENTRANCE PORTAL & ARCHES -->
+  <path d="M310 385 L310 300 C310 270 350 255 350 255 C350 255 390 270 390 300 L390 385 Z" fill="#20303A"/>
+  <!-- Inner Portal Arch highlight -->
+  <path d="M318 385 L318 305 C318 280 350 268 350 268 C350 268 382 280 382 305 L382 385 Z" fill="none" stroke="url(#goldGrad)" stroke-width="2"/>
+  <rect x="348" y="315" width="4" height="70" fill="#152026"/>
+
+  <!-- Side Portal Arches -->
+  <path d="M265 385 L265 320 C265 300 285 290 285 290 C285 290 300 300 300 320 L300 385 Z" fill="#263844"/>
+  <path d="M400 385 L400 320 C400 300 415 290 415 290 C415 290 435 300 435 320 L435 385 Z" fill="#263844"/>
+
+  <!-- TALL RIGHT MINARET -->
+  <!-- Base -->
+  <rect x="580" y="320" width="36" height="65" fill="url(#stoneLight)" stroke="#D4CBBC"/>
+  <!-- Shaft 1 -->
+  <rect x="584" y="210" width="28" height="110" fill="url(#stoneLight)" stroke="#CDC3B2"/>
+  <!-- Balcony 1 -->
+  <rect x="578" y="200" width="40" height="10" fill="#DDD4C5" stroke="#B8AC98"/>
+  <path d="M578 200 L618 200" stroke="#333" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <!-- Shaft 2 -->
+  <rect x="587" y="110" width="22" height="90" fill="url(#stoneLight)" stroke="#CDC3B2"/>
+  <!-- Balcony 2 -->
+  <rect x="582" y="100" width="32" height="10" fill="#DDD4C5" stroke="#B8AC98"/>
+  <path d="M582 100 L614 100" stroke="#333" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <!-- Upper Turret -->
+  <rect x="590" y="60" width="16" height="40" fill="url(#stoneLight)"/>
+  <!-- Minaret Cupola Dome -->
+  <path d="M588 60 C588 38 598 25 598 15 C598 25 608 38 608 60 Z" fill="url(#smallDomeGrad)"/>
+  <path d="M598 15 L598 4" stroke="url(#goldGrad)" stroke-width="2"/>
+  <circle cx="598" cy="4" r="2" fill="url(#goldGrad)"/>
+
+  <!-- FOREGROUND GARDEN, PLAZA & TREES -->
+  <!-- Courtyard Stone Tiles -->
+  <polygon points="100,420 700,420 780,500 20,500" fill="#EAE5DC"/>
+  <line x1="100" y1="420" x2="20" y2="500" stroke="#D3CABE" stroke-width="2"/>
+  <line x1="700" y1="420" x2="780" y2="500" stroke="#D3CABE" stroke-width="2"/>
+  <line x1="250" y1="420" x2="210" y2="500" stroke="#DFD7CC" stroke-width="1.5"/>
+  <line x1="400" y1="420" x2="400" y2="500" stroke="#DFD7CC" stroke-width="1.5"/>
+  <line x1="550" y1="420" x2="590" y2="500" stroke="#DFD7CC" stroke-width="1.5"/>
+
+  <!-- Plinth Steps -->
+  <rect x="120" y="380" width="460" height="10" fill="#D6CDC0"/>
+  <rect x="100" y="390" width="500" height="12" fill="#C5BBAA"/>
+  <rect x="80" y="402" width="540" height="18" fill="#B3A795"/>
+
+  <!-- Lush Trees / Shrubs flanking Left & Right -->
+  <!-- Left Side Palm & Trees -->
+  <g>
+    <!-- Trunk -->
+    <path d="M60 440 Q 65 370 70 310" stroke="#634832" stroke-width="5" stroke-linecap="round"/>
+    <!-- Palm Fronds -->
+    <path d="M70 310 Q 30 290 10 320" stroke="#3D6A35" stroke-width="4" stroke-linecap="round"/>
+    <path d="M70 310 Q 50 260 30 270" stroke="#487A3E" stroke-width="4" stroke-linecap="round"/>
+    <path d="M70 310 Q 80 250 95 275" stroke="#3D6A35" stroke-width="4" stroke-linecap="round"/>
+    <path d="M70 310 Q 110 280 125 315" stroke="#4D8443" stroke-width="4" stroke-linecap="round"/>
+    <!-- Dense Shrubs -->
+    <circle cx="70" cy="410" r="38" fill="#3E6B34"/>
+    <circle cx="105" cy="425" r="30" fill="#4C8240"/>
+    <circle cx="45" cy="430" r="28" fill="#2F5527"/>
+  </g>
+
+  <!-- Right Side Garden & Palm -->
+  <g>
+    <!-- Trunk -->
+    <path d="M680 430 Q 670 360 660 295" stroke="#634832" stroke-width="5" stroke-linecap="round"/>
+    <!-- Palm Fronds -->
+    <path d="M660 295 Q 630 270 610 290" stroke="#487A3E" stroke-width="4" stroke-linecap="round"/>
+    <path d="M660 295 Q 650 240 640 250" stroke="#3D6A35" stroke-width="4" stroke-linecap="round"/>
+    <path d="M660 295 Q 685 240 700 260" stroke="#4D8443" stroke-width="4" stroke-linecap="round"/>
+    <path d="M660 295 Q 710 275 730 305" stroke="#3D6A35" stroke-width="4" stroke-linecap="round"/>
+    <!-- Dense Shrubs -->
+    <circle cx="650" cy="410" r="35" fill="#3D6934"/>
+    <circle cx="685" cy="418" r="32" fill="#4B803F"/>
+    <circle cx="725" cy="425" r="38" fill="#2E5326"/>
+  </g>
+
+  <!-- Soft Vignette / Ambient Light Gradient -->
+  <rect width="800" height="500" fill="url(#sunGlow)" opacity="0.4" pointer-events="none"/>
+</svg>

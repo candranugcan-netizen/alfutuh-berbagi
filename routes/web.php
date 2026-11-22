@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminPenyaluranController;
 use App\Http\Controllers\Admin\AdminProgramController;
 use App\Http\Controllers\Admin\AdminKabarController;
 use App\Http\Controllers\Admin\AdminBankController;
+use App\Http\Controllers\Admin\LaporanInternalController;
 use App\Models\Keuangan;
 use App\Models\Kegiatan;
 use App\Models\Donation;
@@ -130,6 +131,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/banks', [AdminBankController::class, 'index'])->name('banks.index');
         Route::post('/banks', [AdminBankController::class, 'store'])->name('banks.store');
         Route::delete('/banks/{id}', [AdminBankController::class, 'destroy'])->name('banks.destroy');
+
+        // Laporan Keuangan Internal Yayasan (BBHQ, TPA, Kajian, dsb. dari Donasi Operasional)
+        Route::get('/laporan-internal', [LaporanInternalController::class, 'index'])->name('laporan-internal.index');
+        Route::post('/laporan-internal', [LaporanInternalController::class, 'store'])->name('laporan-internal.store');
+        Route::delete('/laporan-internal/{id}', [LaporanInternalController::class, 'destroy'])->name('laporan-internal.destroy');
+        Route::get('/laporan-internal/export/pdf', [LaporanInternalController::class, 'exportPdf'])->name('laporan-internal.export.pdf');
+        Route::get('/laporan-internal/export/excel', [LaporanInternalController::class, 'exportExcel'])->name('laporan-internal.export.excel');
+        Route::post('/laporan-internal/kategori', [LaporanInternalController::class, 'storeKategori'])->name('laporan-internal.kategori.store');
+        Route::put('/laporan-internal/kategori/{id}', [LaporanInternalController::class, 'updateKategori'])->name('laporan-internal.kategori.update');
+        Route::delete('/laporan-internal/kategori/{id}', [LaporanInternalController::class, 'destroyKategori'])->name('laporan-internal.kategori.destroy');
     });
 
     // 3. Modul Kas Keuangan & Ekspor (Legacy & Sinkronisasi)

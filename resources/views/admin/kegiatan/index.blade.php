@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="p-3 pt-0 text-right">
-                            <form action="{{ route('kegiatan.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus kegiatan ini?')">
+                            <form action="{{ route('kegiatan.destroy', $item->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Kegiatan &quot;{{ addslashes($item->judul) }}&quot; akan dihapus permanen.')">
                                 @csrf
                                 @method('DELETE')
                                 <button class="text-xs text-red-500 font-semibold bg-red-50 px-3 py-1 rounded-lg">Hapus</button>

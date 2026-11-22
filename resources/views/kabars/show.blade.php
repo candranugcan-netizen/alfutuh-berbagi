@@ -1,10 +1,10 @@
 <x-app-layout>
-    <div class="py-4 max-w-2xl mx-auto space-y-5">
+    <div class="max-w-2xl mx-auto space-y-6">
         <div class="bg-white p-5 md:p-6 rounded-3xl border border-slate-100 shadow-sm space-y-4">
             <!-- Header Artikel -->
             <div class="space-y-2">
                 @if($kabar->program)
-                    <a href="{{ route('programs.show', $kabar->program->slug) }}" class="inline-block text-[10px] font-bold bg-teal-50 text-teal-700 px-2.5 py-0.5 rounded-md">
+                    <a href="{{ route('programs.show', $kabar->program->slug) }}" class="inline-block text-[10px] font-bold bg-[#EAF5EE] text-[#155E4B] px-3 py-1 rounded-full border border-[#D2E6DC]">
                         Program: {{ $kabar->program->nama }}
                     </a>
                 @endif
@@ -30,12 +30,12 @@
 
             @if($kabar->program)
                 <!-- Ajakan Donasi Terkait -->
-                <div class="mt-6 p-4 bg-teal-50 rounded-2xl border border-teal-100 flex items-center justify-between gap-3">
+                <div class="mt-6 p-4 bg-[#F2F7F4] rounded-2xl border border-[#D2E6DC] flex items-center justify-between gap-3">
                     <div>
-                        <p class="text-xs font-bold text-teal-800">Mari terus dukung program ini</p>
-                        <p class="text-[11px] text-teal-600">{{ $kabar->program->nama }}</p>
+                        <p class="text-xs font-bold text-[#155E4B]">Mari terus dukung program ini</p>
+                        <p class="text-[11px] text-slate-500">{{ $kabar->program->nama }}</p>
                     </div>
-                    <a href="{{ route('donations.create', $kabar->program->slug) }}" class="bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs px-4 py-2 rounded-xl transition shrink-0">
+                    <a href="{{ route('donations.create', $kabar->program->slug) }}" class="bg-[#155E4B] hover:bg-[#0E4436] text-white font-bold text-xs px-5 py-2.5 rounded-full transition shadow-sm shrink-0">
                         Donasi Sekarang
                     </a>
                 </div>
@@ -48,8 +48,8 @@
                 <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider px-1">Kabar Lainnya</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     @foreach($otherKabars as $ok)
-                        <a href="{{ route('kabars.show', $ok->slug) }}" class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm hover:border-teal-200 transition space-y-1 block">
-                            <span class="text-[10px] font-bold text-teal-600">{{ $ok->tanggal->format('d M Y') }}</span>
+                        <a href="{{ route('kabars.show', $ok->slug) }}" class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm hover:border-[#155E4B] transition space-y-1 block">
+                            <span class="text-[10px] font-bold text-[#155E4B]">{{ $ok->tanggal->format('d M Y') }}</span>
                             <h4 class="font-bold text-xs text-slate-800 line-clamp-2">{{ $ok->judul }}</h4>
                         </a>
                     @endforeach

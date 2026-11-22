@@ -149,7 +149,8 @@ class DonationController extends Controller
             $donations = Donation::with('program')
                 ->where('user_id', Auth::id())
                 ->latest()
-                ->paginate(10);
+                ->paginate(10)
+                ->withQueryString();
         }
 
         return view('donations.my-donations', compact('donations'));
@@ -167,11 +168,14 @@ class DonationController extends Controller
         $query = trim($request->input('query'));
 
         $donations = Donation::with('program')
-            ->where('kode_donasi', $query)
-            ->orWhere('no_hp', $query)
-            ->orWhere('email', $query)
+            ->where(function ($q) use ($query) {
+                $q->where('kode_donasi', $query)
+                  ->orWhere('no_hp', $query)
+                  ->orWhere('email', $query);
+            })
             ->latest()
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
 
         return view('donations.my-donations', [
             'donations' => $donations,

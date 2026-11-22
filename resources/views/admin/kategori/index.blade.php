@@ -27,8 +27,11 @@
             <div class="divide-y divide-slate-100">
                 @forelse($kategori as $item)
                     <div class="py-3 flex justify-between items-center">
-                        <span class="text-sm font-medium text-slate-800">🏷️ {{ $item->nama_kategori }}</span>
-                        <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus kategori ini?')">
+                        <span class="inline-flex items-center gap-1.5 text-sm font-medium text-slate-800">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13 13 20l-9-9V4h7l9 9Z" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.5" cy="8.5" r="1.5" stroke-width="1.7"/></svg>
+                            {{ $item->nama_kategori }}
+                        </span>
+                        <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Kategori &quot;{{ addslashes($item->nama_kategori) }}&quot; akan dihapus.')">
                             @csrf
                             @method('DELETE')
                             <button class="text-xs text-red-500 hover:text-red-700 font-semibold bg-red-50 px-2.5 py-1 rounded-lg">Hapus</button>

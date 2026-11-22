@@ -3,471 +3,499 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Al Futuh Peduli - Platform Donasi, Zakat & Sedekah Terpercaya</title>
+    <title>Al Futuh - Berbagi Kebaikan, Menguatkan Umat</title>
 
-    <!-- PWA Meta Tags -->
+    <!-- Favicon & PWA Icons -->
+    <link rel="icon" type="image/png" href="{{ asset('images/icon-192.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('images/icon-192.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-    <meta name="theme-color" content="#0D9488">
+    <meta name="theme-color" content="#155E4B">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Al Futuh">
-    <link rel="apple-touch-icon" href="{{ asset('images/icon-192.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=plus-jakarta-sans:400,500,600,700,800&family=manrope:500,600,700,800&display=swap" rel="stylesheet" />
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased bg-slate-50 text-slate-800 pb-20 md:pb-12 min-h-screen">
+<body x-data="{ mobileMenu: false }" class="font-sans antialiased bg-[#F8FAF8] text-slate-800 pb-24 md:pb-12 min-h-screen">
 
-    <!-- Top Header Style KitaBisa -->
-    <header class="bg-white sticky top-0 z-40 border-b border-slate-100 shadow-sm">
-        <div class="max-w-md md:max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+    <!-- Top Header -->
+    <header class="bg-white sticky top-0 z-40 border-b border-slate-100 shadow-xs">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
             <a href="{{ route('landing') }}" class="flex items-center gap-2.5">
-                <div class="w-10 h-10 rounded-2xl bg-teal-600 text-white flex items-center justify-center font-black text-xl shadow-md shadow-teal-600/20">
-                    🕌
-                </div>
+                <img src="{{ asset('images/icon-192.png') }}" alt="Al Futuh" class="w-10 h-10 object-contain rounded-xl">
                 <div>
-                    <h1 class="font-extrabold text-lg text-teal-700 tracking-tight leading-tight">Al Futuh<span class="text-amber-500">.</span></h1>
-                    <p class="text-[10px] font-semibold text-slate-400 -mt-0.5 uppercase tracking-wider">Donasi & Zakat Online</p>
+                    <h1 class="font-extrabold text-lg sm:text-xl text-[#155E4B] leading-none tracking-tight">Al Futuh</h1>
+                    <p class="text-[9px] font-bold text-slate-400 mt-0.5 uppercase tracking-[0.2em]">Donasi &amp; Zakat</p>
                 </div>
             </a>
 
-            <!-- Menu Kanan -->
-            <div class="flex items-center gap-2">
+            <!-- Desktop Navigation Menu -->
+            <nav class="hidden md:flex items-center gap-6 text-xs font-bold text-slate-600">
+                <a href="{{ route('landing') }}" class="text-[#155E4B] hover:text-[#0E4436] transition">Beranda</a>
+                <a href="{{ route('programs.index') }}" class="hover:text-[#155E4B] transition">Program</a>
+                <a href="{{ route('donations.my-donations') }}" class="hover:text-[#155E4B] transition">Riwayat</a>
+                <a href="{{ route('transparansi') }}" class="hover:text-[#155E4B] transition">Transparansi</a>
+                <a href="{{ route('kabars.index') }}" class="hover:text-[#155E4B] transition">Kabar</a>
+            </nav>
+
+            <!-- Right Actions (Desktop) -->
+            <div class="hidden md:flex items-center gap-3">
+                @php
+                    $firstProg = $featuredPrograms->first() ?? $programs->first();
+                    $donateUrl = $firstProg ? route('programs.show', $firstProg->slug) : route('programs.index');
+                @endphp
+                <a href="{{ $donateUrl }}" class="inline-flex items-center gap-1.5 bg-[#155E4B] hover:bg-[#0E4436] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm active:scale-95 transition">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Donasi Sekarang</span>
+                </a>
+
                 @auth
                     @if(Auth::user()->isAdmin())
-                        <a href="{{ route('dashboard') }}" class="text-xs font-bold bg-teal-600 text-white px-3.5 py-1.5 rounded-full shadow-sm hover:bg-teal-700 transition">
-                            Admin Portal
+                        <a href="{{ route('dashboard') }}" class="text-xs font-bold bg-[#EAF5EE] text-[#155E4B] px-3.5 py-2 rounded-full border border-[#D2E6DC] hover:bg-[#DCEEE5] transition">
+                            Admin
                         </a>
                     @else
-                        <a href="{{ route('donations.my-donations') }}" class="text-xs font-bold bg-teal-50 text-teal-700 px-3.5 py-1.5 rounded-full border border-teal-100 hover:bg-teal-100 transition">
-                            Donasi Saya
+                        <a href="{{ route('profile.edit') }}" class="text-xs font-bold text-slate-700 hover:text-[#155E4B] px-2 py-1 transition">
+                            {{ Str::limit(Auth::user()->name, 12) }}
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="text-xs font-bold text-slate-600 hover:text-teal-600 px-3 py-1.5 transition">
+                    <a href="{{ route('login') }}" class="text-xs font-bold text-slate-600 hover:text-[#155E4B] px-2 py-1 transition">
                         Masuk
                     </a>
-                    <a href="{{ route('register') }}" class="text-xs font-bold bg-teal-600 text-white px-3.5 py-1.5 rounded-full shadow-sm hover:bg-teal-700 active:scale-95 transition">
-                        Daftar
-                    </a>
+                @endauth
+            </div>
+
+            <!-- Mobile Hamburger Menu Button -->
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden p-2 text-slate-700 hover:text-[#155E4B] rounded-xl focus:outline-none" aria-label="Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!mobileMenu" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    <path x-show="mobileMenu" style="display: none;" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Drawer Navigation Dropdown -->
+        <div x-show="mobileMenu" x-cloak @click.away="mobileMenu = false" class="md:hidden bg-white border-b border-slate-100 px-4 py-3 space-y-2 shadow-lg">
+            <a href="{{ route('landing') }}" class="block px-3 py-2 rounded-xl text-xs font-bold text-[#155E4B] bg-[#F2F7F4]">Beranda</a>
+            <a href="{{ route('programs.index') }}" class="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50">Program Donasi</a>
+            <a href="{{ route('donations.my-donations') }}" class="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50">Riwayat Donasi</a>
+            <a href="{{ route('transparansi') }}" class="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50">Laporan Transparansi</a>
+            <a href="{{ route('kabars.index') }}" class="block px-3 py-2 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50">Kabar Terbaru</a>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                @auth
+                    @if(Auth::user()->isAdmin())
+                        <a href="{{ route('dashboard') }}" class="text-xs font-bold bg-[#155E4B] text-white px-4 py-2 rounded-full">Dashboard Admin</a>
+                    @else
+                        <a href="{{ route('profile.edit') }}" class="text-xs font-bold text-[#155E4B]">Akun: {{ Auth::user()->name }}</a>
+                    @endif
+                @else
+                    <a href="{{ route('login') }}" class="text-xs font-bold text-slate-600">Masuk</a>
+                    <a href="{{ route('register') }}" class="text-xs font-bold bg-[#155E4B] text-white px-4 py-1.5 rounded-full">Daftar</a>
                 @endauth
             </div>
         </div>
     </header>
 
-    <main class="max-w-md md:max-w-4xl mx-auto px-4 pt-4 space-y-6">
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-6 space-y-6">
 
-        <!-- Banner PWA Install (Otomatis tampil di browser pendukung) -->
-        <div id="pwa-install-banner" class="hidden bg-gradient-to-r from-teal-700 to-teal-800 text-white p-3.5 rounded-2xl shadow-md flex items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5">
-                <span class="text-2xl">📱</span>
-                <div>
-                    <p class="text-xs font-bold">Pasang Aplikasi Al Futuh</p>
-                    <p class="text-[10px] text-teal-100">Akses cepat & donasi lebih mudah dari layar HP Anda</p>
+        <!-- HERO SECTION -->
+        @php
+            $featured = $featuredPrograms->first() ?? $programs->first();
+            $heroUrl = $featured ? route('programs.show', $featured->slug) : route('programs.index');
+            $heroDonateUrl = $heroUrl;
+        @endphp
+
+        <!-- DESKTOP HERO (Laptop View) -->
+        <div class="hidden md:grid md:grid-cols-12 gap-8 bg-white rounded-3xl p-8 lg:p-10 border border-slate-100 shadow-sm items-center">
+            <div class="md:col-span-6 space-y-5">
+                <div class="inline-flex items-center gap-2 bg-[#F2F7F4] text-[#155E4B] px-3.5 py-1 rounded-full text-xs font-bold border border-[#D2E6DC]">
+                    <span class="w-2 h-2 rounded-full bg-[#155E4B]"></span>
+                    Al Futuh Berbagi
+                </div>
+                <h2 class="text-3xl lg:text-4xl font-extrabold text-[#155E4B] leading-tight tracking-tight">
+                    Berbagi Kebaikan,<br>Menguatkan Umat
+                </h2>
+                <p class="text-sm text-slate-500 leading-relaxed max-w-md">
+                    Salurkan donasi terbaik melalui Al Futuh untuk kemaslahatan bersama, dakwah, pendidikan santri, dan perawatan fasilitas ibadah.
+                </p>
+                <div class="pt-2 flex items-center gap-3">
+                    <a href="{{ $heroDonateUrl }}" class="inline-flex items-center gap-2 bg-[#155E4B] hover:bg-[#0E4436] text-white font-bold text-sm px-7 py-3.5 rounded-full shadow-lg shadow-[#155E4B]/20 transition active:scale-95">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Donasi Sekarang</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                    <a href="{{ $heroUrl }}" class="text-xs font-bold text-slate-600 hover:text-[#155E4B] px-5 py-3.5 rounded-full hover:bg-slate-50 transition border border-transparent hover:border-slate-200">
+                        Detail Program →
+                    </a>
                 </div>
             </div>
-            <button id="pwa-install-btn" class="bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-[11px] px-3 py-1.5 rounded-xl shadow-sm active:scale-95 transition">
-                Pasang
-            </button>
+            <div class="md:col-span-6">
+                <div class="relative rounded-3xl overflow-hidden shadow-md aspect-video border border-slate-100">
+                    @if($featured && $featured->banner)
+                        <img src="{{ asset('storage/' . $featured->banner) }}" alt="Al Futuh" class="w-full h-full object-cover">
+                    @else
+                        <img src="{{ asset('images/mosque-hero.svg') }}" alt="Masjid Al Futuh" class="w-full h-full object-cover">
+                    @endif
+                </div>
+            </div>
         </div>
 
-        <!-- HERO / DONASI UNGGULAN (Featured Campaign KitaBisa Style) -->
-        @if($featuredPrograms->isNotEmpty())
-            @php $featured = $featuredPrograms->first(); @endphp
-            <div class="relative bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
-                <!-- Badge Unggulan -->
-                <div class="relative h-48 md:h-64 w-full bg-gradient-to-br from-teal-600 to-teal-800 flex items-end">
-                    @if($featured->banner)
-                        <img src="{{ asset('storage/' . $featured->banner) }}" alt="{{ $featured->nama }}" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
-                    @else
-                        <div class="absolute inset-0 bg-gradient-to-br from-teal-700 via-teal-800 to-slate-900 opacity-95"></div>
-                        <div class="absolute right-4 top-4 text-7xl opacity-20 select-none">
-                            {{ $featured->icon ?: '🤲' }}
-                        </div>
-                    @endif
+        <!-- MOBILE HERO (Screen 1 View) -->
+        <div class="md:hidden bg-white rounded-3xl overflow-hidden border border-slate-100 shadow-sm">
+            <div class="relative h-48 sm:h-56 w-full bg-slate-100 overflow-hidden">
+                @if($featured && $featured->banner)
+                    <img src="{{ asset('storage/' . $featured->banner) }}" alt="{{ $featured->nama }}" class="w-full h-full object-cover">
+                @else
+                    <img src="{{ asset('images/mosque-hero.svg') }}" alt="Masjid Al Futuh" class="w-full h-full object-cover">
+                @endif
 
-                    <div class="relative z-10 p-5 text-white w-full space-y-1.5">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-amber-500 text-white text-[10px] font-extrabold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
-                                ⭐ Donasi Unggulan
-                            </span>
-                            <span class="bg-white/20 backdrop-blur-md text-white text-[10px] font-semibold px-2 py-0.5 rounded-full">
-                                {{ $featured->kategori }}
-                            </span>
-                        </div>
-                        <h2 class="text-lg md:text-xl font-extrabold leading-snug line-clamp-2">
-                            {{ $featured->nama }}
-                        </h2>
-                    </div>
-                </div>
-
-                <!-- Progress & Action Card -->
-                <div class="p-5 space-y-4">
-                    <p class="text-xs text-slate-500 line-clamp-2 leading-relaxed">
-                        {{ $featured->ringkasan ?: Str::limit($featured->deskripsi, 120) }}
-                    </p>
-
-                    <!-- Bar Progress -->
-                    <div class="space-y-1.5">
-                        <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                            <div class="bg-gradient-to-r from-teal-500 to-teal-600 h-2.5 rounded-full transition-all duration-500" style="width: {{ $featured->persentase }}%"></div>
-                        </div>
-                        <div class="flex justify-between items-center text-xs">
-                            <div>
-                                <span class="text-slate-400 text-[10px] block">Terkumpul</span>
-                                <span class="font-extrabold text-teal-700 text-sm">Rp {{ number_format($featured->dana_terkumpul, 0, ',', '.') }}</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="text-slate-400 text-[10px] block">Target</span>
-                                <span class="font-bold text-slate-700 text-xs">
-                                    @if($featured->target_dana > 0)
-                                        Rp {{ number_format($featured->target_dana, 0, ',', '.') }}
-                                    @else
-                                        Berkelanjutan
-                                    @endif
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Footer Call to Action -->
-                    <div class="pt-2 flex items-center justify-between gap-3">
-                        <div class="text-[11px] text-slate-500">
-                            <span class="font-bold text-slate-700">{{ $featured->total_donatur }}</span> Donasi Terkumpul
-                        </div>
-                        <a href="{{ route('donations.create', $featured->slug) }}" class="bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-md shadow-amber-500/20 active:scale-95 transition flex items-center gap-1.5">
-                            <span>Donasi Sekarang</span>
-                            <span>→</span>
-                        </a>
-                    </div>
+                <div class="absolute -bottom-1 left-0 right-0 leading-none">
+                    <svg viewBox="0 0 500 40" preserveAspectRatio="none" class="w-full h-8 text-white fill-current">
+                        <path d="M0,0 C150,38 350,38 500,0 L500,40 L0,40 Z"></path>
+                    </svg>
                 </div>
             </div>
-        @endif
 
-        <!-- MODEL GRID MENU DONASI (KitaBisa Style Icon Grid) -->
-        <div class="bg-white p-4 md:p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-            <div class="flex justify-between items-center px-1">
-                <h3 class="text-xs md:text-sm font-extrabold text-slate-800 tracking-tight flex items-center gap-1.5">
-                    <span>✨</span> Pilihan Kategori Donasi
+            <div class="p-5 pt-2 text-center space-y-3">
+                <h2 class="text-xl sm:text-2xl font-extrabold text-[#155E4B] leading-tight tracking-tight">
+                    Berbagi Kebaikan,<br>Menguatkan Umat
+                </h2>
+                <p class="text-xs text-slate-500">
+                    Salurkan donasi terbaik melalui Al Futuh
+                </p>
+
+                <div class="pt-2">
+                    <a href="{{ $heroDonateUrl }}" class="inline-flex items-center justify-center gap-2 w-full bg-[#155E4B] hover:bg-[#0E4436] text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg shadow-[#155E4B]/20 active:scale-95 transition">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Donasi Sekarang</span>
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 CATEGORY CARDS (Masjid, Pendidikan, Sosial, Kemanusiaan) -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <!-- 1. Masjid -->
+            <a href="{{ route('programs.index', ['kategori' => 'Masjid']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
+                    <x-program-icon category="masjid" class="w-7 h-7" />
+                </div>
+                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Masjid</span>
+            </a>
+
+            <!-- 2. Pendidikan -->
+            <a href="{{ route('programs.index', ['kategori' => 'Pendidikan']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
+                    <x-program-icon category="pendidikan" class="w-7 h-7" />
+                </div>
+                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Pendidikan</span>
+            </a>
+
+            <!-- 3. Sosial -->
+            <a href="{{ route('programs.index', ['kategori' => 'Sosial']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
+                    <x-program-icon category="sosial" class="w-7 h-7" />
+                </div>
+                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Sosial</span>
+            </a>
+
+            <!-- 4. Kemanusiaan -->
+            <a href="{{ route('programs.index', ['kategori' => 'Kemanusiaan']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
+                    <x-program-icon category="kemanusiaan" class="w-7 h-7" />
+                </div>
+                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Kemanusiaan</span>
+            </a>
+        </div>
+
+        <!-- PROGRAM UNGGULAN SECTION -->
+        <div class="space-y-3.5">
+            <div class="flex items-center justify-between px-1">
+                <h3 class="text-sm font-extrabold text-slate-800 tracking-tight">
+                    Program Unggulan
                 </h3>
-                <a href="{{ route('programs.index') }}" class="text-[11px] font-bold text-teal-600 hover:text-teal-700">
-                    Lihat Semua →
+                <a href="{{ route('programs.index') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436] inline-flex items-center gap-1">
+                    <span>Lihat Semua</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
             </div>
 
-            <!-- Grid 3x2 di Mobile / 6 di Desktop -->
-            <div class="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-1">
-                @foreach($programs->take(6) as $prog)
-                    <a href="{{ route('programs.show', $prog->slug) }}" class="group flex flex-col items-center text-center p-2.5 rounded-2xl hover:bg-teal-50/60 border border-transparent hover:border-teal-100 transition duration-200">
-                        <div class="w-13 h-13 rounded-2xl bg-teal-50 text-teal-700 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:bg-teal-600 group-hover:text-white transition shadow-sm mb-1.5">
-                            {{ $prog->icon ?: '🤲' }}
+            <!-- Featured Campaign Card -->
+            @if($featured)
+                <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition">
+                    <div class="flex flex-col sm:flex-row gap-4 items-center">
+                        <div class="w-full sm:w-36 h-36 sm:h-32 rounded-2xl bg-slate-100 overflow-hidden shrink-0 relative">
+                            @if($featured->banner)
+                                <img src="{{ asset('storage/' . $featured->banner) }}" alt="{{ $featured->nama }}" class="w-full h-full object-cover">
+                            @else
+                                <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $featured->nama }}" class="w-full h-full object-cover">
+                            @endif
                         </div>
-                        <span class="text-[11px] font-bold text-slate-700 leading-tight group-hover:text-teal-700 line-clamp-2">
-                            {{ $prog->nama }}
-                        </span>
-                    </a>
+
+                        <div class="flex-1 min-w-0 space-y-2 w-full">
+                            <a href="{{ route('programs.show', $featured->slug) }}" class="font-extrabold text-sm sm:text-base text-slate-800 hover:text-[#155E4B] transition line-clamp-2 leading-snug">
+                                {{ $featured->nama }}
+                            </a>
+
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div class="bg-[#155E4B] h-2 rounded-full" style="width: {{ $featured->persentase }}%"></div>
+                            </div>
+
+                            <p class="text-xs text-slate-500 flex items-center gap-1.5 flex-wrap">
+                                <span>Rp {{ number_format($featured->dana_terkumpul, 0, ',', '.') }}</span>
+                                <span>/</span>
+                                @if($featured->target_dana > 0)
+                                    <span>Target Rp {{ number_format($featured->target_dana, 0, ',', '.') }}</span>
+                                @else
+                                    <span class="inline-flex items-center gap-1 text-[#155E4B] font-bold">
+                                        <x-infinity-icon class="w-3.5 h-3.5 text-[#155E4B]" />
+                                        <span>Target Tidak Terbatas</span>
+                                    </span>
+                                @endif
+                            </p>
+
+                            <div class="pt-1">
+                                <a href="{{ route('programs.show', $featured->slug) }}" class="inline-block bg-[#155E4B] hover:bg-[#0E4436] text-white text-xs font-bold px-5 py-2 rounded-full shadow-sm active:scale-95 transition">
+                                    Lihat Program
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            <!-- Grid of other active programs -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 pt-1">
+                @foreach($programs->skip(1)->take(3) as $item)
+                    <div class="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
+                        <div>
+                            <div class="h-40 w-full bg-slate-100 relative overflow-hidden">
+                                @if($item->banner)
+                                    <img src="{{ asset('storage/' . $item->banner) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                @else
+                                    <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
+                                @endif
+                                <div class="absolute top-3 left-3">
+                                    <span class="text-[10px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-3 py-0.5 rounded-full shadow-sm">
+                                        {{ $item->kategori }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="p-4 space-y-2.5">
+                                <a href="{{ route('programs.show', $item->slug) }}" class="font-extrabold text-xs sm:text-sm text-slate-800 line-clamp-2 hover:text-[#155E4B] transition leading-snug">
+                                    {{ $item->nama }}
+                                </a>
+
+                                <div class="space-y-1">
+                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                        <div class="bg-[#155E4B] h-1.5 rounded-full" style="width: {{ $item->persentase }}%"></div>
+                                    </div>
+                                    <div class="flex justify-between items-center text-[10px] text-slate-500">
+                                        <span>Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
+                                        @if($item->target_dana > 0)
+                                            <span>Target: Rp {{ number_format($item->target_dana, 0, ',', '.') }}</span>
+                                        @else
+                                            <span class="inline-flex items-center gap-1 font-bold text-[#155E4B]">
+                                                <span>Target:</span>
+                                                <x-infinity-icon class="w-3 h-3 text-[#155E4B]" />
+                                                <span>Tak Terbatas</span>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 pt-0">
+                            <a href="{{ route('programs.show', $item->slug) }}" class="block w-full text-center bg-[#F2F7F4] hover:bg-[#155E4B] text-[#155E4B] hover:text-white font-bold text-xs py-2.5 rounded-full transition active:scale-95">
+                                Lihat Program
+                            </a>
+                        </div>
+                    </div>
                 @endforeach
             </div>
         </div>
 
-        <!-- TRANSPARANSI KAS & AMANAH DONATUR (Live Counter) -->
-        <div class="bg-gradient-to-br from-teal-700 to-teal-900 rounded-3xl p-5 text-white shadow-lg shadow-teal-900/10 space-y-3">
+        <!-- TRANSPARANSI KAS & AMANAH DONATUR -->
+        <div class="bg-[#155E4B] rounded-3xl p-5 sm:p-7 text-white shadow-sm space-y-4">
             <div class="flex justify-between items-center">
                 <div class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
                     <h3 class="text-xs font-bold uppercase tracking-wider text-teal-200">Transparansi Dana Al Futuh</h3>
                 </div>
-                <a href="{{ route('transparansi') }}" class="text-[11px] font-bold text-amber-300 hover:text-amber-200 underline">
+                <a href="{{ route('transparansi') }}" class="text-[11px] font-bold text-[#FFF] hover:underline">
                     Detail Penyaluran →
                 </a>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-1">
-                <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10 col-span-2 sm:col-span-1">
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10 col-span-2 sm:col-span-1">
                     <p class="text-[10px] text-teal-200 font-medium">Total Donasi Terverifikasi</p>
-                    <p class="text-lg font-black text-white mt-0.5">Rp {{ number_format($totalDonasiMasuk, 0, ',', '.') }}</p>
+                    <p class="text-lg sm:text-xl font-black text-white mt-0.5">Rp {{ number_format($totalDonasiMasuk, 0, ',', '.') }}</p>
                     <p class="text-[9px] text-teal-300 mt-1">{{ $totalDonaturCount }} donatur berpartisipasi</p>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
                     <p class="text-[10px] text-teal-200 font-medium">Total Disalurkan</p>
-                    <p class="text-base font-black text-amber-300 mt-0.5">Rp {{ number_format($totalPenyaluran, 0, ',', '.') }}</p>
-                    <p class="text-[9px] text-teal-300 mt-1">Amanah telah disalurkan</p>
+                    <p class="text-base sm:text-lg font-black text-[#FFF] mt-0.5">Rp {{ number_format($totalPenyaluran, 0, ',', '.') }}</p>
+                    <p class="text-[9px] text-teal-300 mt-1">Amanah telah tersalur</p>
                 </div>
-                <div class="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/10">
+                <div class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/10">
                     <p class="text-[10px] text-teal-200 font-medium">Saldo Kas Amanah</p>
-                    <p class="text-base font-black text-emerald-300 mt-0.5">Rp {{ number_format(max(0, $totalDonasiMasuk - $totalPenyaluran), 0, ',', '.') }}</p>
+                    <p class="text-base sm:text-lg font-black text-[#FFF] mt-0.5">Rp {{ number_format(max(0, $totalDonasiMasuk - $totalPenyaluran), 0, ',', '.') }}</p>
                     <p class="text-[9px] text-teal-300 mt-1">Siap disalurkan</p>
                 </div>
             </div>
         </div>
 
-        <!-- DAFTAR PROGRAM DONASI LENGKAP -->
-        <div class="space-y-3 pt-2">
-            <div class="flex items-center justify-between px-1">
-                <h3 class="text-sm font-extrabold text-slate-800 tracking-tight">
-                    Program Kebaikan Al Futuh
-                </h3>
-                <span class="text-xs text-slate-400 font-medium">{{ $programs->count() }} Program Aktif</span>
-            </div>
-
-            <!-- Filter Kategori Tabs -->
-            <div class="flex gap-1.5 overflow-x-auto pb-2 scrollbar-none text-xs">
-                <a href="{{ route('landing') }}" class="px-3.5 py-1.5 rounded-full whitespace-nowrap font-bold transition {{ $kategoriAktif === 'Semua' ? 'bg-teal-600 text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-teal-300' }}">
-                    Semua
-                </a>
-                @foreach($categories as $kat)
-                    <a href="{{ route('landing', ['kategori' => $kat]) }}" class="px-3.5 py-1.5 rounded-full whitespace-nowrap font-bold transition {{ $kategoriAktif === $kat ? 'bg-teal-600 text-white shadow-sm' : 'bg-white text-slate-600 border border-slate-200 hover:border-teal-300' }}">
-                        {{ $kat }}
-                    </a>
-                @endforeach
-            </div>
-
-            <!-- Grid Kartu Donasi (Model KitaBisa Card) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                @forelse($programs as $item)
-                    <div class="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between">
-                        <div>
-                            <!-- Header Foto / Ilustrasi Program -->
-                            <div class="h-40 w-full bg-slate-100 relative overflow-hidden">
-                                @if($item->banner)
-                                    <img src="{{ asset('storage/' . $item->banner) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full bg-gradient-to-br from-teal-500/90 to-teal-700 flex items-center justify-center text-4xl text-white">
-                                        {{ $item->icon ?: '🤲' }}
-                                    </div>
-                                @endif
-                                <div class="absolute top-2.5 left-2.5">
-                                    <span class="text-[10px] font-bold bg-white/90 backdrop-blur-md text-teal-700 px-2.5 py-0.5 rounded-md shadow-sm">
-                                        {{ $item->kategori }}
-                                    </span>
-                                </div>
-                                @if($item->is_featured)
-                                    <div class="absolute top-2.5 right-2.5">
-                                        <span class="text-[10px] font-extrabold bg-amber-500 text-white px-2 py-0.5 rounded-md shadow-sm">
-                                            ⭐ Pilihan
-                                        </span>
-                                    </div>
-                                @endif
-                            </div>
-
-                            <!-- Konten Card -->
-                            <div class="p-4 space-y-2.5">
-                                <a href="{{ route('programs.show', $item->slug) }}" class="font-extrabold text-sm md:text-base text-slate-800 leading-snug line-clamp-2 hover:text-teal-600 transition">
-                                    {{ $item->nama }}
-                                </a>
-
-                                <div class="flex items-center gap-1.5 text-[11px] text-slate-500">
-                                    <span>🏛️ Yayasan Al Futuh</span>
-                                    <span class="text-teal-600 font-bold" title="Terverifikasi">✓</span>
-                                </div>
-
-                                <!-- Progress Bar -->
-                                <div class="space-y-1 pt-1">
-                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
-                                        <div class="bg-teal-500 h-2 rounded-full" style="width: {{ $item->persentase }}%"></div>
-                                    </div>
-                                    <div class="flex justify-between items-center text-[11px]">
-                                        <div>
-                                            <span class="text-slate-400 block text-[9px]">Terkumpul</span>
-                                            <span class="font-black text-teal-700">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-slate-400 block text-[9px]">
-                                                {{ $item->tenggat_waktu ? 'Sisa Waktu' : 'Status' }}
-                                            </span>
-                                            <span class="font-semibold text-slate-600">
-                                                {{ $item->sisa_hari !== null ? $item->sisa_hari . ' hari' : 'Berkelanjutan' }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Tombol Donasi Cepat -->
-                        <div class="p-4 pt-0">
-                            <a href="{{ route('donations.create', $item->slug) }}" class="block w-full text-center bg-teal-50 hover:bg-teal-600 text-teal-700 hover:text-white font-bold text-xs py-2 rounded-xl transition duration-150 active:scale-95">
-                                Donasi Sekarang
-                            </a>
-                        </div>
-                    </div>
-                @empty
-                    <div class="bg-white p-8 text-center rounded-2xl border border-slate-100 col-span-2">
-                        <p class="text-xs text-slate-400">Belum ada program untuk kategori ini.</p>
-                    </div>
-                @endforelse
-            </div>
-        </div>
-
-        <!-- KABAR TERBARU & CERITA PENYALURAN -->
-        <div class="space-y-3 pt-4">
-            <div class="flex items-center justify-between px-1">
-                <div>
-                    <h3 class="text-sm font-extrabold text-slate-800 tracking-tight">Kabar Terbaru & Penyaluran</h3>
-                    <p class="text-[11px] text-slate-400">Cerita nyata manfaat kebaikan dari donatur</p>
-                </div>
-                <a href="{{ route('kabars.index') }}" class="text-xs font-bold text-teal-600 hover:text-teal-700">
-                    Lihat Semua →
-                </a>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                @forelse($kabars as $kabar)
-                    <a href="{{ route('kabars.show', $kabar->slug) }}" class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm hover:border-teal-200 transition flex gap-3.5">
-                        <div class="w-20 h-20 rounded-xl bg-slate-100 shrink-0 overflow-hidden relative">
-                            @if($kabar->foto)
-                                <img src="{{ asset('storage/' . $kabar->foto) }}" alt="{{ $kabar->judul }}" class="w-full h-full object-cover">
-                            @else
-                                <div class="w-full h-full bg-teal-50 text-teal-600 flex items-center justify-center text-xl">
-                                    📰
-                                </div>
-                            @endif
-                        </div>
-                        <div class="space-y-1">
-                            <span class="text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded-md">
-                                {{ \Carbon\Carbon::parse($kabar->tanggal)->format('d M Y') }}
-                            </span>
-                            <h4 class="font-bold text-xs md:text-sm text-slate-800 line-clamp-2 leading-snug">
-                                {{ $kabar->judul }}
-                            </h4>
-                            <p class="text-[11px] text-slate-400 line-clamp-1">
-                                {{ $kabar->ringkasan ?: Str::limit(strip_tags($kabar->konten), 60) }}
-                            </p>
-                        </div>
-                    </a>
-                @empty
-                    <div class="bg-white p-6 text-center rounded-2xl border border-slate-100 col-span-2">
-                        <p class="text-xs text-slate-400">Belum ada kabar terbaru yang diterbitkan.</p>
-                    </div>
-                @endforelse
-            </div>
-        </div>
-
-        <!-- DOA & DUKUNGAN DONATUR TERBARU -->
+        <!-- DOA & DUKUNGAN DONATUR -->
         @if($recentDonations->isNotEmpty())
-            <div class="bg-white p-4 md:p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3">
+            <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3.5">
                 <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>🤲</span> Doa-Doa Donatur
+                    <svg class="w-4 h-4 text-[#155E4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Doa &amp; Dukungan Donatur</span>
                 </h3>
                 <div class="space-y-2.5">
                     @foreach($recentDonations as $d)
-                        <div class="p-3 bg-slate-50/70 rounded-2xl border border-slate-100 space-y-1">
+                        <div class="p-3.5 bg-[#F8FAF8] rounded-2xl border border-slate-100 space-y-1">
                             <div class="flex items-center justify-between text-[11px]">
                                 <span class="font-bold text-slate-800">{{ $d->displayName }}</span>
                                 <span class="text-[10px] text-slate-400">{{ $d->created_at->diffForHumans() }}</span>
                             </div>
                             <p class="text-xs text-slate-600 italic">"{{ $d->doa }}"</p>
-                            <p class="text-[9px] font-medium text-teal-600">Berdonasi di {{ $d->program->nama }}</p>
+                            <p class="text-[9px] font-medium text-[#155E4B]">Berdonasi di {{ $d->program->nama }}</p>
                         </div>
                     @endforeach
                 </div>
             </div>
         @endif
 
-        <!-- CARA BERDONASI (Langkah Mudah) -->
-        <div class="bg-teal-50/60 p-5 rounded-3xl border border-teal-100 space-y-3 text-center">
-            <h4 class="text-xs font-extrabold text-teal-800 uppercase tracking-wider">Alur Donasi Amanah</h4>
-            <div class="grid grid-cols-4 gap-2 text-center text-[10px] text-slate-600">
-                <div class="space-y-1">
-                    <div class="w-8 h-8 rounded-full bg-white text-teal-700 font-black text-xs flex items-center justify-center mx-auto shadow-sm">1</div>
-                    <span class="font-bold block">Pilih Program</span>
-                </div>
-                <div class="space-y-1">
-                    <div class="w-8 h-8 rounded-full bg-white text-teal-700 font-black text-xs flex items-center justify-center mx-auto shadow-sm">2</div>
-                    <span class="font-bold block">Transfer Bank</span>
-                </div>
-                <div class="space-y-1">
-                    <div class="w-8 h-8 rounded-full bg-white text-teal-700 font-black text-xs flex items-center justify-center mx-auto shadow-sm">3</div>
-                    <span class="font-bold block">Verifikasi</span>
-                </div>
-                <div class="space-y-1">
-                    <div class="w-8 h-8 rounded-full bg-white text-teal-700 font-black text-xs flex items-center justify-center mx-auto shadow-sm">4</div>
-                    <span class="font-bold block">Tersalurkan</span>
-                </div>
+        <!-- FEATURE BADGES -->
+        <div class="pt-4 space-y-4 text-center">
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 text-xs">
+                <span class="inline-flex items-center gap-1.5 bg-[#F2F7F4] text-[#155E4B] border border-[#D2E6DC] px-4 py-1.5 rounded-full font-bold">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Amanah &amp; Transparan
+                </span>
+                <span class="inline-flex items-center gap-1.5 bg-[#F2F7F4] text-[#155E4B] border border-[#D2E6DC] px-4 py-1.5 rounded-full font-bold">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Akses Mudah di Semua Perangkat
+                </span>
+               
+                <span class="inline-flex items-center gap-1.5 bg-[#F2F7F4] text-[#155E4B] border border-[#D2E6DC] px-4 py-1.5 rounded-full font-bold">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Mari Berbagi untuk Kebaikan
+                </span>
             </div>
+
+            
         </div>
 
     </main>
 
     <!-- Footer -->
-    <footer class="max-w-md md:max-w-4xl mx-auto px-4 mt-10 text-center text-xs text-slate-400 space-y-2 border-t border-slate-100 pt-6">
-        <p class="font-bold text-slate-600">Yayasan Al Futuh Indonesia</p>
-        <p class="text-[11px]">Menebar manfaat melalui donasi operasional dakwah, qurban, santunan yatim, zakat, beasiswa, dan sedekah listrik masjid.</p>
-        <p class="text-[10px] text-slate-400">© {{ date('Y') }} Al Futuh Peduli PWA. All rights reserved.</p>
+    <footer class="max-w-5xl mx-auto px-4 sm:px-6 mt-10 text-center text-xs text-slate-400 space-y-2 border-t border-slate-100 pt-8 pb-4">
+        <p class="font-bold text-slate-700 text-sm">Al Futuh</p>
+        <p class="text-xs text-slate-500 font-semibold">Sub Yayasan dari Yayasan Tebar Dakwah Al Islamy</p>
+        <p class="text-[11px] max-w-lg mx-auto text-slate-400">Klepu, Rejosari, Semin, Gunungkidul, Daerah Istimewa Yogyakarta • Izin Kemenkumham Nomor : AHU 0006697.AH.01.04</p>
+        <p class="text-[11px] max-w-md mx-auto text-slate-400">Salurkan donasi terbaik untuk kemaslahatan bersama melalui platform digital terpercaya.</p>
+        <p class="text-[10px] text-slate-400 pt-1">© {{ date('Y') }} Al Futuh Peduli. All rights reserved.</p>
     </footer>
 
-    <!-- PWA Bottom Bar -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 flex justify-around items-center py-2 px-1 shadow-lg">
-        <a href="{{ route('landing') }}" class="flex flex-col items-center text-[10px] text-teal-600 font-extrabold">
-            <span class="text-lg">🏠</span>
-            <span>Beranda</span>
-        </a>
-        <a href="{{ route('programs.index') }}" class="flex flex-col items-center text-[10px] text-slate-400 font-medium">
-            <span class="text-lg">🤲</span>
-            <span>Program</span>
-        </a>
-        <a href="{{ route('kabars.index') }}" class="flex flex-col items-center text-[10px] text-slate-400 font-medium">
-            <span class="text-lg">📰</span>
-            <span>Kabar</span>
-        </a>
-        <a href="{{ route('donations.my-donations') }}" class="flex flex-col items-center text-[10px] text-slate-400 font-medium">
-            <span class="text-lg">📜</span>
-            <span>Donasi Saya</span>
-        </a>
-        @auth
-            @if(Auth::user()->isAdmin())
-                <a href="{{ route('dashboard') }}" class="flex flex-col items-center text-[10px] text-slate-400 font-medium">
-                    <span class="text-lg">⚙️</span>
-                    <span>Admin</span>
+    <!-- PWA MOBILE BOTTOM NAVIGATION BAR WITH BIG CENTER ACTION BUTTON -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 z-50 px-2 py-1.5 pb-[max(.5rem,env(safe-area-inset-bottom))] shadow-[0_-4px_20px_rgba(15,23,42,.08)]">
+        <div class="flex justify-between items-end relative">
+            <!-- 1. Beranda -->
+            <a href="{{ route('landing') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] text-[#155E4B] font-extrabold">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 11.5 12 4l9 7.5M5 10v10h14V10M9 20v-6h6v6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Beranda</span>
+            </a>
+
+            <!-- 2. Program -->
+            <a href="{{ route('programs.index') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] text-slate-400 font-medium hover:text-[#155E4B]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="3" width="7" height="7" rx="1.5" stroke-width="1.8"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1.5" stroke-width="1.8"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1.5" stroke-width="1.8"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1.5" stroke-width="1.8"/>
+                </svg>
+                <span>Program</span>
+            </a>
+
+            <!-- 3. TOMBOL BESAR DI TENGAH (AKSI CEPAT DONASI) -->
+            <div class="flex-1 flex justify-center -mt-6">
+                <a href="{{ route('programs.index') }}" class="group relative flex flex-col items-center focus:outline-none" aria-label="Aksi Cepat Donasi">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#1c775e] to-[#155E4B] text-white flex flex-col items-center justify-center shadow-lg shadow-[#155E4B]/40 border-[3.5px] border-white group-active:scale-95 transition-transform duration-200">
+                        <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[9px] font-black text-[#155E4B] tracking-tight mt-0.5">Donasi</span>
                 </a>
+            </div>
+
+            <!-- 4. Riwayat -->
+            <a href="{{ route('donations.my-donations') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] text-slate-400 font-medium hover:text-[#155E4B]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" stroke-width="1.8"/>
+                    <path d="M12 7v5l3 3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Riwayat</span>
+            </a>
+
+            <!-- 5. Akun -->
+            @auth
+                @if(Auth::user()->isAdmin())
+                    <a href="{{ route('dashboard') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] text-slate-400 font-medium hover:text-[#155E4B]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3" stroke-width="1.8"/>
+                            <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06A1.7 1.7 0 0 0 16.44 18a1.7 1.7 0 0 0-1 .6V19H13v-.4a1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 9 15.44a1.7 1.7 0 0 0-.6-1H8v-2.44h.4A1.7 1.7 0 0 0 9 10.56a1.7 1.7 0 0 0-.34-1.88l-.06-.06L10.02 7.2l.06.06A1.7 1.7 0 0 0 12 7a1.7 1.7 0 0 0 1-.6V6h2.44v.4A1.7 1.7 0 0 0 16.44 7a1.7 1.7 0 0 0 1.88-.34l.06-.06 1.42 1.42-.06.06A1.7 1.7 0 0 0 19.4 10a1.7 1.7 0 0 0 .6 1h.4v2.44H20a1.7 1.7 0 0 0-.6 1Z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span>Admin</span>
+                    </a>
+                @else
+                    <a href="{{ route('profile.edit') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] text-slate-400 font-medium hover:text-[#155E4B]">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <circle cx="12" cy="8" r="4" stroke-width="1.8"/>
+                            <path d="M4 20c1.5-4 4-6 8-6s6.5 2 8 6" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
+                        <span>Akun</span>
+                    </a>
+                @endif
             @else
-                <a href="{{ route('profile.edit') }}" class="flex flex-col items-center text-[10px] text-slate-400 font-medium">
-                    <span class="text-lg">👤</span>
+                <a href="{{ route('login') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] text-slate-400 font-medium hover:text-[#155E4B]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="8" r="4" stroke-width="1.8"/>
+                        <path d="M4 20c1.5-4 4-6 8-6s6.5 2 8 6" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
                     <span>Akun</span>
                 </a>
-            @endif
-        @else
-            <a href="{{ route('login') }}" class="flex flex-col items-center text-[10px] text-slate-400 font-medium">
-                <span class="text-lg">🔑</span>
-                <span>Masuk</span>
-            </a>
-        @endauth
+            @endauth
+        </div>
     </div>
 
-    <!-- Service Worker & PWA Install Prompt Script -->
+    <!-- FLOATING ACTION BUTTONS (PWA Install & WhatsApp) -->
+    <x-pwa-install-floating />
+    <x-whatsapp-floating />
+
+    <!-- POP-UP PROMOSI DONASI OPERASIONAL UMUM -->
+    <x-popup-operasional :program="$operasionalProgram ?? null" />
+
+    <!-- Service Worker Registration -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js');
-            });
-        }
-
-        // PWA Install Prompt
-        let deferredPrompt;
-        const banner = document.getElementById('pwa-install-banner');
-        const installBtn = document.getElementById('pwa-install-btn');
-
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            if (banner) {
-                banner.classList.remove('hidden');
-            }
-        });
-
-        if (installBtn) {
-            installBtn.addEventListener('click', async () => {
-                if (deferredPrompt) {
-                    deferredPrompt.prompt();
-                    const { outcome } = await deferredPrompt.userChoice;
-                    console.log(`User response to install prompt: ${outcome}`);
-                    deferredPrompt = null;
-                    if (banner) banner.classList.add('hidden');
-                }
             });
         }
     </script>
