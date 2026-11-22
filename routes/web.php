@@ -157,6 +157,61 @@ Route::middleware('auth')->group(function () {
 | Setup & Migration Helper
 |--------------------------------------------------------------------------
 */
+// Rute Khusus Storage Link
+Route::get('/storage-link-12345', function () {
+    try {
+        $storagePath = public_path('storage');
+        $target = storage_path('app/public');
+        $output = '';
+
+        // Opsi ?recreate=1 jika link lama broken atau ingin dibuat ulang
+        if (request()->has('recreate') && (file_exists($storagePath) || is_link($storagePath))) {
+            if (is_link($storagePath)) {
+                @unlink($storagePath);
+                $output .= "Symlink lama berhasil dilepas/dihapus.\n";
+            } elseif (is_dir($storagePath)) {
+                if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                    @rmdir($storagePath);
+                } else {
+                    @unlink($storagePath);
+                }
+                $output .= "Direktori link storage lama berhasil dibersihkan.\n";
+            }
+        }
+
+        // Jalankan Artisan storage:link
+        Artisan::call('storage:link');
+        $output .= Artisan::output();
+
+        // Fallback manual symlink jika artisan belum membuat link
+        if (!file_exists($storagePath) && !is_link($storagePath) && function_exists('symlink')) {
+            @symlink($target, $storagePath);
+            $output .= "Symlink manual dibuat: [{$target}] -> [{$storagePath}]\n";
+        }
+
+        $isLinked = file_exists($storagePath) || is_link($storagePath);
+        $status = $isLinked
+            ? "STATUS: Storage link AKTIF & TERHUBUNG!\nTarget : {$target}\nPublic : {$storagePath}"
+            : "STATUS: Storage link belum terhubung. Silakan coba klik tautan [Buat Ulang Link (Recreate)].";
+
+        $color = $isLinked ? '#10b981' : '#f59e0b';
+
+        return '<pre style="background:#0f172a; color:' . $color . '; padding:24px; font-family:monospace; border-radius:12px; line-height:1.6; font-size:13px;">'
+            . "=== AL FUTUH STORAGE:LINK HELPER ===\n\n"
+            . trim($output) . "\n\n"
+            . $status . "\n\n"
+            . '--------------------------------------------------\n'
+            . '<a href="/storage-link-12345?recreate=1" style="color:#38bdf8; font-weight:bold; text-decoration:underline;">[Buat Ulang Link (Recreate)]</a> | '
+            . '<a href="/storage-link" style="color:#94a3b8; text-decoration:underline;">/storage-link</a> | '
+            . '<a href="/" style="color:#f59e0b; font-weight:bold; text-decoration:underline;">← Kembali ke Beranda</a></pre>';
+    } catch (\Exception $e) {
+        return '<pre style="background:#0f172a; color:#ef4444; padding:20px; font-family:monospace; border-radius:12px;">ERROR STORAGE LINK: ' . $e->getMessage() . '</pre>';
+    }
+})->name('storage.link.helper');
+
+// Alias rute singkat untuk kemudahan akses
+Route::redirect('/storage-link', '/storage-link-12345');
+
 Route::get('/migrasi-aman-12345', function () {
     try {
         Artisan::call('migrate', ['--force' => true]);
