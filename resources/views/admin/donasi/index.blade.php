@@ -118,7 +118,7 @@
                             <!-- Tombol Aksi Verifikasi / Tolak -->
                             @if($item->status !== 'verified')
                                 <div class="flex items-center gap-2 pt-2">
-                                    <form action="{{ route('admin.donasi.verify', $item->id) }}" method="POST" class="flex-1" onsubmit="return confirmSubmit(event, { title: 'Verifikasi Donasi?', text: 'Pastikan mutasi transfer sebesar Rp {{ number_format($item->nominal + $item->kode_unik, 0, \', \', \'.\') }} sudah masuk rekening.', icon: 'question', confirmButtonText: 'Ya, Verifikasi!', confirmButtonColor: '#155E4B', danger: false })">
+                                    <form action="{{ route('admin.donasi.verify', $item->id) }}" method="POST" class="flex-1" onsubmit="return confirmSubmit(event, { title: 'Verifikasi Donasi?', text: 'Pastikan mutasi transfer sebesar Rp {{ number_format($item->nominal + $item->kode_unik, 0, ',', '.') }} sudah masuk rekening.', icon: 'question', confirmButtonText: 'Ya, Verifikasi!', confirmButtonColor: '#155E4B', danger: false })">
                                         @csrf
                                         <button type="submit" class="w-full bg-[#155E4B] hover:bg-[#0E4436] text-white font-bold text-xs py-2 rounded-full shadow-sm transition active:scale-95">
                                             Verifikasi ✓

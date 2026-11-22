@@ -135,7 +135,7 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('admin.penyaluran.destroy', $item->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Catatan penyaluran &quot;{{ addslashes($item->judul) }}&quot; senilai Rp {{ number_format($item->nominal, 0, \', \', \'.\') }} akan dihapus permanen.')">
+                        <form action="{{ route('admin.penyaluran.destroy', $item->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Catatan penyaluran &quot;{{ addslashes($item->judul) }}&quot; senilai Rp {{ number_format($item->nominal, 0, ',', '.') }} akan dihapus permanen.')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-xs text-rose-600 hover:text-rose-700 font-bold bg-rose-50 border border-rose-100 px-3.5 py-1.5 rounded-full transition active:scale-95">

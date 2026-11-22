@@ -411,7 +411,7 @@
                                 <span class="font-black text-sm {{ $tx->tipe === 'Pemasukan' ? 'text-emerald-700' : 'text-rose-600' }}">
                                     {{ $tx->tipe === 'Pemasukan' ? '+' : '-' }} Rp {{ number_format($tx->nominal, 0, ',', '.') }}
                                 </span>
-                                <form action="{{ route('admin.laporan-internal.destroy', $tx->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Hapus transaksi internal senilai Rp {{ number_format($tx->nominal, 0, \', \', \'.\') }}?')">
+                                <form action="{{ route('admin.laporan-internal.destroy', $tx->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Hapus transaksi internal senilai Rp {{ number_format($tx->nominal, 0, ',', '.') }}?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-rose-500 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 p-1.5 rounded-lg border border-rose-200 transition active:scale-95" title="Hapus Transaksi">
@@ -474,7 +474,7 @@
                                     {{ $tx->tipe === 'Pemasukan' ? '+' : '-' }} Rp {{ number_format($tx->nominal, 0, ',', '.') }}
                                 </td>
                                 <td class="py-3 px-3 text-center whitespace-nowrap">
-                                    <form action="{{ route('admin.laporan-internal.destroy', $tx->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Hapus transaksi internal senilai Rp {{ number_format($tx->nominal, 0, \', \', \'.\') }}?')">
+                                    <form action="{{ route('admin.laporan-internal.destroy', $tx->id) }}" method="POST" onsubmit="return confirmDelete(event, 'Hapus transaksi internal senilai Rp {{ number_format($tx->nominal, 0, ',', '.') }}?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="text-[10px] text-rose-600 hover:text-rose-800 font-bold p-1 rounded hover:bg-rose-50 transition" title="Hapus Transaksi">

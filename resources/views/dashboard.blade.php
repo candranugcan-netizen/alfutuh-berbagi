@@ -205,7 +205,7 @@
                                 </a>
                             @endif
 
-                            <form action="{{ route('admin.donasi.verify', $item->id) }}" method="POST" onsubmit="return confirmSubmit(event, { title: 'Verifikasi Donasi?', text: 'Pastikan dana sebesar Rp {{ number_format($item->total_pembayaran, 0, \', \', \'.\') }} sudah masuk rekening.', icon: 'question', confirmButtonText: 'Ya, Verifikasi!', confirmButtonColor: '#155E4B', danger: false })">
+                            <form action="{{ route('admin.donasi.verify', $item->id) }}" method="POST" onsubmit="return confirmSubmit(event, { title: 'Verifikasi Donasi?', text: 'Pastikan dana sebesar Rp {{ number_format($item->total_pembayaran, 0, ',', '.') }} sudah masuk rekening.', icon: 'question', confirmButtonText: 'Ya, Verifikasi!', confirmButtonColor: '#155E4B', danger: false })">
                                 @csrf
                                 <button type="submit" class="bg-[#155E4B] hover:bg-[#0E4436] text-white font-bold text-xs px-4 py-1.5 rounded-full shadow-sm transition active:scale-95">
                                     Verifikasi ✓
