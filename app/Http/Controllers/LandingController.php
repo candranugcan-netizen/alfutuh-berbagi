@@ -16,20 +16,25 @@ class LandingController extends Controller
      */
     public function index(Request $request)
     {
-        // 1. Program Pilihan / Unggulan (Hero Section)
+        // 1. Program Pilihan / Unggulan (Carousel Program Unggulan)
         $featuredPrograms = Program::where('is_active', true)
             ->where('is_featured', true)
             ->orderBy('urutan')
-            ->take(3)
             ->get();
 
         // Jika tidak ada yang ditandai featured, ambil program teratas
         if ($featuredPrograms->isEmpty()) {
             $featuredPrograms = Program::where('is_active', true)
                 ->orderBy('urutan')
-                ->take(3)
+                ->take(6)
                 ->get();
         }
+
+        // 2. Program Terbaru (3 penggalangan dana terbaru)
+        $latestPrograms = Program::where('is_active', true)
+            ->latest('created_at')
+            ->take(3)
+            ->get();
 
         // 2. Semua Program untuk Grid Menu & List Program
         $kategoriAktif = $request->query('kategori', 'Semua');
@@ -82,6 +87,7 @@ class LandingController extends Controller
 
         return view('welcome', compact(
             'featuredPrograms',
+            'latestPrograms',
             'programs',
             'categories',
             'kategoriAktif',
