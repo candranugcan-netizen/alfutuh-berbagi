@@ -157,6 +157,11 @@ Route::middleware('auth')->group(function () {
 | Setup & Migration Helper
 |--------------------------------------------------------------------------
 */
+// Rute Refresh Token CSRF Otomatis (Mencegah Sesi Habis saat Form Ditinggal Lama)
+Route::get('/refresh-csrf', function () {
+    return response()->json(['csrf_token' => csrf_token()]);
+})->name('refresh-csrf');
+
 // Rute Khusus Storage Link
 Route::get('/storage-link-12345', function () {
     try {

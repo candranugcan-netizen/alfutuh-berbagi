@@ -499,13 +499,38 @@
     <!-- POP-UP PROMOSI DONASI OPERASIONAL UMUM -->
     <x-popup-operasional :program="$operasionalProgram ?? null" />
 
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Registration & CSRF Auto-Refresh -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js');
             });
         }
+
+        // Auto-refresh token CSRF saat tab kembali aktif setelah ditinggal lama (proactive keep-alive)
+        let lastWelcomeActive = Date.now();
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                const elapsedMinutes = (Date.now() - lastWelcomeActive) / 60000;
+                if (elapsedMinutes >= 15) {
+                    fetch('{{ route('refresh-csrf') }}', {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                    .then(r => r.json())
+                    .then(d => {
+                        if (d.csrf_token) {
+                            const meta = document.querySelector('meta[name="csrf-token"]');
+                            if (meta) meta.setAttribute('content', d.csrf_token);
+                            document.querySelectorAll('input[name="_token"]').forEach(el => {
+                                el.value = d.csrf_token;
+                            });
+                        }
+                    })
+                    .catch(() => {});
+                }
+                lastWelcomeActive = Date.now();
+            }
+        });
     </script>
 </body>
 </html>

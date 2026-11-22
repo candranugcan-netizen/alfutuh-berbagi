@@ -246,6 +246,30 @@
                     });
                 @endif
             });
+            // Auto-refresh token CSRF saat tab kembali aktif setelah ditinggal lama (proactive keep-alive)
+            let lastPageActive = Date.now();
+            document.addEventListener('visibilitychange', function() {
+                if (document.visibilityState === 'visible') {
+                    const elapsedMinutes = (Date.now() - lastPageActive) / 60000;
+                    if (elapsedMinutes >= 15) {
+                        fetch('{{ route('refresh-csrf') }}', {
+                            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                        })
+                        .then(r => r.json())
+                        .then(d => {
+                            if (d.csrf_token) {
+                                const meta = document.querySelector('meta[name="csrf-token"]');
+                                if (meta) meta.setAttribute('content', d.csrf_token);
+                                document.querySelectorAll('input[name="_token"]').forEach(el => {
+                                    el.value = d.csrf_token;
+                                });
+                            }
+                        })
+                        .catch(() => {});
+                    }
+                    lastPageActive = Date.now();
+                }
+            });
         </script>
 
         <!-- PWA Service Worker Registration -->
