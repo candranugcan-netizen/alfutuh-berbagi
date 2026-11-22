@@ -47,8 +47,10 @@
             <!-- Right Actions (Desktop) -->
             <div class="hidden md:flex items-center gap-3">
                 @php
-                    $firstProg = $featuredPrograms->first() ?? $programs->first();
-                    $donateUrl = $firstProg ? route('programs.show', $firstProg->slug) : route('programs.index');
+                    $quickOperasional = $operasionalProgram ?? (\App\Models\Program::where('slug', 'sedekah-operasional-dakwah-yayasan')
+                        ->orWhere('nama', 'like', '%operasional%')
+                        ->first() ?? ($featuredPrograms->first() ?? $programs->first()));
+                    $donateUrl = $quickOperasional ? route('programs.show', $quickOperasional->slug) : route('programs.index');
                 @endphp
                 <a href="{{ $donateUrl }}" class="inline-flex items-center gap-1.5 bg-[#155E4B] hover:bg-[#0E4436] text-white text-xs font-bold px-4 py-2 rounded-full shadow-sm active:scale-95 transition">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -107,7 +109,7 @@
 
         <!-- HERO SECTION -->
         @php
-            $featured = $featuredPrograms->first() ?? $programs->first();
+            $featured = $operasionalProgram ?? ($featuredPrograms->first() ?? $programs->first());
             $heroUrl = $featured ? route('programs.show', $featured->slug) : route('programs.index');
             $heroDonateUrl = $heroUrl;
         @endphp
@@ -432,9 +434,15 @@
                 <span>Program</span>
             </a>
 
-            <!-- 3. TOMBOL BESAR DI TENGAH (AKSI CEPAT DONASI) -->
+            <!-- 3. TOMBOL BESAR DI TENGAH (AKSI CEPAT DONASI OPERASIONAL UMUM) -->
+            @php
+                $quickOperasional = $operasionalProgram ?? (\App\Models\Program::where('slug', 'sedekah-operasional-dakwah-yayasan')
+                    ->orWhere('nama', 'like', '%operasional%')
+                    ->first() ?? \App\Models\Program::where('is_active', true)->first());
+                $quickDonateUrl = $quickOperasional ? route('programs.show', $quickOperasional->slug) : route('programs.index');
+            @endphp
             <div class="flex-1 flex justify-center -mt-6">
-                <a href="{{ route('programs.index') }}" class="group relative flex flex-col items-center focus:outline-none" aria-label="Aksi Cepat Donasi">
+                <a href="{{ $quickDonateUrl }}" class="group relative flex flex-col items-center focus:outline-none" aria-label="Aksi Cepat Donasi Operasional Umum">
                     <div class="w-14 h-14 rounded-full bg-gradient-to-br from-[#1c775e] to-[#155E4B] text-white flex flex-col items-center justify-center shadow-lg shadow-[#155E4B]/40 border-[3.5px] border-white group-active:scale-95 transition-transform duration-200">
                         <svg class="w-6 h-6 text-white group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>

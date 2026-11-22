@@ -48,7 +48,7 @@
                 <div>
                     <label for="email" class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Email</label>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username"
-                        placeholder="admin@alfutuh.com atau email donatur"
+                        placeholder="Masukan Email Anda"
                         class="w-full text-xs border border-slate-200 rounded-2xl focus:border-[#155E4B] focus:ring-[#155E4B] p-3">
                     <x-input-error :messages="$errors->get('email')" class="mt-1.5 text-xs text-rose-500" />
                 </div>
