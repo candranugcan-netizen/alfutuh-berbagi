@@ -47,9 +47,9 @@ class DonationController extends Controller
         // Generate kode donasi unik (Format: ALF-Ymd-XXXX)
         $kodeDonasi = 'ALF-' . date('Ymd') . '-' . strtoupper(Str::random(4));
 
-        // Generate 3 digit kode unik (1 - 999) agar mudah diverifikasi di mutasi bank
-        $kodeUnik = rand(101, 899);
-        $totalPembayaran = $validated['nominal'] + $kodeUnik;
+        // Nominal pas tanpa penambahan angka unik
+        $kodeUnik = 0;
+        $totalPembayaran = $validated['nominal'];
 
         // Tentukan nama donatur
         $namaDonatur = $request->nama_donatur;
@@ -88,6 +88,15 @@ class DonationController extends Controller
     public function payment($kodeDonasi)
     {
         $donation = Donation::with('program')->where('kode_donasi', $kodeDonasi)->firstOrFail();
+
+        // Pastikan nominal transfer pas (hilangkan kode unik jika donasi masih pending)
+        if ($donation->status === 'pending_payment' && $donation->kode_unik > 0) {
+            $donation->update([
+                'kode_unik' => 0,
+                'total_pembayaran' => $donation->nominal,
+            ]);
+            $donation->refresh();
+        }
         
         // Cari informasi rekening bank tujuan yang dipilih
         $bankAccount = BankAccount::where('nama_bank', 'like', "%{$donation->bank_tujuan}%")

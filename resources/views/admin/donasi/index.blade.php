@@ -89,8 +89,12 @@
                         <!-- Info Nominal & Pembayaran -->
                         <div class="space-y-1">
                             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Total Pembayaran</p>
-                            <p class="font-black text-[#155E4B] text-base">Rp {{ number_format($item->total_pembayaran, 0, ',', '.') }}</p>
-                            <p class="text-[10px] text-slate-400">Nominal: Rp {{ number_format($item->nominal, 0, ',', '.') }} | Unik: <strong class="text-amber-600">+{{ $item->kode_unik }}</strong></p>
+                            <p class="font-black text-[#155E4B] text-base">Rp {{ number_format($item->nominal, 0, ',', '.') }}</p>
+                            @if($item->kode_unik > 0)
+                                <p class="text-[10px] text-slate-400">Kode Unik: <strong class="text-amber-600">+{{ $item->kode_unik }}</strong> (Total: Rp {{ number_format($item->total_pembayaran, 0, ',', '.') }})</p>
+                            @else
+                                <p class="text-[10px] text-slate-400 font-medium">Nominal Pas (Tanpa Kode Unik)</p>
+                            @endif
                             <p class="text-xs text-slate-700">Bank Tujuan: <strong>{{ $item->bank_tujuan }}</strong></p>
                             @if($item->doa)
                                 <p class="text-xs text-slate-600 italic bg-[#F8FAF8] p-2.5 rounded-xl border border-slate-100 mt-1">"{{ $item->doa }}"</p>

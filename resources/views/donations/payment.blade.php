@@ -59,22 +59,21 @@
             </div>
 
         @else
-            <!-- Instruksi Transfer Nominal Unik -->
+            <!-- Instruksi Transfer Nominal Pas -->
             <div class="bg-[#155E4B] p-6 sm:p-8 rounded-3xl text-white shadow-sm space-y-3.5 text-center">
                 <p class="text-xs text-teal-200 uppercase tracking-wider font-semibold">Total yang Harus Ditransfer</p>
 
                 <div class="flex items-baseline justify-center gap-1.5">
                     <span class="text-2xl font-black">Rp</span>
                     <span class="text-3xl sm:text-4xl font-black">{{ number_format($donation->nominal, 0, ',', '.') }}</span>
-                    <span class="text-3xl sm:text-4xl font-black text-[#D4AF37] bg-white/10 px-2 py-0.5 rounded-xl border border-[#D4AF37]/40" title="3 Digit Kode Unik">{{ sprintf('%03d', $donation->kode_unik) }}</span>
                 </div>
 
                 <p class="text-xs text-teal-200 max-w-sm mx-auto">
-                    *Mohon transfer <strong>tepat hingga 3 digit terakhir</strong> agar verifikasi sistem otomatis dan mudah.
+                    *Silakan lakukan transfer sesuai nominal pas di atas.
                 </p>
 
                 <div class="pt-1">
-                    <button type="button" onclick="navigator.clipboard.writeText('{{ $donation->total_pembayaran }}'); Swal.fire({ icon: 'success', title: 'Nominal Disalin!', text: 'Nominal Rp {{ number_format($donation->total_pembayaran, 0, ',', '.') }} berhasil disalin.', timer: 2000, showConfirmButton: false, customClass: { popup: 'rounded-3xl' } });"
+                    <button type="button" onclick="navigator.clipboard.writeText('{{ $donation->nominal }}'); Swal.fire({ icon: 'success', title: 'Nominal Disalin!', text: 'Nominal Rp {{ number_format($donation->nominal, 0, ',', '.') }} berhasil disalin.', timer: 2000, showConfirmButton: false, customClass: { popup: 'rounded-3xl' } });"
                         class="bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold px-5 py-2.5 rounded-full transition inline-flex items-center gap-2">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="11" height="11" rx="2" stroke-width="1.8"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke-width="1.8" stroke-linecap="round"/></svg>
                         <span>Salin Nominal Transfer</span>
