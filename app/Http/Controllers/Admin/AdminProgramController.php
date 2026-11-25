@@ -72,18 +72,20 @@ class AdminProgramController extends Controller
 
             $maxUrutan = (int) Program::max('urutan');
 
+            $icon = $validated['icon'] ?? $request->input('icon') ?: '🤲';
+
             $program = Program::create([
                 'nama' => $validated['nama'],
                 'slug' => $slug,
                 'kategori' => $validated['kategori'],
-                'icon' => $validated['icon'] ?: '🤲',
+                'icon' => $icon,
                 'ringkasan' => $validated['ringkasan'],
                 'deskripsi' => $validated['deskripsi'],
                 'target_dana' => $validated['target_dana'],
                 'dana_terkumpul' => 0,
                 'banner' => $bannerPath,
                 'tipe_target' => $validated['tipe_target'],
-                'tenggat_waktu' => $validated['tenggat_waktu'] ?: null,
+                'tenggat_waktu' => $validated['tenggat_waktu'] ?? null,
                 'is_featured' => $request->boolean('is_featured'),
                 'is_active' => $request->boolean('is_active', true),
                 'urutan' => $maxUrutan + 1,
@@ -148,7 +150,8 @@ class AdminProgramController extends Controller
                 $validated['banner'] = $request->file('banner')->store('programs', 'public');
             }
 
-            $validated['tenggat_waktu'] = $validated['tenggat_waktu'] ?: null;
+            $validated['icon'] = $validated['icon'] ?? $request->input('icon') ?: ($program->icon ?: '🤲');
+            $validated['tenggat_waktu'] = $validated['tenggat_waktu'] ?? null;
             $validated['is_featured'] = $request->boolean('is_featured');
             $validated['is_active'] = $request->boolean('is_active');
 
