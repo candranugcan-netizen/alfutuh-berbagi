@@ -75,11 +75,11 @@
                     <x-input-error :messages="$errors->get('password')" class="mt-1.5 text-xs text-rose-500" />
                 </div>
 
-                <!-- Remember Me -->
+                <!-- Remember Me (Default Checked agar sesi mobile tahan lama) -->
                 <div class="flex items-center justify-between">
-                    <label for="remember_me" class="inline-flex items-center gap-2">
-                        <input id="remember_me" type="checkbox" name="remember" class="rounded border-slate-300 text-[#155E4B] focus:ring-[#155E4B]">
-                        <span class="text-xs font-semibold text-slate-600">Ingat Saya</span>
+                    <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer">
+                        <input id="remember_me" type="checkbox" name="remember" value="1" checked class="rounded border-slate-300 text-[#155E4B] focus:ring-[#155E4B]">
+                        <span class="text-xs font-semibold text-slate-600">Ingat Saya (Tetap Masuk)</span>
                     </label>
                     @if (Route::has('password.request'))
                         <a href="{{ route('password.request') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436]">Lupa sandi?</a>
@@ -104,5 +104,30 @@
             </a>
         </div>
     </div>
+
+    <!-- Script Refresh Token CSRF saat Kembali ke Browser Mobile / PWA -->
+    <script>
+        let lastVisibleTime = Date.now();
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                // Jika ditinggal lebih dari 5 menit, perbarui token CSRF di background
+                const elapsedMinutes = (Date.now() - lastVisibleTime) / 60000;
+                if (elapsedMinutes >= 5) {
+                    fetch('{{ route('refresh-csrf') }}', {
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && data.csrf_token) {
+                            const csrfInput = document.querySelector('input[name="_token"]');
+                            if (csrfInput) csrfInput.value = data.csrf_token;
+                        }
+                    })
+                    .catch(() => {});
+                }
+                lastVisibleTime = Date.now();
+            }
+        });
+    </script>
 </body>
 </html>

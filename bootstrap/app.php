@@ -28,11 +28,11 @@ return Application::configure(basePath: dirname(__DIR__))
                 ], 419);
             }
 
-            // Jika sedang di halaman login, kembalikan ke login dengan email tersimpan
-            if ($request->is('login')) {
+            // Jika submit dari/di halaman login, arahkan ulang ke form login dengan membawa email dan flash message
+            if ($request->is('login') || str_contains(url()->previous() ?? '', '/login')) {
                 return redirect()->route('login')
                     ->withInput($request->only('email', 'remember'))
-                    ->with('info', 'Sesi login telah diperbarui demi keamanan. Silakan masukkan kata sandi kembali.');
+                    ->with('status', 'Sesi formulir diperbarui otomatis. Silakan masukkan kata sandi Anda kembali.');
             }
 
             // Kembalikan ke halaman sebelumnya dan pertahankan input form (agar donatur tidak kehilangan data isian)

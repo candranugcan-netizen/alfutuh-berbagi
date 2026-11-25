@@ -217,6 +217,52 @@ Route::get('/storage-link-12345', function () {
 // Alias rute singkat untuk kemudahan akses
 Route::redirect('/storage-link', '/storage-link-12345');
 
+// Rute Diagnosa Sistem & Skema Tabel untuk Produksi
+Route::get('/diagnosa-program-12345', function () {
+    try {
+        $output = "=== AL FUTUH PROGRAM DIAGNOSTICS ===\n\n";
+
+        // 1. Cek Koneksi Database
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $output .= "[OK] Database connected.\n";
+
+        // 2. Cek Kolom Tabel programs
+        $columns = \Illuminate\Support\Facades\Schema::getColumnListing('programs');
+        $output .= "[INFO] Kolom tabel 'programs':\n" . implode(', ', $columns) . "\n\n";
+
+        // 3. Cek Kolom Tabel kategori_keuangans
+        $katColumns = \Illuminate\Support\Facades\Schema::getColumnListing('kategori_keuangans');
+        $output .= "[INFO] Kolom tabel 'kategori_keuangans':\n" . implode(', ', $katColumns) . "\n\n";
+
+        // 4. Cek Permission Direktori Storage
+        $storageDisk = \Illuminate\Support\Facades\Storage::disk('public');
+        $testFile = 'programs/.test_' . time() . '.txt';
+        $written = $storageDisk->put($testFile, 'test');
+        if ($written) {
+            $output .= "[OK] Storage disk 'public' Writable (bisa tulis file).\n";
+            $storageDisk->delete($testFile);
+        } else {
+            $output .= "[WARNING] Storage disk 'public' GAGAL menulis file!\n";
+        }
+
+        // 5. Cek Program Aktif & Max Urutan
+        $maxUrutan = \App\Models\Program::max('urutan');
+        $countProgram = \App\Models\Program::count();
+        $output .= "[OK] Total program saat ini: {$countProgram}, Max urutan: {$maxUrutan}\n\n";
+
+        // 6. Cek Log Terakhir
+        $logPath = storage_path('logs/laravel.log');
+        if (file_exists($logPath)) {
+            $logLines = array_slice(file($logPath), -15);
+            $output .= "=== 15 BARIS LOG TERAKHIR ===\n" . implode('', $logLines);
+        }
+
+        return '<pre style="background:#0f172a; color:#10b981; padding:20px; font-family:monospace; border-radius:12px; line-height:1.5;">' . e($output) . '<br><br><a href="/admin/programs" style="color:#f59e0b; font-weight:bold; text-decoration:underline;">← Kembali ke Kelola Program</a></pre>';
+    } catch (\Throwable $e) {
+        return '<pre style="background:#0f172a; color:#ef4444; padding:20px; font-family:monospace; border-radius:12px;">ERROR DIAGNOSA: ' . e($e->getMessage()) . "\n" . e($e->getTraceAsString()) . '</pre>';
+    }
+});
+
 Route::get('/migrasi-aman-12345', function () {
     try {
         Artisan::call('migrate', ['--force' => true]);

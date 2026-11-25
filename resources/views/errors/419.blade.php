@@ -62,19 +62,19 @@
 
             <!-- Tombol Aksi -->
             <div class="space-y-2.5 pt-2">
-                <button type="button" onclick="window.location.reload();"
-                    class="w-full flex items-center justify-center gap-2 bg-[#155E4B] hover:bg-[#0E4436] text-white font-extrabold text-xs sm:text-sm py-3.5 px-6 rounded-full shadow-md shadow-[#155E4B]/20 active:scale-95 transition">
+                <button type="button" id="btn-reload" onclick="hardReload();"
+                    class="w-full flex items-center justify-center gap-2 bg-[#155E4B] hover:bg-[#0E4436] text-white font-extrabold text-xs sm:text-sm py-3.5 px-6 rounded-full shadow-md shadow-[#155E4B]/20 active:scale-95 transition cursor-pointer">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <span>Muat Ulang Halaman Sekarang</span>
+                    <span id="btn-text">Muat Ulang Halaman Sekarang</span>
                 </button>
 
                 <div class="flex items-center gap-2">
-                    <button type="button" onclick="if(window.history.length > 1) { window.history.back(); } else { window.location.href='/'; }"
+                    <a href="{{ route('login') }}"
                         class="flex-1 text-center bg-slate-50 hover:bg-slate-100 text-slate-700 font-bold text-xs py-2.5 rounded-full border border-slate-200 transition active:scale-95">
-                        ← Kembali
-                    </button>
+                        🔑 Masuk Kembali
+                    </a>
                     <a href="{{ url('/') }}"
                         class="flex-1 text-center bg-[#EAF5EE] hover:bg-[#DCEEE5] text-[#155E4B] font-bold text-xs py-2.5 rounded-full border border-[#D2E6DC] transition active:scale-95">
                         Ke Beranda
@@ -84,7 +84,7 @@
 
             <!-- Countdown Timer Otomatis -->
             <p class="text-[11px] text-slate-400 pt-1">
-                Memuat ulang otomatis dalam <strong id="countdown-sec" class="text-slate-600 font-bold">10</strong> detik...
+                Memuat ulang otomatis dalam <strong id="countdown-sec" class="text-slate-600 font-bold">5</strong> detik...
             </p>
         </div>
 
@@ -93,16 +93,28 @@
         </p>
     </div>
 
-    <!-- Script Countdown & Auto-Reload -->
+    <!-- Script Hard-Reload yang Kebal Cache Mobile -->
     <script>
-        let seconds = 10;
+        function hardReload() {
+            const btn = document.getElementById('btn-text');
+            if (btn) btn.textContent = 'Memuat Sesi Baru...';
+
+            // Bersihkan URL dari parameter lama jika ada, lalu tambahkan cache buster timestamp
+            const url = new URL(window.location.href);
+            url.searchParams.set('_t', Date.now());
+
+            // Jika sebelumnya dari submit POST login atau form POST, arahkan langsung dengan GET
+            window.location.replace(url.toString());
+        }
+
+        let seconds = 5;
         const countdownEl = document.getElementById('countdown-sec');
         const interval = setInterval(() => {
             seconds--;
             if (countdownEl) countdownEl.textContent = seconds;
             if (seconds <= 0) {
                 clearInterval(interval);
-                window.location.reload();
+                hardReload();
             }
         }, 1000);
     </script>
