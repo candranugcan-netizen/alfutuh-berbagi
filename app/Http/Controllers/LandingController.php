@@ -17,28 +17,33 @@ class LandingController extends Controller
     public function index(Request $request)
     {
         // 1. Program Pilihan / Unggulan (Carousel Program Unggulan)
-        $featuredPrograms = Program::where('is_active', true)
+        $featuredPrograms = Program::withSum('penyalurans', 'nominal')
+            ->where('is_active', true)
             ->where('is_featured', true)
             ->orderBy('urutan')
             ->get();
 
         // Jika tidak ada yang ditandai featured, ambil program teratas
         if ($featuredPrograms->isEmpty()) {
-            $featuredPrograms = Program::where('is_active', true)
+            $featuredPrograms = Program::withSum('penyalurans', 'nominal')
+                ->where('is_active', true)
                 ->orderBy('urutan')
                 ->take(6)
                 ->get();
         }
 
         // 2. Program Terbaru (3 penggalangan dana terbaru)
-        $latestPrograms = Program::where('is_active', true)
+        $latestPrograms = Program::withSum('penyalurans', 'nominal')
+            ->where('is_active', true)
             ->latest('created_at')
             ->take(3)
             ->get();
 
         // 2. Semua Program untuk Grid Menu & List Program
         $kategoriAktif = $request->query('kategori', 'Semua');
-        $programsQuery = Program::where('is_active', true)->orderBy('urutan');
+        $programsQuery = Program::withSum('penyalurans', 'nominal')
+            ->where('is_active', true)
+            ->orderBy('urutan');
 
         if ($kategoriAktif && $kategoriAktif !== 'Semua') {
             $programsQuery->where('kategori', $kategoriAktif);
@@ -78,7 +83,8 @@ class LandingController extends Controller
             ->get();
 
         // 6. Program Sedekah Operasional Dakwah untuk Pop-Up Promosi
-        $operasionalProgram = Program::where('is_active', true)
+        $operasionalProgram = Program::withSum('penyalurans', 'nominal')
+            ->where('is_active', true)
             ->where(function ($q) {
                 $q->where('slug', 'sedekah-operasional-dakwah-yayasan')
                   ->orWhere('nama', 'like', '%operasional%');
@@ -110,7 +116,7 @@ class LandingController extends Controller
         $kategori = $request->query('kategori', 'Semua');
         $search = $request->query('q');
 
-        $query = Program::where('is_active', true)->orderBy('urutan');
+        $query = Program::withSum('penyalurans', 'nominal')->where('is_active', true)->orderBy('urutan');
 
         if ($kategori && $kategori !== 'Semua') {
             $query->where(function ($q) use ($kategori) {

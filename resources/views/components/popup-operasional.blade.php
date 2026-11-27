@@ -99,6 +99,34 @@
                 </p>
             </div>
 
+            @if($targetProgram)
+                @php
+                    $popSisa = $targetProgram->sisa_donasi;
+                    $popPct = $targetProgram->persentase_sisa;
+                    $popStatus = $targetProgram->status_sisa;
+                @endphp
+                <!-- Info Status Sisa Dana Operasional -->
+                <div class="p-3 rounded-2xl {{ in_array($popStatus, ['critical', 'warning', 'empty']) ? 'bg-amber-50 border border-amber-200 text-amber-900' : 'bg-[#F2F7F4] border border-[#D2E6DC] text-[#155E4B]' }} space-y-1.5 text-xs">
+                    <div class="flex justify-between items-center text-[11px]">
+                        <span class="text-slate-500">Total Terkumpul: <strong class="text-slate-800">Rp {{ number_format($targetProgram->dana_terkumpul, 0, ',', '.') }}</strong></span>
+                        <span class="font-extrabold px-2 py-0.5 rounded-full {{ in_array($popStatus, ['critical', 'warning', 'empty']) ? 'bg-amber-200 text-amber-900' : 'bg-[#EAF5EE] text-[#155E4B]' }}">
+                            Sisa {{ $popPct }}%
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-bold">Sisa Saldo Operasional:</span>
+                        <span class="font-black text-sm {{ in_array($popStatus, ['critical', 'warning', 'empty']) ? 'text-amber-800' : 'text-[#155E4B]' }}">
+                            Rp {{ number_format($popSisa, 0, ',', '.') }}
+                        </span>
+                    </div>
+                    @if(in_array($popStatus, ['critical', 'warning', 'empty']))
+                        <p class="text-[10px] text-amber-700 font-medium pt-0.5">
+                            ⚠️ Sisa dana operasional sedang menipis. Dukungan Anda sangat mendesak untuk menjaga kelangsungan kegiatan dakwah.
+                        </p>
+                    @endif
+                </div>
+            @endif
+
             <!-- 4 Pilar Program Yayasan yang Ditopang -->
             <div class="grid grid-cols-2 gap-2.5 text-[11px]">
                 <!-- 1. BBHQ -->

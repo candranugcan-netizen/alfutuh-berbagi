@@ -68,29 +68,59 @@
                     <div class="bg-[#155E4B] h-2.5 rounded-full transition-all duration-500" style="width: {{ $program->persentase }}%"></div>
                 </div>
 
-                <!-- 2-Column Stats -->
-                <div class="flex justify-between items-baseline pt-1">
+                @php
+                    $sisaDana = $program->sisa_donasi;
+                    $pctSisa = $program->persentase_sisa;
+                    $statusSisa = $program->status_sisa;
+                    $isOperasional = $program->is_operasional;
+                @endphp
+
+                <!-- 3-Column Stats Ringkas: Terkumpul, Sisa Dana, Target -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#F8FAF8] border border-slate-100">
                     <div>
-                        <span class="text-lg sm:text-xl font-black text-slate-800 block">
+                        <span class="text-xs text-slate-400 font-medium block">Total Terkumpul</span>
+                        <span class="text-base sm:text-lg font-black text-[#155E4B] block">
                             Rp {{ number_format($program->dana_terkumpul, 0, ',', '.') }}
                         </span>
-                        <span class="text-xs text-slate-400 font-medium">Terkumpul</span>
                     </div>
-                    <div class="text-right">
+
+                    <div class="border-t sm:border-t-0 sm:border-l border-slate-200/60 pt-2 sm:pt-0 sm:pl-3">
+                        <div class="flex items-center justify-between sm:justify-start gap-1.5">
+                            <span class="text-xs text-slate-500 font-medium">Sisa Dana Saat Ini</span>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'bg-rose-100 text-rose-700' : ($statusSisa === 'warning' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800') }}">
+                                {{ $pctSisa }}% Sisa
+                            </span>
+                        </div>
+                        <span class="text-base sm:text-lg font-black {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-700' : 'text-emerald-700') }} block">
+                            Rp {{ number_format($sisaDana, 0, ',', '.') }}
+                        </span>
+                    </div>
+
+                    <div class="border-t sm:border-t-0 sm:border-l border-slate-200/60 pt-2 sm:pt-0 sm:pl-3">
+                        <span class="text-xs text-slate-400 font-medium block">Target Donasi</span>
                         @if($program->target_dana > 0)
-                            <span class="text-lg sm:text-xl font-black text-slate-800 block">
+                            <span class="text-base sm:text-lg font-black text-slate-700 block">
                                 Rp {{ number_format($program->target_dana, 0, ',', '.') }}
                             </span>
-                            <span class="text-xs text-slate-400 font-medium">Target</span>
                         @else
-                            <div class="flex items-center justify-end gap-1.5 text-[#155E4B]">
-                                <x-infinity-icon class="w-5 h-5 text-[#155E4B]" />
-                                <span class="text-base sm:text-lg font-extrabold">Tidak Terbatas</span>
+                            <div class="flex items-center gap-1 text-[#155E4B]">
+                                <x-infinity-icon class="w-4 h-4 text-[#155E4B]" />
+                                <span class="text-sm font-bold">Berkelanjutan</span>
                             </div>
-                            <span class="text-xs text-slate-400 font-medium">Target Berkelanjutan</span>
                         @endif
                     </div>
                 </div>
+
+                <!-- Notifikasi Khusus jika Donasi Operasional Sisa Sedikit -->
+                @if($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty']))
+                    <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 text-amber-900 flex items-start gap-2.5 shadow-2xs">
+                        <span class="text-amber-600 font-bold text-base shrink-0">⚠️</span>
+                        <div class="text-xs leading-relaxed">
+                            <strong class="font-extrabold block text-slate-800">Sisa Dana Donasi Operasional Sedang Menipis (Sisa {{ $pctSisa }}%)</strong>
+                            <span>Dana donasi operasional yayasan langsung disalurkan untuk kegiatan rutin santri TPA, Gebraq, serta fasilitas dakwah. Dukungan Anda sangat berarti agar syiar kebaikan tetap berkelanjutan.</span>
+                        </div>
+                    </div>
+                @endif
 
                 <!-- Section: Pilih Nominal Donasi -->
                 <div class="space-y-3 pt-3 border-t border-slate-100">

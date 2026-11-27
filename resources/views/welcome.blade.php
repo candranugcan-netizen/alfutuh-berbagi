@@ -218,6 +218,48 @@
             </a>
         </div>
 
+        <!-- NOTIFIKASI KHUSUS: SISA DONASI OPERASIONAL UMUM MENIPIS -->
+        @if($operasionalProgram && in_array($operasionalProgram->status_sisa, ['critical', 'warning', 'empty']))
+            @php
+                $opSisa = $operasionalProgram->sisa_donasi;
+                $opPct = $operasionalProgram->persentase_sisa;
+                $isCritical = ($operasionalProgram->status_sisa === 'critical' || $operasionalProgram->status_sisa === 'empty');
+            @endphp
+            <div class="rounded-3xl p-4 sm:p-5 {{ $isCritical ? 'bg-gradient-to-r from-rose-50 via-red-50 to-amber-50 border-2 border-rose-300' : 'bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 border-2 border-amber-300' }} shadow-sm">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-2xl {{ $isCritical ? 'bg-rose-500 text-white animate-bounce' : 'bg-amber-500 text-white' }} flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                        </div>
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full {{ $isCritical ? 'bg-rose-600 text-white' : 'bg-amber-700 text-white' }}">
+                                    Perhatian Donasi Operasional
+                                </span>
+                                <span class="text-xs font-black {{ $isCritical ? 'text-rose-700' : 'text-amber-800' }}">
+                                    Sisa Dana Tinggal {{ $opPct }}% (Rp {{ number_format($opSisa, 0, ',', '.') }})
+                                </span>
+                            </div>
+                            <h4 class="text-xs sm:text-sm font-extrabold text-slate-800 leading-snug">
+                                Dana Operasional &amp; Dakwah Yayasan Sedang Menipis
+                            </h4>
+                            <p class="text-[11px] sm:text-xs text-slate-600 leading-relaxed max-w-2xl">
+                                Donasi operasional umum digunakan langsung untuk membiayai kelangsungan santri TPA, Gerakan Berantas Buta Huruf Al-Qur'an (Gebraq), dan sarana dakwah. Mari salurkan sedekah terbaik Anda agar aktivitas keumatan tetap berjalan lancar.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="shrink-0 self-end sm:self-center">
+                        <a href="{{ route('programs.show', $operasionalProgram->slug) }}" class="inline-flex items-center justify-center gap-2 {{ $isCritical ? 'bg-rose-600 hover:bg-rose-700' : 'bg-amber-600 hover:bg-amber-700' }} text-white font-black text-xs py-2.5 px-5 rounded-full shadow-md active:scale-95 transition">
+                            <span>Top Up Donasi Operasional</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         <!-- 1. BAGIAN PROGRAM UNGGULAN (BISA DIGESER KANAN-KIRI) -->
         <div x-data="{
                 scrollLeft() { $refs.featuredScroll.scrollBy({ left: -320, behavior: 'smooth' }) },
@@ -252,7 +294,13 @@
             <!-- Kontainer Geser Kanan-Kiri Program Unggulan -->
             <div x-ref="featuredScroll" class="flex gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                 @forelse($featuredPrograms as $item)
-                    <div class="w-[280px] sm:w-[320px] shrink-0 snap-start bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col justify-between group">
+                    @php
+                        $sisaDana = $item->sisa_donasi;
+                        $pctSisa = $item->persentase_sisa;
+                        $statusSisa = $item->status_sisa;
+                        $isOperasional = $item->is_operasional;
+                    @endphp
+                    <div class="w-[285px] sm:w-[325px] shrink-0 snap-start bg-white rounded-3xl border {{ ($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty'])) ? 'border-amber-300 ring-2 ring-amber-100 shadow-sm' : 'border-slate-100 shadow-xs' }} overflow-hidden hover:shadow-md transition flex flex-col justify-between group relative">
                         <div>
                             <div class="h-44 w-full bg-slate-100 relative overflow-hidden">
                                 @if($item->banner)
@@ -260,13 +308,33 @@
                                 @else
                                     <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $item->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @endif
-                                <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                                <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
                                     <span class="text-[10px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-3 py-1 rounded-full shadow-sm">
                                         {{ $item->kategori }}
                                     </span>
                                     <span class="text-[10px] font-extrabold bg-amber-400 text-amber-950 px-2.5 py-1 rounded-full shadow-sm inline-flex items-center gap-1">
                                         ⭐ Unggulan
                                     </span>
+                                </div>
+
+                                <!-- Badge Highlight Sisa Donasi di Pojok Gambar -->
+                                <div class="absolute bottom-2.5 right-2.5">
+                                    @if($statusSisa === 'critical' || $statusSisa === 'empty')
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-rose-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs animate-pulse">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                            Sisa: {{ $pctSisa }}%
+                                        </span>
+                                    @elseif($statusSisa === 'warning')
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-amber-500/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                            Sisa: {{ $pctSisa }}%
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-emerald-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                            Sisa: {{ $pctSisa }}%
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 
@@ -275,23 +343,59 @@
                                     {{ $item->nama }}
                                 </a>
 
-                                <div class="space-y-1">
-                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                                        <div class="bg-[#155E4B] h-1.5 rounded-full" style="width: {{ min(100, $item->persentase) }}%"></div>
+                                <!-- Card Metrik: Total Donasi Terkumpul & Sisa Donasi Saat Ini -->
+                                <div class="p-2.5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-2">
+                                    <div class="flex justify-between items-center text-[11px]">
+                                        <span class="text-slate-400 text-[10px]">Total Terkumpul</span>
+                                        <span class="font-extrabold text-[#155E4B]">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
                                     </div>
-                                    <div class="flex justify-between items-center text-[10px] text-slate-500">
-                                        <span class="font-bold text-slate-800">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
-                                        @if($item->target_dana > 0)
-                                            <span>Target: Rp {{ number_format($item->target_dana, 0, ',', '.') }}</span>
+                                    <div class="flex justify-between items-center text-[11px] pt-1 border-t border-slate-100">
+                                        <span class="text-slate-500 font-semibold text-[10px]">Sisa Dana Saat Ini</span>
+                                        @if($statusSisa === 'critical' || $statusSisa === 'empty')
+                                            <span class="font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg border border-rose-200">
+                                                Rp {{ number_format($sisaDana, 0, ',', '.') }}
+                                            </span>
+                                        @elseif($statusSisa === 'warning')
+                                            <span class="font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+                                                Rp {{ number_format($sisaDana, 0, ',', '.') }}
+                                            </span>
                                         @else
-                                            <span class="inline-flex items-center gap-1 font-bold text-[#155E4B]">
-                                                <span>Target:</span>
-                                                <x-infinity-icon class="w-3 h-3 text-[#155E4B]" />
-                                                <span>Tak Terbatas</span>
+                                            <span class="font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                                                Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @endif
                                     </div>
                                 </div>
+
+                                <!-- Progress Bar Sisa Dana -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-[10px]">
+                                        <span class="text-slate-400">Rasio Sisa Belum Disalurkan</span>
+                                        <span class="font-bold {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-600' : 'text-emerald-700') }}">
+                                            {{ $pctSisa }}%
+                                        </span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                        @if($statusSisa === 'critical' || $statusSisa === 'empty')
+                                            <div class="bg-rose-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                        @elseif($statusSisa === 'warning')
+                                            <div class="bg-amber-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                        @else
+                                            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <!-- Notifikasi Khusus jika Donasi Operasional Sisa Sedikit -->
+                                @if($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty']))
+                                    <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[10px] text-amber-900 flex items-start gap-1.5">
+                                        <span class="text-amber-600 font-bold shrink-0 text-xs">⚠️</span>
+                                        <div class="leading-tight">
+                                            <strong class="font-extrabold block">Sisa Dana Operasional Menipis!</strong>
+                                            <span>Dukungan Anda sangat dibutuhkan untuk kelancaran kegiatan rutin santri &amp; dakwah.</span>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -343,7 +447,13 @@
             <!-- Kontainer Geser Kanan-Kiri 3 Program Terbaru -->
             <div x-ref="latestScroll" class="flex gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                 @forelse($latestPrograms as $item)
-                    <div class="w-[280px] sm:w-[320px] shrink-0 snap-start bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col justify-between group">
+                    @php
+                        $sisaDana = $item->sisa_donasi;
+                        $pctSisa = $item->persentase_sisa;
+                        $statusSisa = $item->status_sisa;
+                        $isOperasional = $item->is_operasional;
+                    @endphp
+                    <div class="w-[285px] sm:w-[325px] shrink-0 snap-start bg-white rounded-3xl border {{ ($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty'])) ? 'border-amber-300 ring-2 ring-amber-100 shadow-sm' : 'border-slate-100 shadow-xs' }} overflow-hidden hover:shadow-md transition flex flex-col justify-between group relative">
                         <div>
                             <div class="h-44 w-full bg-slate-100 relative overflow-hidden">
                                 @if($item->banner)
@@ -351,13 +461,33 @@
                                 @else
                                     <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $item->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @endif
-                                <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                                <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
                                     <span class="text-[10px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-3 py-1 rounded-full shadow-sm">
                                         {{ $item->kategori }}
                                     </span>
                                     <span class="text-[10px] font-extrabold bg-blue-500 text-white px-2.5 py-1 rounded-full shadow-sm inline-flex items-center gap-1">
                                         Baru
                                     </span>
+                                </div>
+
+                                <!-- Badge Highlight Sisa Donasi di Pojok Gambar -->
+                                <div class="absolute bottom-2.5 right-2.5">
+                                    @if($statusSisa === 'critical' || $statusSisa === 'empty')
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-rose-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs animate-pulse">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                            Sisa: {{ $pctSisa }}%
+                                        </span>
+                                    @elseif($statusSisa === 'warning')
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-amber-500/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                            Sisa: {{ $pctSisa }}%
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-emerald-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                            Sisa: {{ $pctSisa }}%
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 
@@ -366,23 +496,59 @@
                                     {{ $item->nama }}
                                 </a>
 
-                                <div class="space-y-1">
-                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                                        <div class="bg-[#155E4B] h-1.5 rounded-full" style="width: {{ min(100, $item->persentase) }}%"></div>
+                                <!-- Card Metrik: Total Donasi Terkumpul & Sisa Donasi Saat Ini -->
+                                <div class="p-2.5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-2">
+                                    <div class="flex justify-between items-center text-[11px]">
+                                        <span class="text-slate-400 text-[10px]">Total Terkumpul</span>
+                                        <span class="font-extrabold text-[#155E4B]">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
                                     </div>
-                                    <div class="flex justify-between items-center text-[10px] text-slate-500">
-                                        <span class="font-bold text-slate-800">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
-                                        @if($item->target_dana > 0)
-                                            <span>Target: Rp {{ number_format($item->target_dana, 0, ',', '.') }}</span>
+                                    <div class="flex justify-between items-center text-[11px] pt-1 border-t border-slate-100">
+                                        <span class="text-slate-500 font-semibold text-[10px]">Sisa Dana Saat Ini</span>
+                                        @if($statusSisa === 'critical' || $statusSisa === 'empty')
+                                            <span class="font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg border border-rose-200">
+                                                Rp {{ number_format($sisaDana, 0, ',', '.') }}
+                                            </span>
+                                        @elseif($statusSisa === 'warning')
+                                            <span class="font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+                                                Rp {{ number_format($sisaDana, 0, ',', '.') }}
+                                            </span>
                                         @else
-                                            <span class="inline-flex items-center gap-1 font-bold text-[#155E4B]">
-                                                <span>Target:</span>
-                                                <x-infinity-icon class="w-3 h-3 text-[#155E4B]" />
-                                                <span>Tak Terbatas</span>
+                                            <span class="font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                                                Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @endif
                                     </div>
                                 </div>
+
+                                <!-- Progress Bar Sisa Dana -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between text-[10px]">
+                                        <span class="text-slate-400">Rasio Sisa Belum Disalurkan</span>
+                                        <span class="font-bold {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-600' : 'text-emerald-700') }}">
+                                            {{ $pctSisa }}%
+                                        </span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                        @if($statusSisa === 'critical' || $statusSisa === 'empty')
+                                            <div class="bg-rose-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                        @elseif($statusSisa === 'warning')
+                                            <div class="bg-amber-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                        @else
+                                            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <!-- Notifikasi Khusus jika Donasi Operasional Sisa Sedikit -->
+                                @if($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty']))
+                                    <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[10px] text-amber-900 flex items-start gap-1.5">
+                                        <span class="text-amber-600 font-bold shrink-0 text-xs">⚠️</span>
+                                        <div class="leading-tight">
+                                            <strong class="font-extrabold block">Sisa Dana Operasional Menipis!</strong>
+                                            <span>Dukungan Anda sangat dibutuhkan untuk kelancaran kegiatan rutin santri &amp; dakwah.</span>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
