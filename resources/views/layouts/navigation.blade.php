@@ -135,7 +135,7 @@
         <!-- 5. Akun -->
         @auth
             @if(Auth::user()->isAdmin())
-                <a href="{{ route('dashboard') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] {{ request()->routeIs('dashboard') ? 'text-[#155E4B] font-extrabold' : 'text-slate-400 font-medium hover:text-[#155E4B]' }}">
+                <a href="{{ route('dashboard') }}" class="flex flex-1 flex-col items-center gap-1 text-[10px] {{ (request()->routeIs('dashboard') || request()->routeIs('admin.*')) ? 'text-[#155E4B] font-extrabold' : 'text-slate-400 font-medium hover:text-[#155E4B]' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <circle cx="12" cy="12" r="3" stroke-width="1.8"/>
                         <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.42 1.42-.06-.06A1.7 1.7 0 0 0 16.44 18a1.7 1.7 0 0 0-1 .6V19H13v-.4a1.7 1.7 0 0 0-1-.6 1.7 1.7 0 0 0-1.88.34l-.06.06-1.42-1.42.06-.06A1.7 1.7 0 0 0 9 15.44a1.7 1.7 0 0 0-.6-1H8v-2.44h.4A1.7 1.7 0 0 0 9 10.56a1.7 1.7 0 0 0-.34-1.88l-.06-.06L10.02 7.2l.06.06A1.7 1.7 0 0 0 12 7a1.7 1.7 0 0 0 1-.6V6h2.44v.4A1.7 1.7 0 0 0 16.44 7a1.7 1.7 0 0 0 1.88-.34l.06-.06 1.42 1.42-.06.06A1.7 1.7 0 0 0 19.4 10a1.7 1.7 0 0 0 .6 1h.4v2.44H20a1.7 1.7 0 0 0-.6 1Z" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>

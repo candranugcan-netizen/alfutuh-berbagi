@@ -48,6 +48,11 @@ class AdminUserController extends Controller
             });
         }
 
+        $perPage = (int) $request->query('per_page', 10);
+        if (!in_array($perPage, [10, 15, 25, 50])) {
+            $perPage = 10;
+        }
+
         // Urutkan berdasarkan donasi terbanyak jika tab klasemen
         if ($tab === 'klasemen') {
             $query->orderByDesc('total_nominal_verified');
@@ -55,7 +60,7 @@ class AdminUserController extends Controller
             $query->latest('id');
         }
 
-        $users = $query->paginate(15)->withQueryString();
+        $users = $query->paginate($perPage)->withQueryString();
 
         // Metrik Pengguna
         $totalUserCount = User::count();
@@ -69,6 +74,7 @@ class AdminUserController extends Controller
             'topDonaturs',
             'search',
             'tab',
+            'perPage',
             'totalUserCount',
             'totalAdminCount',
             'totalDonaturTerdaftar'
