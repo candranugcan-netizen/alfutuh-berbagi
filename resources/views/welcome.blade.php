@@ -367,35 +367,24 @@
                                     </div>
                                 </div>
 
-                                <!-- Progress Bar Sisa Dana -->
-                                <div class="space-y-1">
+                                <!-- Progress Bar Sisa Dana Berwarna -->
+                                <div class="space-y-1 pt-0.5">
                                     <div class="flex justify-between text-[10px]">
-                                        <span class="text-slate-400">Rasio Sisa Belum Disalurkan</span>
+                                        <span class="text-slate-400">Rasio Sisa Dana</span>
                                         <span class="font-bold {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-600' : 'text-emerald-700') }}">
                                             {{ $pctSisa }}%
                                         </span>
                                     </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                                         @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                            <div class="bg-rose-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-rose-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @elseif($statusSisa === 'warning')
-                                            <div class="bg-amber-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-amber-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @else
-                                            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @endif
                                     </div>
                                 </div>
-
-                                <!-- Notifikasi Khusus jika Donasi Operasional Sisa Sedikit -->
-                                @if($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty']))
-                                    <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[10px] text-amber-900 flex items-start gap-1.5">
-                                        <span class="text-amber-600 font-bold shrink-0 text-xs">⚠️</span>
-                                        <div class="leading-tight">
-                                            <strong class="font-extrabold block">Sisa Dana Operasional Menipis!</strong>
-                                            <span>Dukungan Anda sangat dibutuhkan untuk kelancaran kegiatan rutin santri &amp; dakwah.</span>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </div>
 
@@ -520,35 +509,24 @@
                                     </div>
                                 </div>
 
-                                <!-- Progress Bar Sisa Dana -->
-                                <div class="space-y-1">
+                                <!-- Progress Bar Sisa Dana Berwarna -->
+                                <div class="space-y-1 pt-0.5">
                                     <div class="flex justify-between text-[10px]">
-                                        <span class="text-slate-400">Rasio Sisa Belum Disalurkan</span>
+                                        <span class="text-slate-400">Rasio Sisa Dana</span>
                                         <span class="font-bold {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-600' : 'text-emerald-700') }}">
                                             {{ $pctSisa }}%
                                         </span>
                                     </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                                         @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                            <div class="bg-rose-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-rose-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @elseif($statusSisa === 'warning')
-                                            <div class="bg-amber-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-amber-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @else
-                                            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @endif
                                     </div>
                                 </div>
-
-                                <!-- Notifikasi Khusus jika Donasi Operasional Sisa Sedikit -->
-                                @if($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty']))
-                                    <div class="p-2.5 rounded-xl bg-amber-50 border border-amber-200/80 text-[10px] text-amber-900 flex items-start gap-1.5">
-                                        <span class="text-amber-600 font-bold shrink-0 text-xs">⚠️</span>
-                                        <div class="leading-tight">
-                                            <strong class="font-extrabold block">Sisa Dana Operasional Menipis!</strong>
-                                            <span>Dukungan Anda sangat dibutuhkan untuk kelancaran kegiatan rutin santri &amp; dakwah.</span>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </div>
 
