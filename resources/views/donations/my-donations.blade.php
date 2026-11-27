@@ -3,8 +3,45 @@
         <!-- Header Page -->
         <div>
             <h1 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">Riwayat Donasi Saya</h1>
-            <p class="text-xs text-slate-500 mt-0.5">Pantau status transfer, bukti donasi, dan transparansi amanah Anda</p>
+            <p class="text-xs text-slate-500 mt-0.5">Pantau status transfer, bukti donasi, dan total akumulasi kebaikan Anda</p>
         </div>
+
+        <!-- Kartu Total Donasi yang Dilakukan oleh User -->
+        @if(Auth::check() || isset($isSearch))
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <!-- Total Donasi Terverifikasi / Berhasil -->
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Donasi Disalurkan</span>
+                        <div class="w-7 h-7 rounded-full bg-[#EAF5EE] text-[#155E4B] flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-xl sm:text-2xl font-black text-[#155E4B]">
+                        Rp {{ number_format($totalDonasiBerhasil ?? 0, 0, ',', '.') }}
+                    </p>
+                    <p class="text-[10px] text-slate-400">
+                        {{ $totalTransaksiCount ?? 0 }} riwayat transaksi tercatat
+                    </p>
+                </div>
+
+                <!-- Total Donasi Menunggu Verifikasi / Pembayaran -->
+                <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Menunggu Verifikasi</span>
+                        <div class="w-7 h-7 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke-width="2"/><path d="M12 7v5l3 3" stroke-width="2" stroke-linecap="round"/></svg>
+                        </div>
+                    </div>
+                    <p class="text-xl sm:text-2xl font-black text-amber-600">
+                        Rp {{ number_format($totalDonasiPending ?? 0, 0, ',', '.') }}
+                    </p>
+                    <p class="text-[10px] text-slate-400">
+                        Dalam proses transfer / cek admin
+                    </p>
+                </div>
+            </div>
+        @endif
 
         <!-- Form Lacak Donasi Tamu (Untuk Donatur Guest) -->
         <div class="bg-white p-6 sm:p-7 rounded-3xl border border-slate-100 shadow-sm space-y-3.5">
@@ -30,9 +67,16 @@
 
         <!-- Daftar Riwayat Donasi -->
         <div class="space-y-3.5">
-            <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider px-1">
-                {{ isset($isSearch) ? 'Hasil Pencarian Donasi' : 'Daftar Donasi Anda' }}
-            </h3>
+            <div class="flex justify-between items-center px-1">
+                <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">
+                    {{ isset($isSearch) ? 'Hasil Pencarian Donasi' : 'Daftar Donasi Anda' }}
+                </h3>
+                @if(method_exists($donations, 'total'))
+                    <span class="text-[11px] font-bold text-slate-400">
+                        Total {{ $donations->total() }} Transaksi
+                    </span>
+                @endif
+            </div>
 
             @forelse($donations as $item)
                 <div class="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm space-y-3">
@@ -76,8 +120,9 @@
                 </div>
             @endforelse
 
-            @if(method_exists($donations, 'links'))
-                <div class="pt-2">
+            <!-- Paginasi Riwayat Donasi -->
+            @if(method_exists($donations, 'links') && $donations->hasPages())
+                <div class="pt-4">
                     {{ $donations->links() }}
                 </div>
             @endif

@@ -80,7 +80,7 @@
         <!-- Menu Pintas Admin (Quick Actions dengan Ikon Bersih dan Berbeda) -->
         <div class="space-y-2.5">
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider px-1">Menu Operasional Donasi &amp; Yayasan</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2.5">
+            <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
                 <!-- 0. Laporan Keuangan Internal Yayasan -->
                 <a href="{{ route('admin.laporan-internal.index') }}" class="bg-gradient-to-b from-[#EAF5EE] to-white p-4 rounded-2xl border border-[#D2E6DC] shadow-sm hover:border-[#155E4B] transition flex flex-col items-center text-center group active:scale-95">
                     <div class="w-12 h-12 rounded-2xl bg-[#155E4B] text-white flex items-center justify-center mb-2 group-hover:scale-110 transition shadow-sm">
@@ -89,7 +89,7 @@
                         </svg>
                     </div>
                     <p class="text-xs font-black text-[#155E4B]">Laporan Internal</p>
-                    <p class="text-[10px] text-slate-500 mt-0.5">Laporan Untuk Yayasan</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">Laporan Yayasan</p>
                 </a>
                 <!-- 1. Verifikasi Donasi -->
                 <a href="{{ route('admin.donasi.index') }}" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-[#155E4B] transition flex flex-col items-center text-center group active:scale-95">
@@ -138,7 +138,18 @@
                     <p class="text-[10px] text-slate-400 mt-0.5">Tambah kampanye</p>
                 </a>
 
-                <!-- 5. Kabar Berita -->
+                <!-- 5. Kelola Pengguna & Klasemen -->
+                <a href="{{ route('admin.users.index') }}" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-[#155E4B] transition flex flex-col items-center text-center group active:scale-95">
+                    <div class="w-12 h-12 rounded-2xl bg-[#F2F7F4] text-[#155E4B] flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-[#155E4B] group-hover:text-white transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm14 10v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <p class="text-xs font-extrabold text-slate-800">Pengguna &amp; Donatur</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">Klasemen &amp; akun</p>
+                </a>
+
+                <!-- 6. Kabar Berita -->
                 <a href="{{ route('admin.kabar.index') }}" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-[#155E4B] transition flex flex-col items-center text-center group active:scale-95">
                     <div class="w-12 h-12 rounded-2xl bg-[#F2F7F4] text-[#155E4B] flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-[#155E4B] group-hover:text-white transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -149,7 +160,7 @@
                     <p class="text-[10px] text-slate-400 mt-0.5">Update kegiatan</p>
                 </a>
 
-                <!-- 6. Rekening Bank -->
+                <!-- 7. Rekening Bank -->
                 <a href="{{ route('admin.banks.index') }}" class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:border-[#155E4B] transition flex flex-col items-center text-center group active:scale-95">
                     <div class="w-12 h-12 rounded-2xl bg-[#F2F7F4] text-[#155E4B] flex items-center justify-center mb-2 group-hover:scale-110 group-hover:bg-[#155E4B] group-hover:text-white transition">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

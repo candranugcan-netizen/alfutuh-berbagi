@@ -152,17 +152,39 @@ class DonationController extends Controller
     public function myDonations(Request $request)
     {
         $donations = collect();
+        $totalDonasiBerhasil = 0;
+        $totalDonasiPending = 0;
+        $totalTransaksiCount = 0;
 
         if (Auth::check()) {
-            // Donasi terikat akun user
+            $user = Auth::user();
+
+            // Total donasi yang telah terverifikasi oleh user ini
+            $totalDonasiBerhasil = (int) Donation::where('user_id', $user->id)
+                ->where('status', 'verified')
+                ->sum('nominal');
+
+            // Total donasi yang masih pending
+            $totalDonasiPending = (int) Donation::where('user_id', $user->id)
+                ->whereIn('status', ['pending_payment', 'pending_verification'])
+                ->sum('nominal');
+
+            $totalTransaksiCount = Donation::where('user_id', $user->id)->count();
+
+            // Donasi terikat akun user dengan paginasi 10 item per halaman
             $donations = Donation::with('program')
-                ->where('user_id', Auth::id())
+                ->where('user_id', $user->id)
                 ->latest()
                 ->paginate(10)
                 ->withQueryString();
         }
 
-        return view('donations.my-donations', compact('donations'));
+        return view('donations.my-donations', compact(
+            'donations',
+            'totalDonasiBerhasil',
+            'totalDonasiPending',
+            'totalTransaksiCount'
+        ));
     }
 
     /**
@@ -176,12 +198,19 @@ class DonationController extends Controller
 
         $query = trim($request->input('query'));
 
-        $donations = Donation::with('program')
-            ->where(function ($q) use ($query) {
-                $q->where('kode_donasi', $query)
-                  ->orWhere('no_hp', $query)
-                  ->orWhere('email', $query);
-            })
+        $baseQuery = Donation::where(function ($q) use ($query) {
+            $q->where('kode_donasi', $query)
+              ->orWhere('no_hp', $query)
+              ->orWhere('email', $query);
+        });
+
+        // Hitung total donasi hasil pencarian
+        $totalDonasiBerhasil = (int) (clone $baseQuery)->where('status', 'verified')->sum('nominal');
+        $totalDonasiPending = (int) (clone $baseQuery)->whereIn('status', ['pending_payment', 'pending_verification'])->sum('nominal');
+        $totalTransaksiCount = (clone $baseQuery)->count();
+
+        $donations = (clone $baseQuery)
+            ->with('program')
             ->latest()
             ->paginate(10)
             ->withQueryString();
@@ -190,6 +219,9 @@ class DonationController extends Controller
             'donations' => $donations,
             'searchQuery' => $query,
             'isSearch' => true,
+            'totalDonasiBerhasil' => $totalDonasiBerhasil,
+            'totalDonasiPending' => $totalDonasiPending,
+            'totalTransaksiCount' => $totalTransaksiCount,
         ]);
     }
 }

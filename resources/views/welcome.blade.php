@@ -691,10 +691,16 @@
         <!-- DOA & DUKUNGAN DONATUR -->
         @if($recentDonations->isNotEmpty())
             <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3.5">
-                <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-[#155E4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Doa &amp; Dukungan Donatur</span>
-                </h3>
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-[#155E4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <span>Doa &amp; Dukungan Donatur</span>
+                    </h3>
+                    <a href="{{ route('donations.doa') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436] inline-flex items-center gap-1 bg-[#EAF5EE] px-3.5 py-1.5 rounded-full border border-[#D2E6DC] transition active:scale-95 shadow-2xs">
+                        <span>Lihat Semua Doa</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
                 <div class="space-y-2.5">
                     @foreach($recentDonations as $d)
                         <div class="p-3.5 bg-[#F8FAF8] rounded-2xl border border-slate-100 space-y-1">

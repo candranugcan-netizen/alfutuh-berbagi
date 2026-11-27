@@ -145,15 +145,15 @@ class LandingController extends Controller
     /**
      * Halaman Detail Program Donasi
      */
-    public function programDetail($slug)
+    public function programDetail(Request $request, $slug)
     {
         $program = Program::with(['penyalurans', 'kabars'])->where('slug', $slug)->firstOrFail();
 
-        // Donatur terverifikasi terbaru untuk program ini
+        // Donatur terverifikasi terbaru untuk program ini (Paginasi 10)
         $donations = Donation::where('program_id', $program->id)
             ->where('status', 'verified')
             ->latest()
-            ->paginate(10)
+            ->paginate(10, ['*'], 'donatur_page')
             ->withQueryString();
 
         // Kabar update untuk program ini
@@ -162,12 +162,31 @@ class LandingController extends Controller
             ->latest('tanggal')
             ->get();
 
-        // Penyaluran dana untuk program ini
+        // Penyaluran dana untuk program ini (Paginasi 10)
         $penyalurans = Penyaluran::where('program_id', $program->id)
             ->latest('tanggal')
-            ->get();
+            ->paginate(10, ['*'], 'penyaluran_page')
+            ->withQueryString();
 
         return view('programs.show', compact('program', 'donations', 'kabars', 'penyalurans'));
+    }
+
+    /**
+     * Halaman Seluruh Doa & Donatur Terkini (Berdonasi Publik)
+     */
+    public function doaDonatur()
+    {
+        $donations = Donation::with('program')
+            ->where('status', 'verified')
+            ->whereNotNull('doa')
+            ->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        $totalDoaCount = Donation::where('status', 'verified')->whereNotNull('doa')->count();
+        $totalDonasiVerif = Donation::where('status', 'verified')->sum('nominal');
+
+        return view('donations.doa', compact('donations', 'totalDoaCount', 'totalDonasiVerif'));
     }
 
     /**

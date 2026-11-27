@@ -55,6 +55,7 @@
                         <x-slot name="content">
                             @if(Auth::user()->isAdmin())
                                 <x-dropdown-link :href="route('dashboard')">Dashboard Admin</x-dropdown-link>
+                                <x-dropdown-link :href="route('admin.users.index')">Kelola Pengguna &amp; Donatur</x-dropdown-link>
                                 <x-dropdown-link :href="route('admin.laporan-internal.index')">Laporan Keuangan Internal</x-dropdown-link>
                                 <x-dropdown-link :href="route('admin.donasi.index')">Verifikasi Donasi</x-dropdown-link>
                                 <x-dropdown-link :href="route('admin.donasi.manual.create')">Input Manual Donasi</x-dropdown-link>

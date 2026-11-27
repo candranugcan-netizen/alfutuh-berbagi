@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminProgramController;
 use App\Http\Controllers\Admin\AdminKabarController;
 use App\Http\Controllers\Admin\AdminBankController;
 use App\Http\Controllers\Admin\LaporanInternalController;
+use App\Http\Controllers\Admin\AdminUserController;
 use App\Models\Keuangan;
 use App\Models\Kegiatan;
 use App\Models\Donation;
@@ -47,6 +48,9 @@ Route::post('/donasi-saya/lacak', [DonationController::class, 'trackGuest'])->na
 // Kabar Terbaru & Cerita Penyaluran
 Route::get('/kabar', [LandingController::class, 'kabars'])->name('kabars.index');
 Route::get('/kabar/{slug}', [LandingController::class, 'kabarDetail'])->name('kabars.show');
+
+// Halaman Doa & Dukungan Donatur Publik
+Route::get('/doa-donatur', [LandingController::class, 'doaDonatur'])->name('donations.doa');
 
 // Laporan Transparansi Donasi & Kas
 Route::get('/transparansi', [LandingController::class, 'transparansi'])->name('transparansi');
@@ -127,6 +131,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/banks', [AdminBankController::class, 'index'])->name('banks.index');
         Route::post('/banks', [AdminBankController::class, 'store'])->name('banks.store');
         Route::delete('/banks/{id}', [AdminBankController::class, 'destroy'])->name('banks.destroy');
+
+        // Kelola Pengguna, Klasemen Donatur, Riwayat Donasi & Edit/Hapus
+        Route::resource('users', AdminUserController::class)->except(['create', 'store']);
 
         // Laporan Keuangan Internal Yayasan (BBHQ, TPA, Kajian, dsb. dari Donasi Operasional)
         Route::get('/laporan-internal', [LaporanInternalController::class, 'index'])->name('laporan-internal.index');

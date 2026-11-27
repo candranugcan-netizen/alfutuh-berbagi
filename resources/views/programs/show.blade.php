@@ -178,7 +178,7 @@
         </div>
 
         <!-- Interactive Tabs -->
-        <div id="tabs-section" x-data="{ tab: '{{ request('tab', request('page') ? 'donatur' : 'cerita') }}' }" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-5">
+        <div id="tabs-section" x-data="{ tab: '{{ request('tab', (request('donatur_page') ? 'donatur' : (request('penyaluran_page') ? 'kabar' : 'cerita'))) }}' }" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-100 shadow-sm space-y-5">
             <!-- Tab Headers -->
             <div class="flex border-b border-slate-100 gap-6 text-xs sm:text-sm font-bold">
                 <button @click="tab = 'cerita'" :class="tab === 'cerita' ? 'text-[#155E4B] border-b-2 border-[#155E4B] pb-3.5 font-extrabold' : 'text-slate-400 pb-3.5 hover:text-slate-600'" class="inline-flex items-center gap-1.5">
@@ -187,7 +187,7 @@
                 </button>
                 <button @click="tab = 'kabar'" :class="tab === 'kabar' ? 'text-[#155E4B] border-b-2 border-[#155E4B] pb-3.5 font-extrabold' : 'text-slate-400 pb-3.5 hover:text-slate-600'" class="inline-flex items-center gap-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5M16 13h2M8 16h10" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span>Kabar &amp; Penyaluran ({{ $kabars->count() + $penyalurans->count() }})</span>
+                    <span>Kabar &amp; Penyaluran ({{ $kabars->count() + $penyalurans->total() }})</span>
                 </button>
                 <button @click="tab = 'donatur'" :class="tab === 'donatur' ? 'text-[#155E4B] border-b-2 border-[#155E4B] pb-3.5 font-extrabold' : 'text-slate-400 pb-3.5 hover:text-slate-600'" class="inline-flex items-center gap-1.5">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5" stroke-width="1.8"/><path d="M5 20c1-4 3.3-6 7-6s6 2 7 6" stroke-width="1.8" stroke-linecap="round"/></svg>
@@ -206,7 +206,10 @@
             <div x-show="tab === 'kabar'" style="display: none;" class="space-y-4">
                 @if($penyalurans->isNotEmpty())
                     <div class="space-y-2.5">
-                        <h4 class="text-xs font-bold text-[#155E4B] uppercase tracking-wider">Laporan Penyaluran Dana</h4>
+                        <div class="flex justify-between items-center">
+                            <h4 class="text-xs font-bold text-[#155E4B] uppercase tracking-wider">Laporan Penyaluran Dana</h4>
+                            <span class="text-[10px] text-slate-400 font-bold">Total {{ $penyalurans->total() }} Penyaluran</span>
+                        </div>
                         @foreach($penyalurans as $p)
                             <div class="p-4 bg-[#F2F7F4] rounded-2xl border border-[#D2E6DC] space-y-1">
                                 <div class="flex justify-between items-center text-xs">
@@ -217,6 +220,13 @@
                                 <p class="text-xs text-slate-600 mt-1">{{ $p->keterangan }}</p>
                             </div>
                         @endforeach
+
+                        <!-- Paginasi Penyaluran -->
+                        @if($penyalurans->hasPages())
+                            <div class="pt-3">
+                                {{ $penyalurans->appends(['tab' => 'kabar'])->fragment('tabs-section')->links() }}
+                            </div>
+                        @endif
                     </div>
                 @endif
 
@@ -240,6 +250,11 @@
 
             <!-- Tab 3: Donatur & Doa -->
             <div x-show="tab === 'donatur'" style="display: none;" class="space-y-3">
+                <div class="flex justify-between items-center px-1">
+                    <span class="text-xs font-bold text-slate-600">Dukungan Dermawan Terverifikasi</span>
+                    <span class="text-[10px] text-slate-400 font-bold">Total {{ $donations->total() }} Donatur</span>
+                </div>
+
                 @forelse($donations as $donasi)
                     <div class="p-4 bg-[#F8FAF8] rounded-2xl border border-slate-100 space-y-1">
                         <div class="flex justify-between items-center text-xs">
@@ -257,7 +272,8 @@
                     <p class="text-xs text-slate-400 text-center py-8">Jadilah donatur pertama yang menebar kebaikan di program ini!</p>
                 @endforelse
 
-                @if(method_exists($donations, 'links'))
+                <!-- Paginasi Doa & Donatur -->
+                @if(method_exists($donations, 'links') && $donations->hasPages())
                     <div class="pt-4">
                         {{ $donations->appends(['tab' => 'donatur'])->fragment('tabs-section')->links() }}
                     </div>
