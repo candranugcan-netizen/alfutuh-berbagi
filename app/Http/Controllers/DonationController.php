@@ -31,7 +31,7 @@ class DonationController extends Controller
         $program = Program::where('slug', $slug)->where('is_active', true)->firstOrFail();
 
         $validated = $request->validate([
-            'nominal' => 'required|integer|min:10000',
+            'nominal' => 'required|integer|min:1000',
             'nama_donatur' => 'nullable|string|max:100',
             'is_anonim' => 'nullable|boolean',
             'no_hp' => 'required|string|max:20',
@@ -39,7 +39,7 @@ class DonationController extends Controller
             'bank_tujuan' => 'required|string',
             'doa' => 'nullable|string|max:500',
         ], [
-            'nominal.min' => 'Nominal donasi minimal adalah Rp 10.000.',
+            'nominal.min' => 'Nominal donasi minimal adalah Rp 1.000.',
             'no_hp.required' => 'Nomor WhatsApp wajib diisi untuk konfirmasi status donasi.',
             'bank_tujuan.required' => 'Silakan pilih rekening bank tujuan transfer.',
         ]);

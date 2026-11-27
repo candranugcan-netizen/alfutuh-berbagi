@@ -207,7 +207,8 @@ class LandingController extends Controller
             ->withQueryString();
 
         $programsSummary = Program::withCount('verifiedDonations')
-            ->withSum('penyalurans', 'nominal')
+            ->withSum('verifiedDonations as total_donasi_terverifikasi', 'nominal')
+            ->withSum('penyalurans as total_penyaluran', 'nominal')
             ->get();
 
         return view('transparansi', compact('totalDonasi', 'totalPenyaluran', 'saldoAmanah', 'penyalurans', 'programsSummary'));

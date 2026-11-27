@@ -7,6 +7,7 @@ use App\Models\Keuangan;
 use App\Models\KategoriKeuangan;
 use App\Models\Program;
 use App\Models\Donation;
+use App\Models\Penyaluran;
 use App\Exports\LaporanInternalExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -77,7 +78,35 @@ class LaporanInternalController extends Controller
             ->where('status', 'verified')
             ->sum('nominal');
 
-        return max((int) $prog->dana_terkumpul, (int) $verifiedSum);
+        return (int) $verifiedSum;
+    }
+
+    /**
+     * Hitung sisa donasi operasional sesuai laporan donatur per program
+     */
+    protected function getSisaDonasiOperasional()
+    {
+        $prog = $this->getOperasionalProgram();
+        if (!$prog) {
+            return 0;
+        }
+
+        $totalPenyaluran = Penyaluran::where('program_id', $prog->id)->sum('nominal');
+
+        return max(0, $this->getTotalDonasiOperasional() - (int) $totalPenyaluran);
+    }
+
+    /**
+     * Query seluruh transaksi internal, termasuk data lama yang hanya ditandai lewat kategori
+     */
+    protected function internalTransactions()
+    {
+        return Keuangan::where(function ($query) {
+            $query->where('is_internal', true)
+                ->orWhereHas('kategori', function ($categoryQuery) {
+                    $categoryQuery->where('is_internal', true);
+                });
+        });
     }
 
     /**
@@ -85,7 +114,7 @@ class LaporanInternalController extends Controller
      */
     protected function getTotalPencairanDana()
     {
-        return Keuangan::where('is_internal', true)->where('tipe', 'Pemasukan')->sum('nominal');
+        return $this->internalTransactions()->where('tipe', 'Pemasukan')->sum('nominal');
     }
 
     /**
@@ -93,10 +122,9 @@ class LaporanInternalController extends Controller
      */
     protected function getSisaBisaDicairkan()
     {
-        $totalDonasi = $this->getTotalDonasiOperasional();
         $totalPencairan = $this->getTotalPencairanDana();
 
-        return max(0, $totalDonasi - $totalPencairan);
+        return max(0, $this->getTotalDonasiOperasional() - $totalPencairan);
     }
 
     /**
@@ -104,7 +132,7 @@ class LaporanInternalController extends Controller
      */
     protected function getTotalPengeluaranKegiatan()
     {
-        return Keuangan::where('is_internal', true)->where('tipe', 'Pengeluaran')->sum('nominal');
+        return $this->internalTransactions()->where('tipe', 'Pengeluaran')->sum('nominal');
     }
 
     /**
@@ -162,7 +190,8 @@ class LaporanInternalController extends Controller
         // 1. Total Dana Donasi Operasional Yayasan
         $totalDonasiOperasional = $this->getTotalDonasiOperasional();
         $totalPencairanKumulatif = $this->getTotalPencairanDana();
-        // Sisa dana donasi operasional yang siap dicairkan ke pos kegiatan
+        $sisaDonasiOperasional = $this->getSisaDonasiOperasional();
+        // Saldo internal hanya dikurangi pencairan internal, bukan penyaluran publik.
         $sisaBisaDicairkan = max(0, $totalDonasiOperasional - $totalPencairanKumulatif);
 
         // 2 & 3. Total Pencairan & Total Pengeluaran pada filter periode
@@ -205,6 +234,7 @@ class LaporanInternalController extends Controller
             'tipe',
             'search',
             'totalDonasiOperasional',
+            'sisaDonasiOperasional',
             'sisaBisaDicairkan',
             'totalPencairanDana',
             'totalPencairanKumulatif',
@@ -411,6 +441,7 @@ class LaporanInternalController extends Controller
         // 1. Total Dana Donasi Operasional Yayasan
         $totalDonasiOperasional = $this->getTotalDonasiOperasional();
         $totalPencairanKumulatif = $this->getTotalPencairanDana();
+        $sisaDonasiOperasional = $this->getSisaDonasiOperasional();
         $sisaBisaDicairkan = max(0, $totalDonasiOperasional - $totalPencairanKumulatif);
 
         // 2 & 3. Total Pencairan & Total Pengeluaran pada filter periode
@@ -440,6 +471,7 @@ class LaporanInternalController extends Controller
             'endDate',
             'kategoriTerpilih',
             'totalDonasiOperasional',
+            'sisaDonasiOperasional',
             'sisaBisaDicairkan',
             'totalPencairanDana',
             'totalPengeluaranKegiatan',

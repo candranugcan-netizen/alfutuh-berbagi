@@ -42,7 +42,7 @@
 
         @php
             $initialNominal = request()->query('nominal', 50000);
-            if (!is_numeric($initialNominal) || $initialNominal < 10000) {
+            if (!is_numeric($initialNominal) || $initialNominal < 1000) {
                 $initialNominal = 50000;
             }
         @endphp
@@ -66,7 +66,7 @@
                         <span class="text-[10px] text-slate-500 font-medium block">Nominal Donasi:</span>
                         <span class="text-base sm:text-lg font-black text-[#155E4B]">Rp <span x-text="Number(nominal).toLocaleString('id-ID')"></span></span>
                     </div>
-                    <button type="button" @click="let newNom = prompt('Masukkan nominal donasi baru (min. 10000):', nominal); if(newNom && newNom >= 10000) nominal = Number(newNom);"
+                    <button type="button" @click="let newNom = prompt('Masukkan nominal donasi baru (min. 1000):', nominal); if(newNom && newNom >= 1000) nominal = Number(newNom);"
                         class="text-xs font-bold text-[#155E4B] bg-white border border-[#D2E6DC] px-3.5 py-1.5 rounded-full hover:bg-[#EAF3EE] transition">
                         Ubah Nominal
                     </button>

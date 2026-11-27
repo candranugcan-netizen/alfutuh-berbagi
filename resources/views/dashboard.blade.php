@@ -73,7 +73,7 @@
                 </div>
                 <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Saldo Kas Yayasan</p>
                 <p class="text-lg sm:text-xl font-black text-[#155E4B]">Rp {{ number_format($saldo, 0, ',', '.') }}</p>
-                <p class="text-[10px] text-emerald-600 font-semibold">Saldo kas operasional</p>
+                <p class="text-[10px] text-emerald-600 font-semibold">Saldo Kas Seluruh Donasi</p>
             </div>
         </div>
 

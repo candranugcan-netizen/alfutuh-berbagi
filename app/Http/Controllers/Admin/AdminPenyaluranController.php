@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Donation;
 use App\Models\Penyaluran;
 use App\Models\Program;
 use App\Models\KategoriKeuangan;
@@ -18,8 +19,15 @@ class AdminPenyaluranController extends Controller
      */
     public function index(Request $request)
     {
-        $programs = Program::where('is_active', true)->orderBy('nama')->get();
-        $query = Penyaluran::with('program')->latest('tanggal');
+        $programs = Program::where('is_active', true)
+            ->withSum('verifiedDonations as total_donasi_terverifikasi', 'nominal')
+            ->withSum('penyalurans as total_penyaluran', 'nominal')
+            ->orderBy('nama')
+            ->get();
+        $sisaDanaProgram = $programs->mapWithKeys(fn ($program) => [
+            $program->id => max(0, (int) $program->total_donasi_terverifikasi - (int) $program->total_penyaluran),
+        ]);
+        $query = Penyaluran::with('program')->latest('created_at')->latest('id');
 
         if ($request->filled('program_id')) {
             $query->where('program_id', $request->program_id);
@@ -28,7 +36,7 @@ class AdminPenyaluranController extends Controller
         $penyalurans = $query->paginate(15)->withQueryString();
         $totalPenyaluran = Penyaluran::sum('nominal');
 
-        return view('admin.penyaluran.index', compact('penyalurans', 'programs', 'totalPenyaluran'));
+        return view('admin.penyaluran.index', compact('penyalurans', 'programs', 'totalPenyaluran', 'sisaDanaProgram'));
     }
 
     /**
@@ -51,7 +59,19 @@ class AdminPenyaluranController extends Controller
             'keterangan.required' => 'Tuliskan laporan rincian penggunaan dana.',
         ]);
 
-        $program = Program::findOrFail($request->program_id);
+        $availableDonation = (int) Donation::where('program_id', $validated['program_id'])
+            ->where('status', 'verified')
+            ->sum('nominal')
+            - (int) Penyaluran::where('program_id', $validated['program_id'])->sum('nominal');
+        $availableDonation = max(0, $availableDonation);
+
+        if ($validated['nominal'] > $availableDonation) {
+            return back()->withInput()->withErrors([
+                'nominal' => 'Nominal penyaluran melebihi sisa donasi program yang tersedia (Maksimal Rp ' . number_format($availableDonation, 0, ',', '.') . ').',
+            ]);
+        }
+
+        $program = Program::findOrFail($validated['program_id']);
 
         $fotoPath = null;
         if ($request->hasFile('foto')) {

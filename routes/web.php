@@ -70,10 +70,8 @@ Route::get('/dashboard', function () {
     $totalPenyaluran = Penyaluran::sum('nominal');
     $totalProgram = Program::where('is_active', true)->count();
 
-    // Metrik Kas Umum
-    $pemasukan = Keuangan::where('tipe', 'Pemasukan')->sum('nominal');
-    $pengeluaran = Keuangan::where('tipe', 'Pengeluaran')->sum('nominal');
-    $saldo = $pemasukan - $pengeluaran;
+    // Saldo amanah mengikuti laporan donatur untuk seluruh program.
+    $saldo = max(0, $totalDonasiVerif - $totalPenyaluran);
     $totalKegiatan = Kegiatan::count();
     $recentKeuangan = Keuangan::with('kategori')->latest()->take(3)->get();
     
@@ -85,8 +83,6 @@ Route::get('/dashboard', function () {
         ->get();
 
     return view('dashboard', compact(
-        'pemasukan',
-        'pengeluaran',
         'saldo',
         'totalKegiatan',
         'recentKeuangan',

@@ -57,14 +57,18 @@
                             <span class="font-extrabold text-xs sm:text-sm text-slate-800">{{ $ps->nama }}</span>
                             <span class="text-[10px] text-slate-400 block">{{ $ps->verified_donations_count }} kali donasi diterima</span>
                         </div>
-                        <div class="flex items-center gap-6 text-right">
+                        <div class="flex items-center gap-4 text-right">
                             <div>
                                 <span class="text-[9px] text-slate-400 block">Terkumpul</span>
-                                <span class="font-black text-[#155E4B] text-xs sm:text-sm">Rp {{ number_format($ps->dana_terkumpul, 0, ',', '.') }}</span>
+                                <span class="font-black text-[#155E4B] text-xs sm:text-sm">Rp {{ number_format($ps->total_donasi_terverifikasi ?? 0, 0, ',', '.') }}</span>
                             </div>
                             <div>
                                 <span class="text-[9px] text-slate-400 block">Disalurkan</span>
-                                <span class="font-black text-[#D4AF37] text-xs sm:text-sm">Rp {{ number_format($ps->penyalurans_sum_nominal ?? 0, 0, ',', '.') }}</span>
+                                <span class="font-black text-[#D4AF37] text-xs sm:text-sm">Rp {{ number_format($ps->total_penyaluran ?? 0, 0, ',', '.') }}</span>
+                            </div>
+                            <div>
+                                <span class="text-[9px] text-slate-400 block">Sisa</span>
+                                <span class="font-black text-emerald-600 text-xs sm:text-sm">Rp {{ number_format(max(0, (int) $ps->total_donasi_terverifikasi - (int) $ps->total_penyaluran), 0, ',', '.') }}</span>
                             </div>
                         </div>
                     </div>

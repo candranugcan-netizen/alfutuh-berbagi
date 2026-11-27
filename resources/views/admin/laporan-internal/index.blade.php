@@ -8,7 +8,7 @@
                     </span>
                     <h2 class="font-extrabold text-lg sm:text-xl text-slate-800 leading-tight">Laporan Keuangan Internal Operasional</h2>
                 </div>
-                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Lacak alokasi donasi operasional umum untuk program BBHQ, TPA Santri, Kajian Muslimah &amp; dakwah yayasan</p>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">Lacak alokasi donasi operasional umum untuk program &amp; dakwah yayasan</p>
             </div>
 
             <!-- Tombol Ekspor PDF & Excel (Responsive Mobile & Desktop) -->
@@ -27,8 +27,8 @@
 
     <div class="space-y-4 sm:space-y-6">
 
-        <!-- 3 Kartu Metrik Utama Anggaran Internal Sesuai Alur -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+        <!-- 4 Kartu Metrik Utama Anggaran Internal Sesuai Alur -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3 sm:gap-4">
             <!-- 1. Total Donasi Operasional -->
             <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
                 <div class="flex items-center gap-2.5 mb-1">
@@ -42,12 +42,26 @@
                 </div>
                 <p class="text-lg sm:text-xl font-black text-[#155E4B]">Rp {{ number_format($totalDonasiOperasional, 0, ',', '.') }}</p>
                 <div class="pt-1 flex items-center justify-between text-[10px]">
-                    <span class="text-slate-400">Sisa siap dicairkan:</span>
+                    <span class="text-slate-400">Sisa siap dicairkan ke internal:</span>
                     <span class="font-bold text-[#155E4B] bg-[#EAF5EE] px-2 py-0.5 rounded-full border border-[#D2E6DC]">Rp {{ number_format(max(0, $sisaBisaDicairkan), 0, ',', '.') }}</span>
                 </div>
             </div>
 
-            <!-- 2. Total Pencairan Dana -->
+            <!-- 2. Sisa Donasi Operasional pada Laporan Donatur -->
+            <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
+                <div class="flex items-center gap-2.5 mb-1">
+                    <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 7h18v12H3zM7 7V5h10v2M7 12h10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-tight">Sisa Donasi Operasional</p>
+                        <p class="text-[10px] text-slate-400">Sesuai penyaluran pada laporan donatur</p>
+                    </div>
+                </div>
+                <p class="text-lg sm:text-xl font-black text-emerald-600">Rp {{ number_format($sisaDonasiOperasional, 0, ',', '.') }}</p>
+            </div>
+
+            <!-- 3. Total Pencairan Dana -->
             <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
                 <div class="flex items-center gap-2.5 mb-1">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
@@ -65,7 +79,7 @@
                 </div>
             </div>
 
-            <!-- 3. Total Pengeluaran Kegiatan -->
+            <!-- 4. Total Pengeluaran Kegiatan -->
             <div class="bg-white p-4 sm:p-5 rounded-2xl sm:rounded-3xl border border-slate-100 shadow-sm space-y-1">
                 <div class="flex items-center gap-2.5 mb-1">
                     <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">

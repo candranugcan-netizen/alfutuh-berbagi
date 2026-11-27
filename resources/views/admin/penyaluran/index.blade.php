@@ -20,7 +20,19 @@
                 <p class="text-xs text-slate-400">Pengambilan dana akan otomatis tercatat di laporan transparansi publik dan buku kas yayasan.</p>
             </div>
 
-            <form action="{{ route('admin.penyaluran.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form action="{{ route('admin.penyaluran.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4"
+                x-data="{
+                    selectedProgram: '{{ old('program_id', '') }}',
+                    nominal: '{{ old('nominal', '') }}',
+                    balances: {
+                        @foreach($sisaDanaProgram as $programId => $balance)
+                            '{{ $programId }}': {{ $balance }}{{ $loop->last ? '' : ',' }}
+                        @endforeach
+                    },
+                    get availableBalance() { return Number(this.balances[this.selectedProgram] || 0) },
+                    get exceedsBalance() { return this.selectedProgram !== '' && Number(this.nominal || 0) > this.availableBalance },
+                    formatBalance(value) { return new Intl.NumberFormat('id-ID').format(value) }
+                }">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
@@ -29,12 +41,17 @@
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                             Program Donasi Asal Dana <span class="text-rose-500">*</span>
                         </label>
-                        <select name="program_id" required class="w-full text-xs border border-slate-200 rounded-2xl focus:border-[#155E4B] focus:ring-[#155E4B] p-3">
+                        <select name="program_id" x-model="selectedProgram" required class="w-full text-xs border border-slate-200 rounded-2xl focus:border-[#155E4B] focus:ring-[#155E4B] p-3">
                             <option value="">-- Pilih Program Asal Dana --</option>
                             @foreach($programs as $prog)
-                                <option value="{{ $prog->id }}">{{ $prog->nama }} (Terkumpul: Rp {{ number_format($prog->dana_terkumpul, 0, ',', '.') }})</option>
+                                <option value="{{ $prog->id }}" {{ old('program_id') == $prog->id ? 'selected' : '' }}>
+                                    {{ $prog->nama }} (Sisa: Rp {{ number_format($sisaDanaProgram[$prog->id], 0, ',', '.') }})
+                                </option>
                             @endforeach
                         </select>
+                        <p x-show="selectedProgram" class="text-[11px] text-slate-500 mt-1.5">
+                            Sisa donasi yang bisa disalurkan: <strong class="text-[#155E4B]">Rp <span x-text="formatBalance(availableBalance)"></span></strong>
+                        </p>
                         @error('program_id') <p class="text-xs text-rose-500 mt-1">{{ $message }}</p> @enderror
                     </div>
 
@@ -55,8 +72,12 @@
                         <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                             Nominal yang Diambil (Rp) <span class="text-rose-500">*</span>
                         </label>
-                        <input type="number" name="nominal" min="1000" step="1000" required placeholder="Contoh: 5000000"
-                            class="w-full text-xs font-black border border-slate-200 rounded-2xl focus:border-[#155E4B] focus:ring-[#155E4B] p-3">
+                        <input type="number" name="nominal" x-model="nominal" min="1000" step="1000" :max="availableBalance" required placeholder="Contoh: 5000000"
+                            :class="exceedsBalance ? 'border-rose-400 text-rose-700 bg-rose-50/50' : 'border-slate-200'"
+                            class="w-full text-xs font-black rounded-2xl focus:border-[#155E4B] focus:ring-[#155E4B] p-3">
+                        <p x-show="exceedsBalance" x-cloak class="text-xs text-rose-600 font-bold mt-1.5" role="alert">
+                            Nominal melebihi sisa donasi yang tersedia (maksimal Rp <span x-text="formatBalance(availableBalance)"></span>).
+                        </p>
                         @error('nominal') <p class="text-xs text-rose-500 mt-1">{{ $message }}</p> @enderror
                     </div>
 
@@ -98,7 +119,7 @@
                 </div>
 
                 <!-- Tombol Submit -->
-                <button type="submit" class="w-full bg-[#155E4B] hover:bg-[#0E4436] text-white font-extrabold text-xs py-3.5 rounded-full shadow-md shadow-[#155E4B]/20 active:scale-95 transition">
+                <button type="submit" :disabled="exceedsBalance" :class="exceedsBalance ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#0E4436] active:scale-95'" class="w-full bg-[#155E4B] text-white font-extrabold text-xs py-3.5 rounded-full shadow-md shadow-[#155E4B]/20 transition">
                     Simpan &amp; Terbitkan Laporan Penyaluran
                 </button>
             </form>

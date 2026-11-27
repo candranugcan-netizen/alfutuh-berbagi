@@ -34,7 +34,7 @@
                     <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">
                         Nominal Donasi (Rp) <span class="text-rose-500">*</span>
                     </label>
-                    <input type="number" name="nominal" min="1000" step="1000" required placeholder="Contoh: 100000"
+                    <input type="number" name="nominal" min="1000" step="500" required placeholder="Contoh: 100000"
                         class="w-full text-sm font-black border border-slate-200 rounded-2xl focus:border-[#155E4B] focus:ring-[#155E4B] p-3">
                 </div>
 
