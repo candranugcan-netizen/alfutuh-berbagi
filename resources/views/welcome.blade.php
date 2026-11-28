@@ -636,7 +636,6 @@
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
                             <h3 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Doa &amp; Dukungan Donatur</h3>
                         </div>
-                        <p class="text-[11px] text-slate-400">Untaian doa baik dari para muhsinin</p>
                     </div>
                     <div class="flex items-center gap-2">
                         <!-- Tombol Navigasi Geser (Desktop) -->

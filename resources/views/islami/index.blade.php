@@ -94,7 +94,6 @@
             <div class="flex items-center justify-between px-1">
                 <div>
                     <h2 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Menu Fitur Islami</h2>
-                    <p class="text-[11px] text-slate-500">Pendamping ibadah harian Anda (dikembangkan bertahap)</p>
                 </div>
             </div>
 
@@ -185,7 +184,7 @@
                 <div class="p-3.5 rounded-2xl bg-[#F7FAFC] border border-[#E2EEF6] space-y-1">
                     <span class="text-[10px] font-extrabold text-[#2B5B84] uppercase tracking-wider block">Rutin Mingguan</span>
                     <h4 class="font-extrabold text-xs sm:text-sm text-slate-800">Puasa Senin &amp; Kamis</h4>
-                    <p class="text-[11px] text-slate-500 leading-relaxed">Hari diangkatnya amal-amal hamba kepada Allah SWT.</p>
+                    <p class="text-[11px] text-slate-500 leading-relaxed">Hari diangkatnya amal-amal seorang hamba kepada Allah Ta'ala.</p>
                 </div>
 
                 <div class="p-3.5 rounded-2xl bg-[#F7FAFC] border border-[#E2EEF6] space-y-1">
