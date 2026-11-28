@@ -91,11 +91,6 @@
 
         <!-- 3. TOMBOL GRID FITUR ISLAMI (4 FITUR UTAMA - FLAT & BULAT) -->
         <div class="space-y-3">
-            <div class="flex items-center justify-between px-1">
-                <div>
-                    <h2 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Menu Fitur Islami</h2>
-                </div>
-            </div>
 
             <div class="grid grid-cols-4 gap-2 sm:gap-4 px-1">
                 <!-- 1. Al-Qur'an -->
