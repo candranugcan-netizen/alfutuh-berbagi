@@ -107,6 +107,31 @@
 
     <main class="max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-6 space-y-6">
 
+    <!-- CARD PINTASAN FITUR ISLAMI -->
+        <div class="bg-[#FFF7ED] rounded-3xl border border-orange-200 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+            <div class="flex items-center gap-3.5">
+                <div class="w-11 h-11 rounded-2xl bg-[#EA580C] text-white flex items-center justify-center shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.5c-2.5-2-6-2.5-9-2v13c3-.5 6.5 0 9 2m0-13c2.5-2 6-2.5 9-2v13c-3-.5-6.5 0-9 2m0-13v13"/>
+                    </svg>
+                </div>
+                <div class="space-y-0.5">
+                    <div class="flex items-center gap-2">
+                        <h3 class="font-extrabold text-sm sm:text-base text-slate-800 tracking-tight">Fitur Islami &amp; Jadwal Sholat</h3>
+                        <span class="text-[9px] font-extrabold bg-white text-[#EA580C] border border-orange-200 px-2 py-0.5 rounded-full">Baru</span>
+                    </div>
+                    <p class="text-[11px] sm:text-xs text-slate-600 leading-snug">
+                        Cek jadwal sholat, ayat &amp; hadits harian, doa shahih, kalkulator zakat, serta pengingat amalan sunnah.
+                    </p>
+                </div>
+            </div>
+            <a href="{{ route('islami.index') }}"
+               class="inline-flex items-center justify-center gap-1.5 bg-[#EA580C] hover:bg-[#C2410C] text-white font-extrabold text-xs px-5 py-2.5 rounded-full active:scale-95 transition shrink-0">
+                <span>Buka Fitur Islami</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+        </div>
+
         <!-- HERO SECTION -->
         @php
             $featured = $operasionalProgram ?? ($featuredPrograms->first() ?? $programs->first());
@@ -648,6 +673,8 @@
                 </div>
             </div>
         @endif
+
+        
 
     </main>
 

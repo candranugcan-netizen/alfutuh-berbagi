@@ -5,6 +5,7 @@ use App\Http\Controllers\KategoriKeuanganController;
 use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LandingController;
+use App\Http\Controllers\IslamicFeatureController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Admin\AdminDonationController;
 use App\Http\Controllers\Admin\AdminPenyaluranController;
@@ -54,6 +55,9 @@ Route::get('/doa-donatur', [LandingController::class, 'doaDonatur'])->name('dona
 
 // Laporan Transparansi Donasi & Kas
 Route::get('/transparansi', [LandingController::class, 'transparansi'])->name('transparansi');
+
+// Halaman Fitur-Fitur Islami
+Route::get('/islami', [IslamicFeatureController::class, 'index'])->name('islami.index');
 
 
 /*
