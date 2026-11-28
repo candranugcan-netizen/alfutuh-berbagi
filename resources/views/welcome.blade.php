@@ -183,38 +183,38 @@
             </div>
         </div>
 
-        <!-- 4 CATEGORY CARDS (Masjid, Pendidikan, Sosial, Kemanusiaan) -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <!-- 4 CATEGORY CARDS (Masjid, Pendidikan, Sosial, Kemanusiaan) - Small, Bulat & Berjejer 4 -->
+        <div class="grid grid-cols-4 gap-2 sm:gap-4 px-1">
             <!-- 1. Masjid -->
-            <a href="{{ route('programs.index', ['kategori' => 'Masjid']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
-                    <x-program-icon category="masjid" class="w-7 h-7" />
+            <a href="{{ route('programs.index', ['kategori' => 'Masjid']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
+                    <x-program-icon category="masjid" class="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Masjid</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Masjid</span>
             </a>
 
             <!-- 2. Pendidikan -->
-            <a href="{{ route('programs.index', ['kategori' => 'Pendidikan']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
-                    <x-program-icon category="pendidikan" class="w-7 h-7" />
+            <a href="{{ route('programs.index', ['kategori' => 'Pendidikan']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
+                    <x-program-icon category="pendidikan" class="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Pendidikan</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Pendidikan</span>
             </a>
 
             <!-- 3. Sosial -->
-            <a href="{{ route('programs.index', ['kategori' => 'Sosial']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
-                    <x-program-icon category="sosial" class="w-7 h-7" />
+            <a href="{{ route('programs.index', ['kategori' => 'Sosial']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
+                    <x-program-icon category="sosial" class="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Sosial</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Sosial</span>
             </a>
 
             <!-- 4. Kemanusiaan -->
-            <a href="{{ route('programs.index', ['kategori' => 'Kemanusiaan']) }}" class="group bg-[#F2F7F4] hover:bg-[#E8F1EC] p-4 sm:p-5 rounded-2xl border border-[#E2ECE6] text-center flex flex-col items-center justify-center transition active:scale-95">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center text-[#155E4B] group-hover:scale-110 transition mb-1.5">
-                    <x-program-icon category="kemanusiaan" class="w-7 h-7" />
+            <a href="{{ route('programs.index', ['kategori' => 'Kemanusiaan']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
+                    <x-program-icon category="kemanusiaan" class="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <span class="text-xs font-bold text-slate-800 group-hover:text-[#155E4B]">Kemanusiaan</span>
+                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Kemanusiaan</span>
             </a>
         </div>
 
@@ -271,7 +271,7 @@
                         <span class="w-2.5 h-2.5 rounded-full bg-[#155E4B]"></span>
                         <h3 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Program Unggulan</h3>
                     </div>
-                    <p class="text-[11px] text-slate-400">Pilihan program prioritas dakwah &amp; sosial yayasan</p>
+                    
                 </div>
                 <div class="flex items-center gap-2">
                     <!-- Tombol Navigasi Geser (Desktop) -->
@@ -292,7 +292,7 @@
             </div>
 
             <!-- Kontainer Geser Kanan-Kiri Program Unggulan -->
-            <div x-ref="featuredScroll" class="flex gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div x-ref="featuredScroll" class="flex gap-3 sm:gap-3.5 overflow-x-auto pb-2.5 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                 @forelse($featuredPrograms as $item)
                     @php
                         $sisaDana = $item->sisa_donasi;
@@ -300,67 +300,67 @@
                         $statusSisa = $item->status_sisa;
                         $isOperasional = $item->is_operasional;
                     @endphp
-                    <div class="w-[285px] sm:w-[325px] shrink-0 snap-start bg-white rounded-3xl border {{ ($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty'])) ? 'border-amber-300 ring-2 ring-amber-100 shadow-sm' : 'border-slate-100 shadow-xs' }} overflow-hidden hover:shadow-md transition flex flex-col justify-between group relative">
+                    <a href="{{ route('programs.show', $item->slug) }}" class="w-[215px] sm:w-[245px] shrink-0 snap-start bg-white rounded-2xl border {{ ($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty'])) ? 'border-amber-300 ring-2 ring-amber-100 shadow-sm' : 'border-slate-100 shadow-xs' }} overflow-hidden hover:shadow-md transition flex flex-col justify-between group relative">
                         <div>
-                            <div class="h-44 w-full bg-slate-100 relative overflow-hidden">
+                            <div class="h-28 sm:h-32 w-full bg-slate-100 relative overflow-hidden">
                                 @if($item->banner)
                                     <img src="{{ asset('storage/' . $item->banner) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @else
                                     <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $item->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @endif
-                                <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[10px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-3 py-1 rounded-full shadow-sm">
+                                <div class="absolute top-2 left-2 flex items-center gap-1 flex-wrap">
+                                    <span class="text-[9px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-2 py-0.5 rounded-full shadow-sm">
                                         {{ $item->kategori }}
                                     </span>
-                                    <span class="text-[10px] font-extrabold bg-amber-400 text-amber-950 px-2.5 py-1 rounded-full shadow-sm inline-flex items-center gap-1">
+                                    <span class="text-[9px] font-extrabold bg-amber-400 text-amber-950 px-2 py-0.5 rounded-full shadow-sm inline-flex items-center gap-0.5">
                                         ⭐ Unggulan
                                     </span>
                                 </div>
 
                                 <!-- Badge Highlight Sisa Donasi di Pojok Gambar -->
-                                <div class="absolute bottom-2.5 right-2.5">
+                                <div class="absolute bottom-2 right-2">
                                     @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-rose-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs animate-pulse">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-black bg-rose-600/95 text-white px-2 py-0.5 rounded-full shadow-md backdrop-blur-xs animate-pulse">
+                                            <span class="w-1 h-1 rounded-full bg-white"></span>
                                             Sisa: {{ $pctSisa }}%
                                         </span>
                                     @elseif($statusSisa === 'warning')
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-amber-500/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-black bg-amber-500/95 text-white px-2 py-0.5 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1 h-1 rounded-full bg-white"></span>
                                             Sisa: {{ $pctSisa }}%
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-emerald-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-black bg-emerald-600/95 text-white px-2 py-0.5 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1 h-1 rounded-full bg-white"></span>
                                             Sisa: {{ $pctSisa }}%
                                         </span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="p-4 space-y-2.5">
-                                <a href="{{ route('programs.show', $item->slug) }}" class="font-extrabold text-xs sm:text-sm text-slate-800 line-clamp-2 hover:text-[#155E4B] transition leading-snug">
+                            <div class="p-3 space-y-2">
+                                <h4 class="font-extrabold text-xs text-slate-800 line-clamp-2 group-hover:text-[#155E4B] transition leading-snug">
                                     {{ $item->nama }}
-                                </a>
+                                </h4>
 
                                 <!-- Card Metrik: Total Donasi Terkumpul & Sisa Donasi Saat Ini -->
-                                <div class="p-2.5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-2">
-                                    <div class="flex justify-between items-center text-[11px]">
-                                        <span class="text-slate-400 text-[10px]">Total Terkumpul</span>
+                                <div class="p-2 rounded-xl bg-[#F8FAF8] border border-slate-100 space-y-1">
+                                    <div class="flex justify-between items-center text-[10px]">
+                                        <span class="text-slate-400">Terkumpul</span>
                                         <span class="font-extrabold text-[#155E4B]">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
                                     </div>
-                                    <div class="flex justify-between items-center text-[11px] pt-1 border-t border-slate-100">
-                                        <span class="text-slate-500 font-semibold text-[10px]">Sisa Dana Saat Ini</span>
+                                    <div class="flex justify-between items-center text-[10px] pt-1 border-t border-slate-100">
+                                        <span class="text-slate-500 font-semibold">Sisa Dana</span>
                                         @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                            <span class="font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg border border-rose-200">
+                                            <span class="font-black text-rose-600">
                                                 Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @elseif($statusSisa === 'warning')
-                                            <span class="font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+                                            <span class="font-black text-amber-700">
                                                 Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @else
-                                            <span class="font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                                            <span class="font-black text-emerald-700">
                                                 Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @endif
@@ -368,34 +368,22 @@
                                 </div>
 
                                 <!-- Progress Bar Sisa Dana Berwarna -->
-                                <div class="space-y-1 pt-0.5">
-                                    <div class="flex justify-between text-[10px]">
-                                        <span class="text-slate-400">Rasio Sisa Dana</span>
-                                        <span class="font-bold {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-600' : 'text-emerald-700') }}">
-                                            {{ $pctSisa }}%
-                                        </span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div class="space-y-1">
+                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                                         @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                            <div class="bg-rose-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-rose-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @elseif($statusSisa === 'warning')
-                                            <div class="bg-amber-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-amber-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @else
-                                            <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="p-4 pt-0">
-                            <a href="{{ route('programs.show', $item->slug) }}" class="block w-full text-center bg-[#155E4B] hover:bg-[#0E4436] text-white font-extrabold text-xs py-2.5 rounded-full shadow-xs active:scale-95 transition">
-                                Donasi Sekarang
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 @empty
-                    <div class="w-full p-8 text-center bg-white rounded-3xl border border-slate-100 text-slate-400 text-xs">
+                    <div class="w-full p-6 text-center bg-white rounded-2xl border border-slate-100 text-slate-400 text-xs">
                         Belum ada program unggulan aktif.
                     </div>
                 @endforelse
@@ -413,7 +401,7 @@
                         <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
                         <h3 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Program Terbaru</h3>
                     </div>
-                    <p class="text-[11px] text-slate-400">Penggalangan dana yang baru saja dibuka</p>
+                    
                 </div>
                 <div class="flex items-center gap-2">
                     <!-- Tombol Navigasi Geser (Desktop) -->
@@ -434,7 +422,7 @@
             </div>
 
             <!-- Kontainer Geser Kanan-Kiri 3 Program Terbaru -->
-            <div x-ref="latestScroll" class="flex gap-3.5 sm:gap-4 overflow-x-auto pb-3 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div x-ref="latestScroll" class="flex gap-3 sm:gap-3.5 overflow-x-auto pb-2.5 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                 @forelse($latestPrograms as $item)
                     @php
                         $sisaDana = $item->sisa_donasi;
@@ -442,67 +430,67 @@
                         $statusSisa = $item->status_sisa;
                         $isOperasional = $item->is_operasional;
                     @endphp
-                    <div class="w-[285px] sm:w-[325px] shrink-0 snap-start bg-white rounded-3xl border {{ ($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty'])) ? 'border-amber-300 ring-2 ring-amber-100 shadow-sm' : 'border-slate-100 shadow-xs' }} overflow-hidden hover:shadow-md transition flex flex-col justify-between group relative">
+                    <a href="{{ route('programs.show', $item->slug) }}" class="w-[215px] sm:w-[245px] shrink-0 snap-start bg-white rounded-2xl border {{ ($isOperasional && in_array($statusSisa, ['critical', 'warning', 'empty'])) ? 'border-amber-300 ring-2 ring-amber-100 shadow-sm' : 'border-slate-100 shadow-xs' }} overflow-hidden hover:shadow-md transition flex flex-col justify-between group relative">
                         <div>
-                            <div class="h-44 w-full bg-slate-100 relative overflow-hidden">
+                            <div class="h-28 sm:h-32 w-full bg-slate-100 relative overflow-hidden">
                                 @if($item->banner)
                                     <img src="{{ asset('storage/' . $item->banner) }}" alt="{{ $item->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @else
                                     <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $item->nama }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @endif
-                                <div class="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-                                    <span class="text-[10px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-3 py-1 rounded-full shadow-sm">
+                                <div class="absolute top-2 left-2 flex items-center gap-1 flex-wrap">
+                                    <span class="text-[9px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-2 py-0.5 rounded-full shadow-sm">
                                         {{ $item->kategori }}
                                     </span>
-                                    <span class="text-[10px] font-extrabold bg-blue-500 text-white px-2.5 py-1 rounded-full shadow-sm inline-flex items-center gap-1">
+                                    <span class="text-[9px] font-extrabold bg-blue-500 text-white px-2 py-0.5 rounded-full shadow-sm inline-flex items-center gap-0.5">
                                         Baru
                                     </span>
                                 </div>
 
                                 <!-- Badge Highlight Sisa Donasi di Pojok Gambar -->
-                                <div class="absolute bottom-2.5 right-2.5">
+                                <div class="absolute bottom-2 right-2">
                                     @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-rose-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs animate-pulse">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-black bg-rose-600/95 text-white px-2 py-0.5 rounded-full shadow-md backdrop-blur-xs animate-pulse">
+                                            <span class="w-1 h-1 rounded-full bg-white"></span>
                                             Sisa: {{ $pctSisa }}%
                                         </span>
                                     @elseif($statusSisa === 'warning')
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-amber-500/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-black bg-amber-500/95 text-white px-2 py-0.5 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1 h-1 rounded-full bg-white"></span>
                                             Sisa: {{ $pctSisa }}%
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center gap-1 text-[10px] font-black bg-emerald-600/95 text-white px-2.5 py-1 rounded-full shadow-md backdrop-blur-xs">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+                                        <span class="inline-flex items-center gap-1 text-[9px] font-black bg-emerald-600/95 text-white px-2 py-0.5 rounded-full shadow-md backdrop-blur-xs">
+                                            <span class="w-1 h-1 rounded-full bg-white"></span>
                                             Sisa: {{ $pctSisa }}%
                                         </span>
                                     @endif
                                 </div>
                             </div>
 
-                            <div class="p-4 space-y-2.5">
-                                <a href="{{ route('programs.show', $item->slug) }}" class="font-extrabold text-xs sm:text-sm text-slate-800 line-clamp-2 hover:text-[#155E4B] transition leading-snug">
+                            <div class="p-3 space-y-2">
+                                <h4 class="font-extrabold text-xs text-slate-800 line-clamp-2 group-hover:text-[#155E4B] transition leading-snug">
                                     {{ $item->nama }}
-                                </a>
+                                </h4>
 
                                 <!-- Card Metrik: Total Donasi Terkumpul & Sisa Donasi Saat Ini -->
-                                <div class="p-2.5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-2">
-                                    <div class="flex justify-between items-center text-[11px]">
-                                        <span class="text-slate-400 text-[10px]">Total Terkumpul</span>
+                                <div class="p-2 rounded-xl bg-[#F8FAF8] border border-slate-100 space-y-1">
+                                    <div class="flex justify-between items-center text-[10px]">
+                                        <span class="text-slate-400">Terkumpul</span>
                                         <span class="font-extrabold text-[#155E4B]">Rp {{ number_format($item->dana_terkumpul, 0, ',', '.') }}</span>
                                     </div>
-                                    <div class="flex justify-between items-center text-[11px] pt-1 border-t border-slate-100">
-                                        <span class="text-slate-500 font-semibold text-[10px]">Sisa Dana Saat Ini</span>
+                                    <div class="flex justify-between items-center text-[10px] pt-1 border-t border-slate-100">
+                                        <span class="text-slate-500 font-semibold">Sisa Dana</span>
                                         @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                            <span class="font-black text-rose-600 bg-rose-50 px-2 py-0.5 rounded-lg border border-rose-200">
+                                            <span class="font-black text-rose-600">
                                                 Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @elseif($statusSisa === 'warning')
-                                            <span class="font-black text-amber-700 bg-amber-50 px-2 py-0.5 rounded-lg border border-amber-200">
+                                            <span class="font-black text-amber-700">
                                                 Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @else
-                                            <span class="font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-lg border border-emerald-200">
+                                            <span class="font-black text-emerald-700">
                                                 Rp {{ number_format($sisaDana, 0, ',', '.') }}
                                             </span>
                                         @endif
@@ -510,232 +498,156 @@
                                 </div>
 
                                 <!-- Progress Bar Sisa Dana Berwarna -->
-                                <div class="space-y-1 pt-0.5">
-                                    <div class="flex justify-between text-[10px]">
-                                        <span class="text-slate-400">Rasio Sisa Dana</span>
-                                        <span class="font-bold {{ $statusSisa === 'critical' || $statusSisa === 'empty' ? 'text-rose-600' : ($statusSisa === 'warning' ? 'text-amber-600' : 'text-emerald-700') }}">
-                                            {{ $pctSisa }}%
-                                        </span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div class="space-y-1">
+                                    <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                                         @if($statusSisa === 'critical' || $statusSisa === 'empty')
-                                            <div class="bg-rose-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-rose-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @elseif($statusSisa === 'warning')
-                                            <div class="bg-amber-500 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-amber-500 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @else
-                                            <div class="bg-emerald-600 h-2 rounded-full" style="width: {{ $pctSisa }}%"></div>
+                                            <div class="bg-emerald-600 h-1.5 rounded-full" style="width: {{ $pctSisa }}%"></div>
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="p-4 pt-0">
-                            <a href="{{ route('programs.show', $item->slug) }}" class="block w-full text-center bg-[#F2F7F4] hover:bg-[#155E4B] text-[#155E4B] hover:text-white font-extrabold text-xs py-2.5 rounded-full transition active:scale-95">
-                                Donasi Sekarang
-                            </a>
-                        </div>
-                    </div>
+                    </a>
                 @empty
-                    <div class="w-full p-8 text-center bg-white rounded-3xl border border-slate-100 text-slate-400 text-xs">
+                    <div class="w-full p-6 text-center bg-white rounded-2xl border border-slate-100 text-slate-400 text-xs">
                         Belum ada program terbaru.
                     </div>
                 @endforelse
             </div>
         </div>
 
-        <!-- 3. BAGIAN BERITA & KABAR TERBARU (4 BERITA TERBARU) -->
-        <div class="space-y-3.5">
+        <!-- 3. BAGIAN BERITA & KABAR TERBARU (GESER KE SAMPING, UKURAN SEPERTI CARD DONASI) -->
+        <div x-data="{
+                scrollLeft() { $refs.kabarScroll.scrollBy({ left: -260, behavior: 'smooth' }) },
+                scrollRight() { $refs.kabarScroll.scrollBy({ left: 260, behavior: 'smooth' }) }
+            }" class="space-y-3.5">
             <div class="flex items-center justify-between px-1">
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
                         <h3 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Kabar &amp; Berita Terbaru</h3>
                     </div>
-                    <p class="text-[11px] text-slate-400">Dokumentasi kegiatan dan transparansi penyaluran nyata</p>
+                    
                 </div>
-                <!-- Pintasan Halaman Penuh Berita -->
-                <a href="{{ route('kabars.index') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436] inline-flex items-center gap-1 bg-[#EAF5EE] px-3.5 py-1.5 rounded-full border border-[#D2E6DC] transition active:scale-95 shadow-2xs">
-                    <span>Lihat Semua Berita</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
+                <div class="flex items-center gap-2">
+                    <!-- Tombol Navigasi Geser (Desktop) -->
+                    <div class="hidden sm:flex items-center gap-1">
+                        <button type="button" @click="scrollLeft()" class="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-600 hover:text-[#155E4B] hover:border-[#155E4B] flex items-center justify-center transition active:scale-90 shadow-2xs" aria-label="Geser ke kiri">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button type="button" @click="scrollRight()" class="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-600 hover:text-[#155E4B] hover:border-[#155E4B] flex items-center justify-center transition active:scale-90 shadow-2xs" aria-label="Geser ke kanan">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                    </div>
+                    <!-- Pintasan Halaman Penuh Berita -->
+                    <a href="{{ route('kabars.index') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436] inline-flex items-center gap-1 bg-[#EAF5EE] px-3.5 py-1.5 rounded-full border border-[#D2E6DC] transition active:scale-95 shadow-2xs">
+                        <span>Lihat Semua</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </a>
+                </div>
             </div>
 
-            <!-- Grid 4 Berita Terbaru -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4">
+            <!-- Kontainer Geser Kanan-Kiri Berita Terbaru -->
+            <div x-ref="kabarScroll" class="flex gap-3 sm:gap-3.5 overflow-x-auto pb-2.5 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                 @forelse($kabars->take(4) as $kabar)
-                    <a href="{{ route('kabars.show', $kabar->slug) }}" class="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col justify-between group">
+                    <a href="{{ route('kabars.show', $kabar->slug) }}" class="w-[215px] sm:w-[245px] shrink-0 snap-start bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-md transition flex flex-col justify-between group">
                         <div>
-                            <div class="h-36 sm:h-40 w-full bg-slate-100 relative overflow-hidden">
+                            <div class="h-28 sm:h-32 w-full bg-slate-100 relative overflow-hidden">
                                 @if($kabar->foto)
                                     <img src="{{ asset('storage/' . $kabar->foto) }}" alt="{{ $kabar->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @else
                                     <img src="{{ asset('images/mosque-hero.svg') }}" alt="{{ $kabar->judul }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
                                 @endif
                                 @if($kabar->program)
-                                    <div class="absolute top-2.5 left-2.5">
-                                        <span class="text-[9px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-2.5 py-0.5 rounded-full shadow-sm line-clamp-1">
+                                    <div class="absolute top-2 left-2 right-2">
+                                        <span class="inline-block max-w-full truncate text-[9px] font-bold bg-white/95 backdrop-blur-md text-[#155E4B] px-2 py-0.5 rounded-full shadow-sm">
                                             {{ $kabar->program->nama }}
                                         </span>
                                     </div>
                                 @endif
                             </div>
 
-                            <div class="p-4 space-y-1.5">
-                                <span class="text-[10px] font-bold text-slate-400 block">
+                            <div class="p-3 space-y-1.5">
+                                <span class="text-[9px] font-bold text-slate-400 block">
                                     📅 {{ $kabar->tanggal ? $kabar->tanggal->format('d M Y') : '-' }}
                                 </span>
-                                <h4 class="font-extrabold text-xs sm:text-sm text-slate-800 leading-snug line-clamp-2 group-hover:text-[#155E4B] transition">
+                                <h4 class="font-extrabold text-xs text-slate-800 leading-snug line-clamp-2 group-hover:text-[#155E4B] transition">
                                     {{ $kabar->judul }}
                                 </h4>
-                                <p class="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
-                                    {{ $kabar->ringkasan ?: Str::limit(strip_tags($kabar->konten), 80) }}
+                                <p class="text-[10px] text-slate-500 line-clamp-2 leading-relaxed">
+                                    {{ $kabar->ringkasan ?: Str::limit(strip_tags($kabar->konten), 70) }}
                                 </p>
                             </div>
                         </div>
 
-                        <div class="p-4 pt-0">
-                            <span class="text-[11px] font-extrabold text-[#155E4B] inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                        <div class="p-3 pt-0">
+                            <span class="text-[10px] font-extrabold text-[#155E4B] inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                                 <span>Baca Selengkapnya</span>
                                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </span>
                         </div>
                     </a>
                 @empty
-                    <div class="col-span-full p-8 text-center bg-white rounded-3xl border border-slate-100 text-slate-400 text-xs">
+                    <div class="w-full p-6 text-center bg-white rounded-2xl border border-slate-100 text-slate-400 text-xs">
                         Belum ada berita atau kabar terbaru yang diterbitkan.
                     </div>
                 @endforelse
             </div>
         </div>
 
-        <!-- 4. MODIFIKASI CARD TRANSPARANSI DANA (CLEAN, RINGKAS, & PROFESIONAL) -->
-        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-sm p-5 sm:p-7 space-y-5">
-            <!-- Header Transparansi -->
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
-                <div class="space-y-1">
-                    <div class="flex items-center gap-2">
-                        <div class="w-7 h-7 rounded-lg bg-[#EAF5EE] text-[#155E4B] flex items-center justify-center font-bold">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        <h3 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Transparansi &amp; Akuntabilitas Publik</h3>
-                    </div>
-                    <p class="text-[11px] text-slate-400">Pengelolaan dana donasi secara terbuka, amanah, dan dapat dipertanggungjawabkan</p>
-                </div>
-
-                <!-- Pintasan Laporan Transparansi -->
-                <a href="{{ route('transparansi') }}" class="inline-flex items-center justify-center gap-1.5 text-xs font-bold bg-[#EAF5EE] text-[#155E4B] hover:bg-[#DCEEE5] border border-[#D2E6DC] px-4 py-2 rounded-full transition active:scale-95 shadow-2xs self-start sm:self-auto">
-                    <span>Lihat Laporan Penyaluran</span>
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-            </div>
-
-            <!-- 3 Kartu Metrik Ringkas & Profesional -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                <!-- 1. Total Donasi Terverifikasi -->
-                <div class="p-4 sm:p-5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-1 hover:border-[#155E4B]/30 transition">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <div class="w-8 h-8 rounded-xl bg-[#EAF5EE] text-[#155E4B] flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-width="2" stroke-linecap="round"/></svg>
-                        </div>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Donasi Masuk</span>
-                    </div>
-                    <p class="text-lg sm:text-xl font-black text-[#155E4B]">Rp {{ number_format($totalDonasiMasuk, 0, ',', '.') }}</p>
-                    <p class="text-[10px] text-slate-400 font-medium">{{ $totalDonaturCount }} donasi terverifikasi</p>
-                </div>
-
-                <!-- 2. Total Disalurkan -->
-                <div class="p-4 sm:p-5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-1 hover:border-blue-300 transition">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Disalurkan</span>
-                    </div>
-                    <p class="text-lg sm:text-xl font-black text-blue-600">Rp {{ number_format($totalPenyaluran, 0, ',', '.') }}</p>
-                    <p class="text-[10px] text-slate-400 font-medium">Realisasi program &amp; dakwah</p>
-                </div>
-
-                <!-- 3. Saldo Kas Amanah -->
-                <div class="p-4 sm:p-5 rounded-2xl bg-[#F8FAF8] border border-slate-100 space-y-1 hover:border-emerald-300 transition">
-                    <div class="flex items-center gap-2 mb-1.5">
-                        <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </div>
-                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Saldo Kas Amanah</span>
-                    </div>
-                    <p class="text-lg sm:text-xl font-black text-slate-800">Rp {{ number_format(max(0, $totalDonasiMasuk - $totalPenyaluran), 0, ',', '.') }}</p>
-                    <p class="text-[10px] text-emerald-700 font-bold">Siap disalurkan untuk umat</p>
-                </div>
-            </div>
-
-            <!-- Footer Badge Legitimasi & Akuntabilitas -->
-            <div class="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[10px] text-slate-400 border-t border-slate-100">
-                <div class="flex items-center gap-3">
-                    <span class="inline-flex items-center gap-1 text-slate-500 font-bold">
-                        <svg class="w-3.5 h-3.5 text-[#155E4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        Tercatat Real-Time
-                    </span>
-                    <span class="inline-flex items-center gap-1 text-slate-500 font-bold">
-                        <svg class="w-3.5 h-3.5 text-[#155E4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        100% Amanah
-                    </span>
-                    <span class="hidden sm:inline text-slate-400">• AHU 0006697.AH.01.04</span>
-                </div>
-                <a href="{{ route('transparansi') }}" class="text-[#155E4B] hover:underline font-bold">
-                    Buka Ringkasan Lengkap &amp; Bukti Penyaluran →
-                </a>
-            </div>
-        </div>
-
-        <!-- DOA & DUKUNGAN DONATUR -->
+        <!-- DOA & DUKUNGAN DONATUR (KECIL & BISA DIGESER KE SAMPING) -->
         @if($recentDonations->isNotEmpty())
-            <div class="bg-white p-5 sm:p-6 rounded-3xl border border-slate-100 shadow-sm space-y-3.5">
-                <div class="flex items-center justify-between">
-                    <h3 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-[#155E4B]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v8Z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        <span>Doa &amp; Dukungan Donatur</span>
-                    </h3>
-                    <a href="{{ route('donations.doa') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436] inline-flex items-center gap-1 bg-[#EAF5EE] px-3.5 py-1.5 rounded-full border border-[#D2E6DC] transition active:scale-95 shadow-2xs">
-                        <span>Lihat Semua Doa</span>
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    </a>
+            <div x-data="{
+                    scrollLeft() { $refs.doaScroll.scrollBy({ left: -280, behavior: 'smooth' }) },
+                    scrollRight() { $refs.doaScroll.scrollBy({ left: 280, behavior: 'smooth' }) }
+                }" class="space-y-3">
+                <div class="flex items-center justify-between px-1">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                            <h3 class="text-sm sm:text-base font-extrabold text-slate-800 tracking-tight">Doa &amp; Dukungan Donatur</h3>
+                        </div>
+                        <p class="text-[11px] text-slate-400">Untaian doa baik dari para muhsinin</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <!-- Tombol Navigasi Geser (Desktop) -->
+                        <div class="hidden sm:flex items-center gap-1">
+                            <button type="button" @click="scrollLeft()" class="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-600 hover:text-[#155E4B] hover:border-[#155E4B] flex items-center justify-center transition active:scale-90 shadow-2xs" aria-label="Geser ke kiri">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                            <button type="button" @click="scrollRight()" class="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-600 hover:text-[#155E4B] hover:border-[#155E4B] flex items-center justify-center transition active:scale-90 shadow-2xs" aria-label="Geser ke kanan">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+                        </div>
+                        <a href="{{ route('donations.doa') }}" class="text-xs font-bold text-[#155E4B] hover:text-[#0E4436] inline-flex items-center gap-1 bg-[#EAF5EE] px-3.5 py-1.5 rounded-full border border-[#D2E6DC] transition active:scale-95 shadow-2xs">
+                            <span>Lihat Semua</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
                 </div>
-                <div class="space-y-2.5">
+
+                <div x-ref="doaScroll" class="flex gap-3 overflow-x-auto pb-2.5 pt-1 scroll-smooth snap-x snap-mandatory scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
                     @foreach($recentDonations as $d)
-                        <div class="p-3.5 bg-[#F8FAF8] rounded-2xl border border-slate-100 space-y-1">
-                            <div class="flex items-center justify-between text-[11px]">
-                                <span class="font-bold text-slate-800">{{ $d->displayName }}</span>
-                                <span class="text-[10px] text-slate-400">{{ $d->created_at->diffForHumans() }}</span>
+                        <div class="w-[225px] sm:w-[260px] shrink-0 snap-start p-3 bg-white rounded-2xl border border-slate-100 shadow-xs flex flex-col justify-between space-y-2">
+                            <div class="space-y-1.5">
+                                <div class="flex items-center justify-between gap-2 text-[10px]">
+                                    <span class="font-extrabold text-slate-800 truncate">{{ $d->displayName }}</span>
+                                    <span class="text-[9px] text-slate-400 shrink-0">{{ $d->created_at->diffForHumans() }}</span>
+                                </div>
+                                <p class="text-[11px] text-slate-600 italic line-clamp-3 leading-relaxed">"{{ $d->doa }}"</p>
                             </div>
-                            <p class="text-xs text-slate-600 italic">"{{ $d->doa }}"</p>
-                            <p class="text-[9px] font-medium text-[#155E4B]">Berdonasi di {{ $d->program->nama }}</p>
+                            <p class="text-[9px] font-bold text-[#155E4B] truncate pt-1 border-t border-slate-50">
+                                {{ $d->program->nama }}
+                            </p>
                         </div>
                     @endforeach
                 </div>
             </div>
         @endif
-
-        <!-- FEATURE BADGES -->
-        <div class="pt-4 space-y-4 text-center">
-            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 text-xs">
-                <span class="inline-flex items-center gap-1.5 bg-[#F2F7F4] text-[#155E4B] border border-[#D2E6DC] px-4 py-1.5 rounded-full font-bold">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Amanah &amp; Transparan
-                </span>
-                <span class="inline-flex items-center gap-1.5 bg-[#F2F7F4] text-[#155E4B] border border-[#D2E6DC] px-4 py-1.5 rounded-full font-bold">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Akses Mudah di Semua Perangkat
-                </span>
-               
-                <span class="inline-flex items-center gap-1.5 bg-[#F2F7F4] text-[#155E4B] border border-[#D2E6DC] px-4 py-1.5 rounded-full font-bold">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    Mari Berbagi untuk Kebaikan
-                </span>
-            </div>
-
-            
-        </div>
 
     </main>
 

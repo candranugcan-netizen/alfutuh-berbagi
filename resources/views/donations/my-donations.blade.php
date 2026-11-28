@@ -1,9 +1,16 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto space-y-6">
         <!-- Header Page -->
-        <div>
-            <h1 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">Riwayat Donasi Saya</h1>
-            <p class="text-xs text-slate-500 mt-0.5">Pantau status transfer, bukti donasi, dan total akumulasi kebaikan Anda</p>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-black text-slate-800 tracking-tight">Riwayat Donasi Saya</h1>
+                <p class="text-xs text-slate-500 mt-0.5">Pantau status transfer, bukti donasi, dan total akumulasi kebaikan Anda</p>
+            </div>
+            <a href="{{ route('transparansi') }}" class="inline-flex items-center justify-center gap-1.5 text-xs font-bold bg-[#EAF5EE] text-[#155E4B] hover:bg-[#155E4B] hover:text-white border border-[#D2E6DC] px-4 py-2.5 rounded-full transition active:scale-95 shadow-2xs self-start sm:self-auto shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Transparansi Dana</span>
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
         </div>
 
         <!-- Kartu Total Donasi yang Dilakukan oleh User -->
