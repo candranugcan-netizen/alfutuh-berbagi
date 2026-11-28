@@ -60,6 +60,106 @@
 
     <main class="max-w-5xl mx-auto px-4 sm:px-6 pt-5 space-y-6">
 
+        <!-- 0. POP-UP NOTIF PENGEMBANGAN FITUR ISLAMI -->
+        <div x-data="{
+                showDevPopup: false,
+                dontShowToday: false,
+                init() {
+                    const hideDate = localStorage.getItem('alfutuh_islami_popup_hide_date');
+                    const todayStr = new Date().toISOString().slice(0, 10);
+                    const seenSession = sessionStorage.getItem('alfutuh_islami_popup_seen');
+                    if (hideDate === todayStr || seenSession) return;
+                    setTimeout(() => { this.showDevPopup = true; }, 500);
+                },
+                closeDevPopup() {
+                    this.showDevPopup = false;
+                    sessionStorage.setItem('alfutuh_islami_popup_seen', 'true');
+                    if (this.dontShowToday) {
+                        localStorage.setItem('alfutuh_islami_popup_hide_date', new Date().toISOString().slice(0, 10));
+                    }
+                }
+            }"
+            x-show="showDevPopup"
+            x-cloak
+            @keydown.escape.window="closeDevPopup()"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+
+            <!-- Backdrop -->
+            <div x-show="showDevPopup"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="closeDevPopup()"
+                 class="fixed inset-0 bg-slate-900/55 backdrop-blur-xs"></div>
+
+            <!-- Modal Card -->
+            <div x-show="showDevPopup"
+                 x-transition:enter="ease-out duration-200"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-150"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:scale-95"
+                 class="relative z-10 bg-white rounded-3xl max-w-md w-full border border-amber-200 shadow-2xl overflow-hidden">
+
+                <!-- Header Peringatan -->
+                <div class="bg-amber-500 text-white p-5 relative">
+                    <button type="button" @click="closeDevPopup()"
+                            class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-black/20 hover:bg-black/35 text-white flex items-center justify-center transition"
+                            aria-label="Tutup Pemberitahuan">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+
+                    <div class="flex items-center gap-3 pr-8">
+                        <div class="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider bg-white/20 px-2.5 py-0.5 rounded-full">
+                                Dalam Pengembangan
+                            </span>
+                            <h2 class="text-base font-extrabold mt-1 leading-snug">Pemberitahuan Fitur Islami</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Isi Pesan -->
+                <div class="p-5 space-y-4">
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Halaman dan layanan Fitur Islami ini masih dalam tahap pengembangan. Kesalahan data maupun ketidaktepatan respons (termasuk pada fitur AI dan jadwal) masih mungkin terjadi.
+                    </p>
+                    <p class="text-xs text-slate-600 leading-relaxed bg-amber-50 border border-amber-100 rounded-2xl p-3">
+                        Masukan, saran perbaikan, dan dukungan Anda sangat terbuka bagi tim pengembang. <strong>Apabila menemukan bug atau kesalahan pada sistem, silakan hubungi developer.</strong>
+                    </p>
+
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" x-model="dontShowToday" class="rounded border-slate-300 text-amber-500 focus:ring-amber-500">
+                        <span class="text-xs text-slate-500 font-medium">Jangan tampilkan lagi hari ini</span>
+                    </label>
+
+                    <div class="flex flex-col sm:flex-row gap-2 pt-1">
+                        <a href="https://wa.me/6285743377335"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="flex-1 inline-flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs px-4 py-2.5 rounded-full transition active:scale-95">
+                            <span>Hubungi Developer</span>
+                        </a>
+                        <button type="button" @click="closeDevPopup()"
+                                class="flex-1 inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs px-4 py-2.5 rounded-full transition active:scale-95">
+                            Mengerti, Lanjutkan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 1. HERO: AYAT & HADITS HARIAN (OTOMATIS ACAK SETIAP HARI - BIRU KALEM) -->
         <div class="bg-[#2B5B84] rounded-3xl p-5 sm:p-7 text-white border border-[#1E4363]">
             <div class="space-y-4">
@@ -92,28 +192,28 @@
         <!-- 3. TOMBOL GRID FITUR ISLAMI (4 FITUR UTAMA - FLAT & BULAT) -->
         <div class="space-y-3">
 
-            <div class="grid grid-cols-4 gap-2 sm:gap-4 px-1">
+            <div class="grid grid-cols-4 gap-x-2 gap-y-4 sm:gap-4 px-1">
                 <!-- 1. Al-Qur'an -->
-                <button type="button" @click="selectedFeature = 'Al-Qur\'an Digital'; comingSoonModal = true"
-                        class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <a href="{{ route('islami.quran.index') }}"
+                   class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
                     <div class="w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-[#F0F6FA] group-hover:bg-[#E2EEF6] border border-[#D6E6F2] flex items-center justify-center text-[#2B5B84] group-hover:scale-105 transition p-3 sm:p-4">
                         <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.5c-2.5-2-6-2.5-9-2v13c3-.5 6.5 0 9 2m0-13c2.5-2 6-2.5 9-2v13c-3-.5-6.5 0-9 2m0-13v13"/>
                         </svg>
                     </div>
                     <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#2B5B84] leading-tight">Al-Qur'an</span>
-                </button>
+                </a>
 
                 <!-- 2. Hadits -->
-                <button type="button" @click="selectedFeature = 'Kumpulan Hadits Shahih'; comingSoonModal = true"
-                        class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <a href="{{ route('islami.hadits.index') }}"
+                   class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
                     <div class="w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-[#F0F6FA] group-hover:bg-[#E2EEF6] border border-[#D6E6F2] flex items-center justify-center text-[#2B5B84] group-hover:scale-105 transition p-3 sm:p-4">
                         <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/>
                         </svg>
                     </div>
                     <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#2B5B84] leading-tight">Hadits</span>
-                </button>
+                </a>
 
                 <!-- 3. Doa-Doa Shahih -->
                 <button type="button" @click="selectedFeature = 'Doa-Doa Shahih'; comingSoonModal = true"
@@ -127,8 +227,8 @@
                 </button>
 
                 <!-- 4. Kalkulator Zakat -->
-                <button type="button" @click="selectedFeature = 'Kalkulator Zakat'; comingSoonModal = true"
-                        class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                <a href="{{ route('islami.zakat.index') }}"
+                   class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
                     <div class="w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-[#F0F6FA] group-hover:bg-[#E2EEF6] border border-[#D6E6F2] flex items-center justify-center text-[#2B5B84] group-hover:scale-105 transition p-3 sm:p-4">
                         <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <rect x="4" y="2" width="16" height="20" rx="2" stroke-width="1.8"/>
@@ -136,7 +236,29 @@
                         </svg>
                     </div>
                     <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#2B5B84] leading-tight">Kalkulator Zakat</span>
-                </button>
+                </a>
+
+                <!-- 5. Generator Khutbah Jumat AI -->
+                <a href="{{ route('islami.khutbah.index') }}"
+                   class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                    <div class="w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-[#F0F6FA] group-hover:bg-[#E2EEF6] border border-[#D6E6F2] flex items-center justify-center text-[#2B5B84] group-hover:scale-105 transition p-3 sm:p-4">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#2B5B84] leading-tight">Khutbah AI</span>
+                </a>
+
+                <!-- 6. Generator Kultum & Ceramah AI -->
+                <a href="{{ route('islami.kultum.index') }}"
+                   class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
+                    <div class="w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-[#F0F6FA] group-hover:bg-[#E2EEF6] border border-[#D6E6F2] flex items-center justify-center text-[#2B5B84] group-hover:scale-105 transition p-3 sm:p-4">
+                        <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                        </svg>
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#2B5B84] leading-tight">Kultum AI</span>
+                </a>
             </div>
         </div>
 

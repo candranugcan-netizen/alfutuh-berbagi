@@ -6,6 +6,11 @@ use App\Http\Controllers\KeuanganController;
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\IslamicFeatureController;
+use App\Http\Controllers\QuranController;
+use App\Http\Controllers\HadithController;
+use App\Http\Controllers\ZakatController;
+use App\Http\Controllers\KhutbahController;
+use App\Http\Controllers\KultumController;
 use App\Http\Controllers\DonationController;
 use App\Http\Controllers\Admin\AdminDonationController;
 use App\Http\Controllers\Admin\AdminPenyaluranController;
@@ -58,6 +63,15 @@ Route::get('/transparansi', [LandingController::class, 'transparansi'])->name('t
 
 // Halaman Fitur-Fitur Islami
 Route::get('/islami', [IslamicFeatureController::class, 'index'])->name('islami.index');
+Route::get('/islami/quran', [QuranController::class, 'index'])->name('islami.quran.index');
+Route::get('/islami/quran/{nomor}', [QuranController::class, 'show'])->whereNumber('nomor')->name('islami.quran.show');
+Route::get('/islami/hadits', [HadithController::class, 'index'])->name('islami.hadits.index');
+Route::get('/islami/hadits/{book}', [HadithController::class, 'show'])->name('islami.hadits.show');
+Route::get('/islami/zakat', [ZakatController::class, 'index'])->name('islami.zakat.index');
+Route::get('/islami/khutbah', [KhutbahController::class, 'index'])->name('islami.khutbah.index');
+Route::post('/islami/khutbah/generate', [KhutbahController::class, 'generate'])->middleware('throttle:10,1')->name('islami.khutbah.generate');
+Route::get('/islami/kultum', [KultumController::class, 'index'])->name('islami.kultum.index');
+Route::post('/islami/kultum/generate', [KultumController::class, 'generate'])->middleware('throttle:10,1')->name('islami.kultum.generate');
 
 
 /*
