@@ -108,9 +108,9 @@
     <main class="max-w-5xl mx-auto px-4 sm:px-6 py-5 sm:py-6 space-y-6">
 
     <!-- CARD PINTASAN FITUR ISLAMI -->
-        <div class="bg-[#FFF7ED] rounded-3xl border border-orange-200 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
+        <div class="bg-[#F0F6FA] rounded-3xl border border-[#D6E6F2] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5">
             <div class="flex items-center gap-3.5">
-                <div class="w-11 h-11 rounded-2xl bg-[#EA580C] text-white flex items-center justify-center shrink-0">
+                <div class="w-11 h-11 rounded-2xl bg-[#2B5B84] text-white flex items-center justify-center shrink-0">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.5c-2.5-2-6-2.5-9-2v13c3-.5 6.5 0 9 2m0-13c2.5-2 6-2.5 9-2v13c-3-.5-6.5 0-9 2m0-13v13"/>
                     </svg>
@@ -118,7 +118,7 @@
                 <div class="space-y-0.5">
                     <div class="flex items-center gap-2">
                         <h3 class="font-extrabold text-sm sm:text-base text-slate-800 tracking-tight">Fitur Islami &amp; Jadwal Sholat</h3>
-                        <span class="text-[9px] font-extrabold bg-white text-[#EA580C] border border-orange-200 px-2 py-0.5 rounded-full">Baru</span>
+                        <span class="text-[9px] font-extrabold bg-white text-[#2B5B84] border border-[#D6E6F2] px-2 py-0.5 rounded-full">Baru</span>
                     </div>
                     <p class="text-[11px] sm:text-xs text-slate-600 leading-snug">
                         Cek jadwal sholat, ayat &amp; hadits harian, doa shahih, kalkulator zakat, serta pengingat amalan sunnah.
@@ -126,7 +126,7 @@
                 </div>
             </div>
             <a href="{{ route('islami.index') }}"
-               class="inline-flex items-center justify-center gap-1.5 bg-[#EA580C] hover:bg-[#C2410C] text-white font-extrabold text-xs px-5 py-2.5 rounded-full active:scale-95 transition shrink-0">
+               class="inline-flex items-center justify-center gap-1.5 bg-[#2B5B84] hover:bg-[#1E4363] text-white font-extrabold text-xs px-5 py-2.5 rounded-full active:scale-95 transition shrink-0">
                 <span>Buka Fitur Islami</span>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
@@ -209,37 +209,37 @@
         </div>
 
         <!-- 4 CATEGORY CARDS (Masjid, Pendidikan, Sosial, Kemanusiaan) - Small, Bulat & Berjejer 4 -->
-        <div class="grid grid-cols-4 gap-2 sm:gap-4 px-1">
+        <div class="grid grid-cols-4 gap-2 sm:gap-4 bg-white p-3.5 sm:p-4 rounded-3xl border border-slate-100 shadow-xs">
             <!-- 1. Masjid -->
             <a href="{{ route('programs.index', ['kategori' => 'Masjid']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
-                    <x-program-icon category="masjid" class="w-5 h-5 sm:w-6 sm:h-6" />
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#155E4B] group-hover:bg-[#0E4436] flex items-center justify-center text-white group-hover:scale-105 transition shadow-xs">
+                    <x-program-icon category="masjid" class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
-                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Masjid</span>
+                <span class="text-[11px] sm:text-xs font-extrabold text-slate-800 group-hover:text-[#155E4B] leading-tight">Masjid</span>
             </a>
 
             <!-- 2. Pendidikan -->
             <a href="{{ route('programs.index', ['kategori' => 'Pendidikan']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
-                    <x-program-icon category="pendidikan" class="w-5 h-5 sm:w-6 sm:h-6" />
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#155E4B] group-hover:bg-[#0E4436] flex items-center justify-center text-white group-hover:scale-105 transition shadow-xs">
+                    <x-program-icon category="pendidikan" class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
-                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Pendidikan</span>
+                <span class="text-[11px] sm:text-xs font-extrabold text-slate-800 group-hover:text-[#155E4B] leading-tight">Pendidikan</span>
             </a>
 
             <!-- 3. Sosial -->
             <a href="{{ route('programs.index', ['kategori' => 'Sosial']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
-                    <x-program-icon category="sosial" class="w-5 h-5 sm:w-6 sm:h-6" />
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#155E4B] group-hover:bg-[#0E4436] flex items-center justify-center text-white group-hover:scale-105 transition shadow-xs">
+                    <x-program-icon category="sosial" class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
-                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Sosial</span>
+                <span class="text-[11px] sm:text-xs font-extrabold text-slate-800 group-hover:text-[#155E4B] leading-tight">Sosial</span>
             </a>
 
             <!-- 4. Kemanusiaan -->
             <a href="{{ route('programs.index', ['kategori' => 'Kemanusiaan']) }}" class="group flex flex-col items-center text-center gap-1.5 transition active:scale-95">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#F2F7F4] group-hover:bg-[#E8F1EC] border border-[#D2E6DC] flex items-center justify-center text-[#155E4B] group-hover:scale-105 transition shadow-2xs">
-                    <x-program-icon category="kemanusiaan" class="w-5 h-5 sm:w-6 sm:h-6" />
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#155E4B] group-hover:bg-[#0E4436] flex items-center justify-center text-white group-hover:scale-105 transition shadow-xs">
+                    <x-program-icon category="kemanusiaan" class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
-                <span class="text-[10px] sm:text-xs font-bold text-slate-700 group-hover:text-[#155E4B] leading-tight">Kemanusiaan</span>
+                <span class="text-[11px] sm:text-xs font-extrabold text-slate-800 group-hover:text-[#155E4B] leading-tight">Kemanusiaan</span>
             </a>
         </div>
 

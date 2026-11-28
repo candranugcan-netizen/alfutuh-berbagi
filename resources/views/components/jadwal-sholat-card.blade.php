@@ -133,12 +133,12 @@
             this.countdown = `${h}:${m}:${s}`;
         }
     }"
-    class="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-5 border border-orange-200 shadow-xs space-y-2.5 sm:space-y-4">
+    class="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-5 border border-[#D6E6F2] shadow-xs space-y-2.5 sm:space-y-4">
 
     <!-- Header Card Compact: Judul, Lokasi & Countdown -->
     <div class="flex items-center justify-between gap-2">
         <div class="flex items-center gap-2 sm:gap-2.5 min-w-0">
-            <span class="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#FFF7ED] text-[#EA580C] border border-orange-200 shrink-0">
+            <span class="inline-flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#F0F6FA] text-[#2B5B84] border border-[#D6E6F2] shrink-0">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3c-3.5 2.5-6 6-6 10v7h12v-7c0-4-2.5-7.5-6-10Z"/>
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M10 20v-4a2 2 0 1 1 4 0v4M3 20h18M12 1.5v2"/>
@@ -151,7 +151,7 @@
                 </div>
                 <!-- Kontrol Kota & GPS Inline Compact -->
                 <div class="flex items-center gap-1 mt-1">
-                    <svg class="w-3 h-3 text-[#EA580C] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-3 h-3 text-[#2B5B84] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
                     </svg>
@@ -161,7 +161,7 @@
                             <option :value="c" x-text="c" class="text-slate-800 bg-white"></option>
                         </template>
                     </select>
-                    <button type="button" @click="detectGps()" title="Deteksi Lokasi GPS" class="text-[#EA580C] hover:text-[#C2410C] transition">
+                    <button type="button" @click="detectGps()" title="Deteksi Lokasi GPS" class="text-[#2B5B84] hover:text-[#1E4363] transition">
                         <svg class="w-3 h-3 sm:w-3.5 sm:h-3.5" :class="loading ? 'animate-spin' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="3" stroke-width="2"/>
                             <path stroke-linecap="round" stroke-width="2" d="M12 2v3m0 14v3M2 12h3m14 0h3"/>
@@ -172,7 +172,7 @@
         </div>
 
         <!-- Countdown Pill Compact -->
-        <div class="inline-flex flex-col sm:flex-row items-end sm:items-center sm:gap-1.5 bg-[#EA580C] text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl sm:rounded-full text-[9px] sm:text-[11px] font-bold shrink-0 leading-tight">
+        <div class="inline-flex flex-col sm:flex-row items-end sm:items-center sm:gap-1.5 bg-[#2B5B84] text-white px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl sm:rounded-full text-[9px] sm:text-[11px] font-bold shrink-0 leading-tight">
             <span class="opacity-90">Menuju <span x-text="nextPrayerName"></span></span>
             <span class="font-mono font-black text-[11px] sm:text-xs" x-text="countdown"></span>
         </div>
@@ -188,11 +188,11 @@
             { label: 'Isya', key: 'Isha' }
         ]" :key="item.key">
             <div :class="nextPrayerName === item.label
-                    ? 'bg-[#EA580C] text-white border-[#EA580C]'
-                    : 'bg-[#FFF7ED] text-slate-800 border-orange-100'"
+                    ? 'bg-[#2B5B84] text-white border-[#2B5B84]'
+                    : 'bg-[#F0F6FA] text-slate-800 border-[#E2EEF6]'"
                  class="rounded-xl sm:rounded-2xl py-1.5 px-1 sm:p-3 text-center border transition flex flex-col items-center justify-center space-y-0.5">
                 <span class="text-[8.5px] sm:text-[10px] font-bold uppercase tracking-tight sm:tracking-wider"
-                      :class="nextPrayerName === item.label ? 'text-orange-100' : 'text-slate-500'"
+                      :class="nextPrayerName === item.label ? 'text-sky-100' : 'text-slate-500'"
                       x-text="item.label"></span>
                 <span class="text-[11px] sm:text-base font-black font-mono tracking-tighter sm:tracking-tight" x-text="timings[item.key]"></span>
             </div>
@@ -205,7 +205,7 @@
                 Akses Al-Qur'an, Hadits, Doa Shahih, Kalkulator Zakat &amp; Pengingat Amalan Sunnah
             </p>
             <a href="{{ route('islami.index') }}"
-               class="inline-flex items-center justify-center gap-1.5 bg-[#EA580C] hover:bg-[#C2410C] text-white font-extrabold text-xs px-4 py-2 rounded-full active:scale-95 transition shrink-0">
+               class="inline-flex items-center justify-center gap-1.5 bg-[#2B5B84] hover:bg-[#1E4363] text-white font-extrabold text-xs px-4 py-2 rounded-full active:scale-95 transition shrink-0">
                 <span>Buka Fitur Islami</span>
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
